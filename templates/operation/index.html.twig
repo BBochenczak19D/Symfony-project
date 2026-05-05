@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lista transkacji{% endblock %}
+
+{% block body %}
+    <h1>Twoje Transkacje</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Portfel</th>
+            <th>Kwota</th>
+            <th>Data tranksacji</th>
+            <th>Opis</th>
+            <th scope="col">Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for item in operation %}
+            <tr>
+                <td>{{ item.wallet.name}}</td>
+                <td>{{ item.amount }}</td>
+                <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
+                <td>{{ item.description }}</td>
+
+                <td>
+                    <a href="{{ path('wallet_view',{id: item.id}) }}"class="btn btn-sm btn-outline-primary">Edytuj</a>
+                    <a href="{{ path('wallet_view',{id: item.id}) }}"class="btn btn-sm btn-danger">Usuń</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="text-center">Lista jest pusta</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Portfel #{{ wallet.id }}{% endblock %}
+
+{% block body %}
+
+    <a href="{{ path('wallet_index') }}">Wróć do listy</a>
+
+
+    {% if wallet is defined and wallet is not null %}
+        <p>Szczegóły portfela: </p>
+        <h1>{{ wallet.name }}</h1>
+        <dl>
+            <dt>Saldo</dt>
+            <dd>{{ wallet.balance }} {{ wallet.currency }}</dd>
+        </dl>
+
+        <hr>
+
+        <h4>Transakcje dla portfela #{{ wallet.id }}</h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Kwota</th>
+                <th>Data transakcji</th>
+                <th>Opis</th>
+                <th scope="col">Akcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in operation %}
+                <tr>
+                    {# Waluta jest brana z nadrzędnego obiektu wallet #}
+                    <td>{{ item.amount }} {{ wallet.currency }}</td>
+                    <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        {# Przykładowe linki - musisz mieć trasy operation_edit/delete #}
+                        <button class="btn btn-sm btn-outline-primary">Edytuj</button>
+                        <button class="btn btn-sm btn-danger">Usuń</button>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">Brak transakcji dla tego portfela.</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-danger">Portfel nie został znaleziony.</div>
+    {% endif %}
+{% endblock %}
