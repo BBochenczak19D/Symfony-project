@@ -14,13 +14,13 @@
         </tr>
         </thead>
         <tbody>
-        {% for item in wallets %}
+        {% for item in operation %}
             <tr>
                 <td>{{ item.name }}</td>
-                <td>{{ item.balance }}</td>
+                <td>{{ item.amount }}</td>
                 <td>{{ item.currency }}</td>
 
-                <td><a href="{{ path('wallet_view',{id: item.id}) }}"class="btn btn-sm btn-outline-primary">Przejdź</a></td>
+                <td><a href="{{ path('wallet_view',{id: item.id}) }}" class="btn btn-sm btn-outline-primary">Przejdź</a></td>
             </tr>
         {% else %}
             <tr>

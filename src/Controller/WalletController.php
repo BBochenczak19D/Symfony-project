@@ -21,12 +21,16 @@ class WalletController extends AbstractController
         name: 'wallet_index',
         methods: ['GET'],
     )]
-    public function index(WalletRepository $repository): Response
+    public function index(WalletRepository $walletRepository, OperationRepository $operationRepository): Response
     {
-        $wallets = $repository->findAll();
+        $wallets = $walletRepository->findAll();
+        $operation = $operationRepository->findByExampleField();
+
+        dump($operation);
 
         return $this->render('wallet/index.html.twig', [
             'wallets' => $wallets,
+            'operation' => $operation,
         ]);
     }
 

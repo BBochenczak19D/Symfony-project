@@ -24,6 +24,7 @@ class Wallet
     #[ORM\Column(length: 5)]
     private ?string $currency = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
@@ -43,13 +44,12 @@ class Wallet
 
     public function getBalance(): ?string
     {
-        return $this->balance;
+      return $this->balance;
     }
 
     public function setBalance(string $balance): static
     {
         $this->balance = $balance;
-
         return $this;
     }
 
