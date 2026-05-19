@@ -23,4 +23,8 @@ interface WalletServiceInterface
      */
     public function getPaginatedList(int $page): PaginationInterface;
 
+    /**
+     * @return array
+     */
+    public function getOperationTotals(): array;
 }

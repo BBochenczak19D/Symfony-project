@@ -29,33 +29,18 @@ class WalletController extends AbstractController
     /**
      * Displays list of all wallets.
      * @param int $page
-     * @param OperationRepository $operationRepository
      * @return Response
      */
     #[Route(
         name: 'wallet_index',
         methods: ['GET'],
     )]
-    public function index( OperationRepository $operationRepository, #[MapQueryParameter] int $page = 1): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->walletService->getPaginatedList($page);
-
-        // $wallets = $walletRepository->findAll();
-        // $operation = $operationRepository->findByExampleField();
-
-        $totals = [];
-        foreach ($operationRepository->findByExampleField() as $dto) {
-            $totals[$dto->getId()] = $dto->getAmount();
-        }
-
         return $this->render('wallet/index.html.twig', [
-            'pagination' => $pagination,
-            'totals' => $totals,
+            'pagination' => $this->walletService->getPaginatedList($page),
+            'totals' => $this->walletService->getOperationTotals(),
         ]);
-        /*return $this->render('wallet/index.html.twig', [
-            'wallets' => $wallets,
-            'operation' => $operation,
-        ]);*/
     }
 
     /**
