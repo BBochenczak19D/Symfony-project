@@ -30,12 +30,10 @@
             <tbody>
             {% for item in operation %}
                 <tr>
-                    {# Waluta jest brana z nadrzędnego obiektu wallet #}
                     <td>{{ item.amount }} {{ wallet.currency }}</td>
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
                     <td>{{ item.description }}</td>
                     <td>
-                        {# Przykładowe linki - musisz mieć trasy operation_edit/delete #}
                         <button class="btn btn-sm btn-outline-primary">Edytuj</button>
                         <button class="btn btn-sm btn-danger">Usuń</button>
                     </td>

@@ -11,9 +11,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WalletRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Wallet::class);
+    }
+
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->createQueryBuilder('wallet');
     }
 
     //    /**

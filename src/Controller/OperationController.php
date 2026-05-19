@@ -31,6 +31,9 @@ class OperationController extends AbstractController
 
     /**
      * Displays a operations details
+     * @param OperationRepository $repository
+     * @param int $id
+     * @return Response
      */
     #[Route(
         '/{id}',
