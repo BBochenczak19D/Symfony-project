@@ -6,13 +6,12 @@
 
     <a href="{{ path('wallet_index') }}">Wróć do listy</a>
 
-
     {% if wallet is defined and wallet is not null %}
         <p>Szczegóły portfela: </p>
         <h1>{{ wallet.name }}</h1>
         <dl>
             <dt>Saldo</dt>
-            <dd>{{ wallet.balance }} {{ wallet.currency }}</dd>
+            <dd>{{ totals[wallet.id] ?? '0' }} {{ wallet.currency }}</dd>
         </dl>
 
         <hr>
@@ -21,16 +20,16 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Kwota</th>
-                <th>Data transakcji</th>
-                <th>Opis</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Kwota', 'operation.amount') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Data transakcji', 'operation.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Opis', 'operation.description') }}</th>
                 <th scope="col">Akcje</th>
             </tr>
             </thead>
             <tbody>
-            {% for item in operation %}
+            {% for item in pagination.items %}
                 <tr>
-                    <td>{{ item.amount }} {{ wallet.currency }}</td>
+                    <td>{{ item.amount }} {{ item.wallet.currency }}</td>
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
                     <td>{{ item.description }}</td>
                     <td>
@@ -45,6 +44,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <div class="alert alert-danger">Portfel nie został znaleziony.</div>
     {% endif %}

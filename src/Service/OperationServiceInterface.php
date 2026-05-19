@@ -1,18 +1,18 @@
 <?php
 
 /**
- * Wallet service interface.
+ * Operation service interface.
  */
 
 namespace App\Service;
 
-use App\Entity\Wallet;
+use App\Entity\Operation;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
- * Interface WalletServiceInterface.
+ * Interface OperationServiceInterface.
  */
-interface WalletServiceInterface
+interface OperationServiceInterface
 {
     /**
      * Get paginated list.
@@ -24,15 +24,9 @@ interface WalletServiceInterface
     public function getPaginatedList(int $page): PaginationInterface;
 
     /**
-     * @return array
-     */
-    public function getOperationTotals(): array;
-
-    /**
      * @param int $id
-     * @return Wallet|null
+     * @return Operation|null
      */
-    public function findById(int $id): ?Wallet;
-    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
+    public function findById(int $id): ?Operation;
 
 }

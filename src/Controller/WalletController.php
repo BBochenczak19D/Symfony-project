@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\OperationRepository;
-use App\Repository\WalletRepository;
 use App\Service\WalletService;
 use App\Service\WalletServiceInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,8 +26,6 @@ class WalletController extends AbstractController
 
     /**
      * Displays list of all wallets.
-     * @param int $page
-     * @return Response
      */
     #[Route(
         name: 'wallet_index',
@@ -52,19 +48,20 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET'],
     )]
-    public function view(WalletRepository $repository, OperationRepository $operationRepository, int $id): Response
-    {
-        $wallet = $repository->find($id);
+    public function view(
+        int $id,
+        #[MapQueryParameter] int $page = 1
+    ): Response {
+        $wallet = $this->walletService->findById($id);
 
         if (!$wallet) {
             throw $this->createNotFoundException('Nie ma takiego portfela');
         }
 
-        $operation = $operationRepository->findBy(['wallet' => $wallet]);
-
         return $this->render('wallet/view.html.twig', [
-            'wallet' => $wallet,
-            'operation' => $operation,
+            'wallet'     => $wallet,
+            'pagination' => $this->walletService->getPaginatedOperations($id,$page),
+            'totals'     => $this->walletService->getOperationTotals(),
         ]);
     }
 }

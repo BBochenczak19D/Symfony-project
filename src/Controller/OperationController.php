@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\OperationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 /**
@@ -20,12 +21,10 @@ class OperationController extends AbstractController
         name: 'operation_index',
         methods: ['GET'],
     )]
-    public function index(OperationRepository $repository): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $operation = $repository->findAll();
-
         return $this->render('operation/index.html.twig', [
-            'operation' => $operation,
+            'pagination' => $this->operationService->getPaginatedList($page)
         ]);
     }
 

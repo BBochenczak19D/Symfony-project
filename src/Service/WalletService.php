@@ -10,6 +10,8 @@ use App\Repository\OperationRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Wallet;
+
 
 /**
  * Class WalletService.
@@ -25,7 +27,7 @@ class WalletService implements WalletServiceInterface
      *
      * @varant int
      */
-    private const int PAGINATOR_ITEMS_PER_PAGE = 2;
+    private const int PAGINATOR_ITEMS_PER_PAGE = 3;
 
     /**
      * Constructor.
@@ -72,5 +74,33 @@ class WalletService implements WalletServiceInterface
             $totals[$dto->getId()] = $dto->getAmount();
         }
         return $totals;
+    }
+
+    /**
+     * @param int $id
+     * @return Wallet|null
+     */
+    public function findById(int $id): ?Wallet
+    {
+        return $this->walletRepository->find($id);
+    }
+
+    /**
+     * @param int $walletId
+     * @param int $page
+     * @return PaginationInterface
+     */
+    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->operationRepository->queryByWallet($walletId),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['operation.amount', 'operation.createdAt', 'operation.description'],
+                'defaultSortFieldName' => 'operation.createdAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
     }
 }
