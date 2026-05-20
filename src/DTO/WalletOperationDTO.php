@@ -2,6 +2,9 @@
 
 namespace App\Dto;
 
+/**
+ *
+ */
 class WalletOperationDto
 {
     private string $id;
@@ -9,6 +12,12 @@ class WalletOperationDto
     private string $amount;
     private string $currency;
 
+    /**
+     * @param string $id
+     * @param string $name
+     * @param string $amount
+     * @param string $currency
+     */
     public function __construct(string $id, string $name, string $amount, string $currency)
     {
         $this->id = $id;
@@ -16,20 +25,34 @@ class WalletOperationDto
         $this->amount = $amount;
         $this->currency = $currency;
     }
+
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
+
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getAmount(): string
     {
         return $this->amount;
     }
 
+    /**
+     * @return string
+     */
     public function getCurrency(): string
     {
         return $this->currency;
