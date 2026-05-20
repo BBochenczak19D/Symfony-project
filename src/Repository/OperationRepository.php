@@ -2,9 +2,8 @@
 
 namespace App\Repository;
 
-use App\Dto\WalletOperationDTO;
+use App\Dto\WalletOperationDto;
 use App\Entity\Operation;
-use App\Entity\Wallet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -51,7 +50,7 @@ class OperationRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('o')
             ->select(sprintf(
                 'NEW %s(w.id,w.name, SUM(o.amount), w.currency)',
-                WalletOperationDTO::class
+                WalletOperationDto::class
             ))
             ->leftJoin('o.wallet', 'w')
             ->groupBy('w.id')
