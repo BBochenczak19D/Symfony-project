@@ -6,12 +6,11 @@
 
 namespace App\Service;
 
+use App\Entity\Wallet;
 use App\Repository\OperationRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-use App\Entity\Wallet;
-
 
 /**
  * Class WalletService.
@@ -32,9 +31,8 @@ class WalletService implements WalletServiceInterface
     /**
      * Constructor.
      *
-     * @param WalletRepository $walletRepository Task repository
-     * @param PaginatorInterface $paginator Paginator
-     * @param OperationRepository $operationRepository
+     * @param WalletRepository   $walletRepository Task repository
+     * @param PaginatorInterface $paginator        Paginator
      */
     public function __construct(
         private readonly WalletRepository $walletRepository,
@@ -64,32 +62,21 @@ class WalletService implements WalletServiceInterface
         );
     }
 
-    /**
-     * @return array
-     */
     public function getOperationTotals(): array
     {
         $totals = [];
         foreach ($this->operationRepository->findByExampleField() as $dto) {
             $totals[$dto->getId()] = $dto->getAmount();
         }
+
         return $totals;
     }
 
-    /**
-     * @param int $id
-     * @return Wallet|null
-     */
     public function findById(int $id): ?Wallet
     {
         return $this->walletRepository->find($id);
     }
 
-    /**
-     * @param int $walletId
-     * @param int $page
-     * @return PaginationInterface
-     */
     public function getPaginatedOperations(int $walletId, int $page): PaginationInterface
     {
         return $this->paginator->paginate(

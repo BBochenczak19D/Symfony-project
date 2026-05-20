@@ -23,16 +23,9 @@ interface WalletServiceInterface
      */
     public function getPaginatedList(int $page): PaginationInterface;
 
-    /**
-     * @return array
-     */
     public function getOperationTotals(): array;
 
-    /**
-     * @param int $id
-     * @return Wallet|null
-     */
     public function findById(int $id): ?Wallet;
-    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
 
+    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
 }

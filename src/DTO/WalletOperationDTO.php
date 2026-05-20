@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Dto;
+namespace App\DTO;
 
 /**
  *
  */
-class WalletOperationDto
+class WalletOperationDTO
 {
     private string $id;
     private string $name;
