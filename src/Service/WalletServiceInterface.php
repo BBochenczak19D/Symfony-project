@@ -28,4 +28,7 @@ interface WalletServiceInterface
     public function findById(int $id): ?Wallet;
 
     public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
+
+    public function save(Wallet $wallet): void;
+
 }

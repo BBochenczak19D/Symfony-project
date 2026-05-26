@@ -3,16 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Operation;
+use App\Entity\Wallet;
 use App\Form\Type\OperationType;
+use App\Form\Type\WalletType;
 use App\Service\WalletServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+
 
 /**
  * Controller for wallet-related actions.
@@ -72,11 +75,17 @@ class WalletController extends AbstractController
         ]);
     }
 
+    /**
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route(
         '/{id}/add-operation',
         name: 'add_operation',
-        methods: ['GET', 'POST'],
         requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET', 'POST'],
     )]
     public function addOperation(int $id, Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -111,13 +120,19 @@ class WalletController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param Operation $operation
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route(
         '/{id}/delete-operation',
         name: 'delete_operation',
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
-    public function deleteOperation(Request $request, Operation $operation,EntityManagerInterface $entityManager): Response
+    public function deleteOperation(Request $request, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
         $form = $this->createForm(FormType::class, $operation, [
@@ -144,6 +159,42 @@ class WalletController extends AbstractController
                 'form' => $form->createView(),
                 'wallet' => $wallet,
             ]
+        );
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
+    #[Route(
+        '/add-wallet',
+        name: 'add_wallet',
+        methods: ['GET', 'POST'],
+    )]
+    public function addWallet(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $wallet = new Wallet();
+
+        $form = $this->createForm(WalletType::class, $wallet);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($wallet);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('wallet_index');
+        }
+
+        return $this->render(
+            'wallet/add-wallet.html.twig',
+            ['form' => $form->createView()]
         );
     }
 }

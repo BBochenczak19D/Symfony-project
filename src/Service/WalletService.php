@@ -26,7 +26,7 @@ class WalletService implements WalletServiceInterface
      *
      * @varant int
      */
-    private const int PAGINATOR_ITEMS_PER_PAGE = 3;
+    private const int PAGINATOR_ITEMS_PER_PAGE = 7;
 
     /**
      * Constructor.
@@ -91,4 +91,13 @@ class WalletService implements WalletServiceInterface
         );
     }
 
+    /**
+     * @param wWllet $operation
+     * @return void
+     */
+    public function save(Wallet $wallet): void
+    {
+        $this->entityManager->persist($wallet);
+        $this->entityManager->flush();
+    }
 }

@@ -27,32 +27,22 @@ class Operation
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
 
-    /**
-     *
-     */
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return string|null
-     */
     public function getAmount(): ?string
     {
         return $this->amount;
     }
 
     /**
-     * @param string $amount
      * @return $this
      */
     public function setAmount(string $amount): static
@@ -62,16 +52,12 @@ class Operation
         return $this;
     }
 
-    /**
-     * @return \DateTimeImmutable|null
-     */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
     /**
-     * @param \DateTimeImmutable $createdAt
      * @return $this
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
@@ -81,16 +67,12 @@ class Operation
         return $this;
     }
 
-    /**
-     * @return string|null
-     */
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
     /**
-     * @param string|null $description
      * @return $this
      */
     public function setDescription(?string $description): static
@@ -110,6 +92,7 @@ class Operation
 
     /**
      * @param Wallet|null $wallet
+     *
      * @return $this
      */
     public function setWallet(?Wallet $wallet): static

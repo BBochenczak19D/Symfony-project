@@ -17,6 +17,16 @@ class WalletRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param Wallet $wallet
+     * @return void
+     */
+    public function save(Wallet $wallet): void
+    {
+        $this->getEntityManager()->persist($wallet);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
      * Query all records.
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder

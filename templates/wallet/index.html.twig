@@ -3,7 +3,13 @@
 {% block title %}Lista portfeli{% endblock %}
 
 {% block body %}
-    <h1>Twoje portfele</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-0">Twoje portfele</h1>
+        <a href="{{ path('add_wallet') }}" class="btn btn-primary">
+            + Dodaj portfel
+        </a>
+    </div>
+
     {% if pagination is defined and pagination.items|length %}
         <table class="table table-striped">
             <thead>
@@ -20,19 +26,22 @@
                     <td>{{ wallet.name }}</td>
                     <td>{{ totals[wallet.id] ?? '0' }}</td>
                     <td>{{ wallet.currency }}</td>
-                    <td><a href="{{ path('wallet_view',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">Przejdź</a></td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">Lista jest pusta</td>
+                    <td>
+                        <a href="{{ path('wallet_view',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">
+                            Przejdź
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
     {% else %}
-        <p>{{ 'message.empty_list'|trans }}</p>
+        <div class="alert alert-info">
+            {{ 'message.empty_list'|trans }}
+        </div>
     {% endif %}
 {% endblock %}

@@ -13,17 +13,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OperationRepository extends ServiceEntityRepository
 {
-    /**
-     * @param ManagerRegistry $registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Operation::class);
     }
 
-    /**
-     * @return QueryBuilder
-     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('operation')
@@ -31,10 +25,6 @@ class OperationRepository extends ServiceEntityRepository
             ->addSelect('wallet');
     }
 
-    /**
-     * @param int $walletId
-     * @return QueryBuilder
-     */
     public function queryByWallet(int $walletId): QueryBuilder
     {
         return $this->queryAll()
@@ -42,24 +32,18 @@ class OperationRepository extends ServiceEntityRepository
             ->setParameter('walletId', $walletId);
     }
 
-    /**
-     * @param Operation $operation
-     * @return void
-     */
     public function save(Operation $operation): void
     {
         $this->getEntityManager()->persist($operation);
         $this->getEntityManager()->flush();
     }
+
     public function delete(Operation $operation): void
     {
         $this->getEntityManager()->remove($operation);
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @return array
-     */
     public function findByExampleField(): array
     {
         return $this->createQueryBuilder('o')
