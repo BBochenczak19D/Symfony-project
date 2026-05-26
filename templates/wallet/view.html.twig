@@ -35,7 +35,9 @@
                     <td>{{ item.description }}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-                        <button><a href="{{ path('delete_operation',{id: wallet.id}) }}" class="btn btn-sm btn-danger">Usuń</a></button>
+                        <button><a href="{{ path('delete_operation', {'id': item.id}) }}" class="btn btn-sm btn-danger">
+                                Usuń
+                            </a></button>
                     </td>
                 </tr>
             {% else %}
