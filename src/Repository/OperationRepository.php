@@ -51,6 +51,11 @@ class OperationRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($operation);
         $this->getEntityManager()->flush();
     }
+    public function delete(Operation $operation): void
+    {
+        $this->getEntityManager()->remove($operation);
+        $this->getEntityManager()->flush();
+    }
 
     /**
      * @return array

@@ -7,12 +7,9 @@ use App\Repository\OperationRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
-/**
- *
- */
 class OperationService implements OperationServiceInterface
 {
-    private const int PAGINATOR_ITEMS_PER_PAGE =5;
+    private const int PAGINATOR_ITEMS_PER_PAGE = 5;
 
     public function __construct(
         private readonly PaginatorInterface $paginator,
@@ -50,6 +47,10 @@ class OperationService implements OperationServiceInterface
         return $this->operationRepository->find($id);
     }
 
+    /**
+     * @param Operation $operation
+     * @return void
+     */
     public function save(Operation $operation): void
     {
         $operation->setCreatedAt(new \DateTimeImmutable());
@@ -59,4 +60,12 @@ class OperationService implements OperationServiceInterface
         $this->operationRepository->save($operation);
     }
 
+    /**
+     * @param Operation $operation
+     * @return void
+     */
+    public function delete(Operation $operation): void
+    {
+        $this->operationRepository->delete($operation);
+    }
 }

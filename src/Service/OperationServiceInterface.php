@@ -35,4 +35,10 @@ interface OperationServiceInterface
      */
     public function save(Operation $operation): void;
 
+    /**
+     * @param Operation $operation
+     * @return void
+     */
+    public function delete(Operation $operation): void;
+
 }

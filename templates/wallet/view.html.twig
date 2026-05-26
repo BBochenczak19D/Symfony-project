@@ -35,7 +35,7 @@
                     <td>{{ item.description }}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-                        <button class="btn btn-sm btn-danger">Usuń</button>
+                        <button><a href="{{ path('delete_operation',{id: wallet.id}) }}" class="btn btn-sm btn-danger">Usuń</a></button>
                     </td>
                 </tr>
             {% else %}
