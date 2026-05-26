@@ -2,15 +2,21 @@
 
 namespace App\Controller;
 
-use App\Service\WalletService;
+use App\Entity\Operation;
+use App\Form\Type\OperationType;
 use App\Service\WalletServiceInterface;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 
 /**
  * Controller for wallet-related actions.
+ * @method addFlash(string $string, $trans)
  */
 #[Route('/wallet')]
 class WalletController extends AbstractController
@@ -20,7 +26,7 @@ class WalletController extends AbstractController
      *
      * @param WalletService $walletService Wallet service
      */
-    public function __construct(private readonly WalletServiceInterface $walletService)
+    public function __construct(private readonly WalletServiceInterface $walletService,private readonly TranslatorInterface $translator)
     {
     }
 
@@ -63,5 +69,51 @@ class WalletController extends AbstractController
             'pagination' => $this->walletService->getPaginatedOperations($id,$page),
             'totals'     => $this->walletService->getOperationTotals(),
         ]);
+    }
+
+    /**
+     * @param int $id
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @param WalletService $wallet
+     * @return Response
+     */
+    #[Route(
+        '/{id}/add-operation',
+        name: 'add_operation',
+        methods: ['GET','POST'],
+        requirements: ['id' => '[1-9]\d*'],
+    )]
+    public function addOperation(int $id, Request $request, EntityManagerInterface $entityManager) : Response
+    {
+        $wallet = $this->walletService->findById($id);
+
+        if (!$wallet) {
+            throw $this->createNotFoundException('Nie ma takiego portfela');
+        }
+
+        $operation = new Operation();
+        $operation->setWallet($wallet);
+
+        $form = $this->createForm(OperationType::class, $operation);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($operation);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('wallet_view',['id' => $wallet->getId()]);
+        }
+
+        return $this->render(
+            'wallet/add-operation.html.twig',
+            ['form' => $form->createView(),
+                'wallet' => $wallet,]
+        );
     }
 }

@@ -90,4 +90,5 @@ class WalletService implements WalletServiceInterface
             ]
         );
     }
+
 }

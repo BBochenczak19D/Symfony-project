@@ -16,7 +16,8 @@
 
         <hr>
 
-        <h4>Transakcje dla portfela #{{ wallet.id }}</h4>
+        <h4>Lista Twoich transkacji</h4>
+        <button><a href="{{ path('add_operation',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">+ Dodaj transakcję</a></button>
         <table class="table table-striped">
             <thead>
             <tr>

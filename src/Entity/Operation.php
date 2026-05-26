@@ -28,6 +28,14 @@ class Operation
     private ?Wallet $wallet = null;
 
     /**
+     *
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int

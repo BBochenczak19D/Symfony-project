@@ -11,9 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WalletRepository extends ServiceEntityRepository
 {
-    /**
-     * @param ManagerRegistry $registry
-     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Wallet::class);
@@ -28,7 +25,6 @@ class WalletRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('wallet');
     }
-
     //    /**
     //     * @return Wallet[] Returns an array of Wallet objects
     //     */

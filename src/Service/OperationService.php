@@ -49,4 +49,14 @@ class OperationService implements OperationServiceInterface
     {
         return $this->operationRepository->find($id);
     }
+
+    public function save(Operation $operation): void
+    {
+        $operation->setCreatedAt(new \DateTimeImmutable());
+        if (null === $operation->getId()) {
+            $operation->setCreatedAt(new \DateTimeImmutable());
+        }
+        $this->operationRepository->save($operation);
+    }
+
 }

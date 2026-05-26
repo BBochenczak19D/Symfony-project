@@ -29,4 +29,10 @@ interface OperationServiceInterface
      */
     public function findById(int $id): ?Operation;
 
+    /**
+     * @param Operation $operation
+     * @return void
+     */
+    public function save(Operation $operation): void;
+
 }

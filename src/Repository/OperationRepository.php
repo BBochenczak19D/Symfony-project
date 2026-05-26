@@ -43,6 +43,16 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param Operation $operation
+     * @return void
+     */
+    public function save(Operation $operation): void
+    {
+        $this->getEntityManager()->persist($operation);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
      * @return array
      */
     public function findByExampleField(): array
