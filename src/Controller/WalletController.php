@@ -7,6 +7,7 @@ use App\Entity\Wallet;
 use App\Form\Type\OperationType;
 use App\Form\Type\WalletType;
 use App\Service\WalletServiceInterface;
+use App\Service\OperationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -30,7 +31,11 @@ class WalletController extends AbstractController
      *
      * @param WalletService $walletService Wallet service
      */
-    public function __construct(private readonly WalletServiceInterface $walletService, private readonly TranslatorInterface $translator)
+    public function __construct(
+        private readonly WalletServiceInterface $walletService,
+        private readonly OperationServiceInterface $operationService,
+        private readonly TranslatorInterface $translator
+    )
     {
     }
 
@@ -102,14 +107,15 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($operation);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.created_successfully')
-            );
-
+            if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount())) {
+                $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
+                return $this->render('wallet/add-operation.html.twig', [
+                    'form' => $form->createView(),
+                    'wallet' => $wallet,
+                ]);
+            }
+            $this->operationService->save($operation);
+            $this->addFlash('success', $this->translator->trans('message.created_successfully'));
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 
@@ -145,14 +151,9 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->remove($operation);
-            $entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.deleted_successfully')
-            );
-
+            $this->operationService->save($operation);
+            $this->addFlash('success', $this->translator->trans('message.edited_successfully'));
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 
@@ -174,6 +175,7 @@ class WalletController extends AbstractController
     public function edit(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
+        $oldAmount = (float) $operation->getAmount();
 
         $form = $this->createForm(OperationType::class, $operation, [
             'method' => 'POST',
@@ -185,13 +187,17 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.edited_successfully')
-            );
-
+            //$entityManager->flush();
+            if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount(), $oldAmount)) {
+                $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
+                return $this->render('wallet/edit-operation.html.twig', [
+                    'form' => $form->createView(),
+                    'operation' => $operation,
+                    'wallet' => $wallet,
+                ]);
+            }
+            $this->operationService->save($operation);
+            $this->addFlash('success', $this->translator->trans('message.created_successfully'));
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 

@@ -92,22 +92,29 @@ class WalletService implements WalletServiceInterface
         );
     }
 
-    /**
-     * @param wWllet $operation
-     * @return void
-     */
     public function save(Wallet $wallet): void
     {
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
     }
 
-    /**
-     * @param Operation|Wallet $operation
-     * @return void
-     */
     public function delete(Operation|Wallet $operation): void
     {
         $this->operationRepository->delete($operation);
+    }
+
+    public function getCurrentBalance(int $walletId): float
+    {
+        $totals = $this->getOperationTotals();
+
+        return (float) ($totals[$walletId] ?? 0);
+    }
+
+    public function canAddAmount(int $walletId, float $newAmount, ?float $oldAmount = null): bool
+    {
+        $current = $this->getCurrentBalance($walletId);
+        $base = $current - ($oldAmount ?? 0);
+
+        return $base + $newAmount >= 0;
     }
 }
