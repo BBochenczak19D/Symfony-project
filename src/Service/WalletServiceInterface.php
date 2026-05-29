@@ -30,5 +30,6 @@ interface WalletServiceInterface
     public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
 
     public function save(Wallet $wallet): void;
+    public function delete(Wallet $wallet): void;
 
 }

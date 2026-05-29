@@ -127,17 +127,20 @@ class WalletController extends AbstractController
      * @return Response
      */
     #[Route(
-        '/{id}/delete-operation',
+        '/{walletId}/operation-{id}/delete',
         name: 'delete_operation',
-        requirements: ['id' => '[1-9]\d*'],
+        requirements: ['walletId' => '[1-9]\d*', 'id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
-    public function deleteOperation(Request $request, Operation $operation, EntityManagerInterface $entityManager): Response
+    public function deleteOperation(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
-        $form = $this->createForm(FormType::class, $operation, [
+        $form = $this->createForm(FormType::class, null, [
             'method' => 'POST',
-            'action' => $this->generateUrl('delete_operation', ['id' => $operation->getId()]),
+            'action' => $this->generateUrl('delete_operation', [
+                'walletId' => $walletId,
+                'id' => $operation->getId(),
+            ]),
         ]);
         $form->handleRequest($request);
 
@@ -157,6 +160,46 @@ class WalletController extends AbstractController
             'wallet/delete-operation.html.twig',
             [
                 'form' => $form->createView(),
+                'wallet' => $wallet,
+            ]
+        );
+    }
+
+    #[Route(
+        '/{walletId}/operation-{id}/edit',
+        name: 'edit_operation',
+        requirements: ['walletId' => '[1-9]\d*', 'id' => '[1-9]\d*'],
+        methods: ['GET', 'POST'],
+    )]
+    public function edit(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
+    {
+        $wallet = $operation->getWallet();
+
+        $form = $this->createForm(OperationType::class, $operation, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('edit_operation', [
+                'walletId' => $walletId,
+                'id' => $operation->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
+
+            return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
+        }
+
+        return $this->render(
+            'wallet/edit-operation.html.twig',
+            [
+                'form' => $form->createView(),
+                'operation' => $operation,
                 'wallet' => $wallet,
             ]
         );

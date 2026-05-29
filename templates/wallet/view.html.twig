@@ -34,10 +34,8 @@
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
                     <td>{{ item.description }}</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-                        <button><a href="{{ path('delete_operation', {'id': item.id}) }}" class="btn btn-sm btn-danger">
-                                Usuń
-                            </a></button>
+                        <a href="{{ path('edit_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn btn-sm btn-secondary">Edytuj</a>
+                        <a href="{{ path('delete_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn btn-sm btn-danger">Usuń</a>
                     </td>
                 </tr>
             {% else %}

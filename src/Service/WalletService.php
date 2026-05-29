@@ -6,6 +6,7 @@
 
 namespace App\Service;
 
+use App\Entity\Operation;
 use App\Entity\Wallet;
 use App\Repository\OperationRepository;
 use App\Repository\WalletRepository;
@@ -99,5 +100,14 @@ class WalletService implements WalletServiceInterface
     {
         $this->entityManager->persist($wallet);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param Operation|Wallet $operation
+     * @return void
+     */
+    public function delete(Operation|Wallet $operation): void
+    {
+        $this->operationRepository->delete($operation);
     }
 }
