@@ -158,7 +158,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/delete-operation.html.twig',
+            'wallet/delete-category.html.twig',
             [
                 'form' => $form->createView(),
                 'wallet' => $wallet,
@@ -190,7 +190,7 @@ class WalletController extends AbstractController
             //$entityManager->flush();
             if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount(), $oldAmount)) {
                 $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
-                return $this->render('wallet/edit-operation.html.twig', [
+                return $this->render('wallet/edit-category.html.twig', [
                     'form' => $form->createView(),
                     'operation' => $operation,
                     'wallet' => $wallet,
@@ -202,7 +202,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/edit-operation.html.twig',
+            'wallet/edit-category.html.twig',
             [
                 'form' => $form->createView(),
                 'operation' => $operation,
@@ -242,7 +242,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/add-wallet.html.twig',
+            'wallet/add-category.html.twig',
             ['form' => $form->createView()]
         );
     }

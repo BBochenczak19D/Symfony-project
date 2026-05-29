@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.category_delete'|trans }}
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1>{{ 'title.category_delete'|trans }}</h1>
+
+        <div class="alert alert-warning">
+            <p>Czy na pewno chcesz bezpowrotnie usunąć tę kategorię?</p>
+        </div>
+
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+
+        <div class="form-group mt-3">
+            <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger"/>
+
+            <a href="{{ path('category_index', {'id': category.id}) }}" class="btn btn-secondary">
+                Przerwij
+            </a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

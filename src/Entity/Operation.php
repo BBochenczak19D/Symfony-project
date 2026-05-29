@@ -27,6 +27,9 @@ class Operation
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
 
+    #[ORM\ManyToOne]
+    private ?Category $Category = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -98,6 +101,18 @@ class Operation
     public function setWallet(?Wallet $wallet): static
     {
         $this->wallet = $wallet;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->Category;
+    }
+
+    public function setCategory(?Category $Category): static
+    {
+        $this->Category = $Category;
 
         return $this;
     }

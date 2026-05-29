@@ -6,15 +6,17 @@ use App\Entity\Operation;
 use App\Entity\Wallet;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-// USUNIĘTO 'abstract' i zmieniono rozszerzenie na AbstractBaseFixtures
+/**
+ *
+ */
 class OperationFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+
     /**
-     * Główna logika ładowania danych.
+     * @return void
      */
     public function loadData(): void
     {
-        // Pobieramy portfele przez managera dostępnego w klasie bazowej
         $wallets = $this->manager->getRepository(Wallet::class)->findAll();
 
         if (empty($wallets)) {
@@ -42,7 +44,7 @@ class OperationFixtures extends AbstractBaseFixtures implements DependentFixture
     }
 
     /**
-     * Dzięki temu Symfony najpierw załaduje portfele, a potem operacje.
+     * @return \class-string[]
      */
     public function getDependencies(): array
     {
