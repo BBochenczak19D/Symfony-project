@@ -6,38 +6,38 @@
 
     <a href="{{ path('wallet_index') }}">Wróć do listy</a>
 
-
     {% if wallet is defined and wallet is not null %}
         <p>Szczegóły portfela: </p>
         <h1>{{ wallet.name }}</h1>
         <dl>
             <dt>Saldo</dt>
-            <dd>{{ wallet.balance }} {{ wallet.currency }}</dd>
+            <dd>{{ totals[wallet.id] ?? '0' }} {{ wallet.currency }}</dd>
         </dl>
 
         <hr>
 
-        <h4>Transakcje dla portfela #{{ wallet.id }}</h4>
+        <h4>Lista Twoich transkacji</h4>
+        <button><a href="{{ path('add_operation',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">+ Dodaj transakcję</a></button>
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Kwota</th>
-                <th>Data transakcji</th>
-                <th>Opis</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Kwota', 'operation.amount') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Data transakcji', 'operation.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Opis', 'operation.description') }}</th>
                 <th scope="col">Akcje</th>
             </tr>
             </thead>
             <tbody>
-            {% for item in operation %}
+            {% for item in pagination.items %}
                 <tr>
-                    {# Waluta jest brana z nadrzędnego obiektu wallet #}
-                    <td>{{ item.amount }} {{ wallet.currency }}</td>
+                    <td>{{ item.amount }} {{ item.wallet.currency }}</td>
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
                     <td>{{ item.description }}</td>
                     <td>
-                        {# Przykładowe linki - musisz mieć trasy operation_edit/delete #}
                         <button class="btn btn-sm btn-outline-primary">Edytuj</button>
-                        <button class="btn btn-sm btn-danger">Usuń</button>
+                        <button><a href="{{ path('delete_operation', {'id': item.id}) }}" class="btn btn-sm btn-danger">
+                                Usuń
+                            </a></button>
                     </td>
                 </tr>
             {% else %}
@@ -47,6 +47,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {% else %}
         <div class="alert alert-danger">Portfel nie został znaleziony.</div>
     {% endif %}

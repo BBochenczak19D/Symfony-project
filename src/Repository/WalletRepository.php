@@ -16,6 +16,25 @@ class WalletRepository extends ServiceEntityRepository
         parent::__construct($registry, Wallet::class);
     }
 
+    /**
+     * @param Wallet $wallet
+     * @return void
+     */
+    public function save(Wallet $wallet): void
+    {
+        $this->getEntityManager()->persist($wallet);
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Query all records.
+     *
+     * @return \Doctrine\ORM\QueryBuilder Query builder
+     */
+    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    {
+        return $this->createQueryBuilder('wallet');
+    }
     //    /**
     //     * @return Wallet[] Returns an array of Wallet objects
     //     */

@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\DTO\WalletOperationDTO;
 use App\Entity\Operation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,28 +18,44 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
-    //    /**
-    //     * @return Operation[] Returns an array of Operation objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('o.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function queryAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('operation')
+            ->leftJoin('operation.wallet', 'wallet')
+            ->addSelect('wallet');
+    }
 
-    //    public function findOneBySomeField($value): ?Operation
-    //    {
-    //        return $this->createQueryBuilder('o')
-    //            ->andWhere('o.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function queryByWallet(int $walletId): QueryBuilder
+    {
+        return $this->queryAll()
+            ->andWhere('operation.wallet = :walletId')
+            ->setParameter('walletId', $walletId);
+    }
+
+    public function save(Operation $operation): void
+    {
+        $this->getEntityManager()->persist($operation);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete(Operation $operation): void
+    {
+        $this->getEntityManager()->remove($operation);
+        $this->getEntityManager()->flush();
+    }
+
+    public function findByExampleField(): array
+    {
+        return $this->createQueryBuilder('o')
+            ->select(sprintf(
+                'NEW %s(w.id,w.name, SUM(o.amount), w.currency)',
+                WalletOperationDTO::class
+            ))
+            ->leftJoin('o.wallet', 'w')
+            ->groupBy('w.id')
+            ->addGroupBy('w.name')
+            ->addGroupBy('w.currency')
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -24,6 +24,11 @@ class Wallet
     #[ORM\Column(length: 5)]
     private ?string $currency = null;
 
+    public function __construct()
+    {
+        $this->balance = 0;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
