@@ -104,4 +104,38 @@ class CategoryController extends AbstractController
             ]
         );
     }
+
+    /**
+     * @param Request $request
+     * @param Category $category
+     * @return Response
+     */
+    #[Route(
+        '/{id}/edit',
+    name: 'edit_category',
+    requirements: ['id' => '[1-9]\d*'],
+    methods: ['GET', 'POST'],
+    )]
+    public function editCategory(Request $request, Category $category): Response
+    {
+        $form = $this->createForm(CategoryType::class, $category, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('edit_category', [
+                'id' => $category->getId(),
+            ]),
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->categoryService->save($category);
+            $this->addFlash('success', $this->translator->trans('message.created_successfully'));
+            return $this->redirectToRoute('category_index', ['id' => $category->getId()]);
+        }
+        return $this->render(
+            'category/edit-category.html.twig',
+            [
+                'form' => $form->createView(),
+                'category' => $category,
+            ]
+        );
+    }
 }
