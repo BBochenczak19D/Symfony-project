@@ -27,8 +27,10 @@ class Operation
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
 
-    #[ORM\ManyToOne]
-    private ?Category $Category = null;
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\JoinColumn(nullable: true)] //wskauzjemy jak moze wygladac ta kolumna, moze byc pusta
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -107,12 +109,12 @@ class Operation
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): static
+    public function setCategory(?Category $category): static
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }

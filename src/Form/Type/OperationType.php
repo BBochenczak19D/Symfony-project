@@ -6,7 +6,9 @@
 
 namespace App\Form\Type;
 
+use App\Entity\Category;
 use App\Entity\Operation;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -51,6 +53,19 @@ class OperationType extends AbstractType
                     'placeholder' => 'label.description',
                     'maxlength' => 255]
             ],
+        );
+        $builder->add(
+            'category',
+            EntityType::class,
+            [
+                'class' => Category::class,
+                'choice_label' => function ($category): string {
+                    return $category->getName();
+                },
+                'label' => 'Select label.category',
+                'required' => false,
+                'multiple' => false,
+            ]
         );
     }
 
