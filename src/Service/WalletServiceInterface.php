@@ -31,7 +31,7 @@ interface WalletServiceInterface
 
     public function save(Wallet $wallet): void;
     public function delete(Wallet $wallet): void;
-
+    public function editWallet(Wallet $wallet): void;
     public function getCurrentBalance(int $walletId): float;
     public function canAddAmount(int $walletId, float $newAmount, ?float $oldAmount = null): bool;
 }

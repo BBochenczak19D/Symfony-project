@@ -33,6 +33,9 @@
                         <a href="{{ path('wallet_view',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">
                             Przejdź
                         </a>
+                        <a href="{{ path('edit_wallet',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">
+                            Edytuj
+                        </a>
                     </td>
                 </tr>
             {% endfor %}

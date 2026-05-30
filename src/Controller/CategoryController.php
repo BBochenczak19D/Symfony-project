@@ -14,26 +14,15 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- *
- */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    /**
-     * @param CategoryServiceInterface $categoryService
-     * @param TranslatorInterface $translator
-     */
     public function __construct(
         private readonly CategoryServiceInterface $categoryService,
-        private readonly TranslatorInterface $translator
-    )
-    {
+        private readonly TranslatorInterface $translator,
+    ) {
     }
-    /**
-     * @param int $page
-     * @return Response
-     */
+
     #[Route(
         name: 'category_index',
         methods: ['GET'],
@@ -46,8 +35,8 @@ class CategoryController extends AbstractController
 
     #[Route(
         '/add-category',
-    name: 'add_category',
-    methods: ['GET', 'POST'],
+        name: 'add_category',
+        methods: ['GET', 'POST'],
     )]
     public function addCategory(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -79,7 +68,7 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
-    public function deleteCategory(Request $request,Category $category, EntityManagerInterface $entityManager): Response
+    public function deleteCategory(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FormType::class, null, [
             'method' => 'POST',
@@ -90,9 +79,9 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->categoryService->delete($category);
             $this->addFlash('success', $this->translator->trans('message.edited_successfully'));
+
             return $this->redirectToRoute('category_index');
         }
 
@@ -105,16 +94,11 @@ class CategoryController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     * @param Category $category
-     * @return Response
-     */
     #[Route(
         '/{id}/edit',
-    name: 'edit_category',
-    requirements: ['id' => '[1-9]\d*'],
-    methods: ['GET', 'POST'],
+        name: 'edit_category',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET', 'POST'],
     )]
     public function editCategory(Request $request, Category $category): Response
     {
@@ -128,8 +112,10 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->save($category);
             $this->addFlash('success', $this->translator->trans('message.created_successfully'));
+
             return $this->redirectToRoute('category_index', ['id' => $category->getId()]);
         }
+
         return $this->render(
             'category/edit-category.html.twig',
             [

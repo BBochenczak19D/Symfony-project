@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\DTO\WalletOperationDTO;
 use App\Entity\Operation;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -57,5 +58,16 @@ class OperationRepository extends ServiceEntityRepository
             ->addGroupBy('w.currency')
             ->getQuery()
             ->getResult();
+    }
+    public function nullifyCategory(Category $category): void
+    {
+        $this->createQueryBuilder('o')
+        ->update()
+        ->set('o.category', ':null')
+        ->where('o.category = :category')
+        ->setParameter('null', null)
+        ->setParameter('category', $category)
+        ->getQuery()
+        ->execute();
     }
 }

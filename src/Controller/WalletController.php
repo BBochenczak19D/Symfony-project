@@ -202,7 +202,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/edit-category.html.twig',
+            'wallet/edit-operation.html.twig',
             [
                 'form' => $form->createView(),
                 'operation' => $operation,
@@ -242,8 +242,48 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/add-category.html.twig',
+            'wallet/add-wallet.html.twig',
             ['form' => $form->createView()]
+        );
+    }
+
+    /**
+     * @param Request $request
+     * @param int $walletId
+     * @return Response
+     */
+    #[Route(
+        '/{id}/edit-wallet',
+        name: 'edit_wallet',
+        methods: ['GET', 'POST'],
+        requirements: ['id' => '[1-9]\d*'],
+    )]
+    public function editWallet(Request $request,int $id): Response
+    {
+        $wallet = $this->walletService->findById($id);
+        if (!$wallet) {
+            throw $this->createNotFoundException('Nie ma takiego portfela');
+        }
+
+        $form = $this->createForm(WalletType::class, $wallet, [
+            'method' => 'POST',
+            'action' => $this->generateUrl('edit_wallet', ['id' => $wallet->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->walletService->save($wallet);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
+            return $this->redirectToRoute('wallet_index');
+        }
+
+        return $this->render(
+            'wallet/add-wallet.html.twig',
+            ['form' => $form->createView(), 'wallet' => $wallet]
         );
     }
 }

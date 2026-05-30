@@ -94,8 +94,7 @@ class WalletService implements WalletServiceInterface
 
     public function save(Wallet $wallet): void
     {
-        $this->entityManager->persist($wallet);
-        $this->entityManager->flush();
+        $this->walletRepository->save($wallet);
     }
 
     public function delete(Operation|Wallet $operation): void
@@ -116,5 +115,8 @@ class WalletService implements WalletServiceInterface
         $base = $current - ($oldAmount ?? 0);
 
         return $base + $newAmount >= 0;
+    }
+    public function editWallet(Wallet $wallet): void{
+        $this->walletRepository->save($wallet);
     }
 }

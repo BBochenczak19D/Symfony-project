@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\OperationRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
@@ -14,6 +15,7 @@ class CategoryService implements CategoryServiceInterface
     public function __construct(
         private readonly PaginatorInterface $paginator,
         private readonly CategoryRepository $categoryRepository,
+        private readonly OperationRepository $operationRepository
     ) {
     }
 
@@ -50,6 +52,7 @@ class CategoryService implements CategoryServiceInterface
 
     public function delete(Category $category): void
     {
+        $this->operationRepository->nullifyCategory($category);
         $this->categoryRepository->delete($category);
     }
 }
