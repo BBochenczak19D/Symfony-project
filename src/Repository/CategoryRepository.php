@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,9 +20,11 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    public function queryAll(User $author): \Doctrine\ORM\QueryBuilder
     {
-        return $this->createQueryBuilder('category');
+        return $this->createQueryBuilder('category')
+            ->where('category.author = :author OR category.author IS NULL')
+            ->setParameter('author', $author);
     }
 
     public function save(Category $category): void

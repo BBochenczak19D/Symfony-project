@@ -7,6 +7,7 @@
 namespace App\Service;
 
 use App\Entity\Category;
+use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
@@ -21,24 +22,11 @@ interface CategoryServiceInterface
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page): PaginationInterface;
+    public function getPaginatedList(int $page, User $author): PaginationInterface;
 
-    /**
-     * @param int $id
-     * @return Category|null
-     */
     public function findById(int $id): ?Category;
 
-    /**
-     * @param Category $category
-     * @return void
-     */
     public function save(Category $category): void;
 
-    /**
-     * @param Category $category
-     * @return void
-     */
     public function delete(Category $category): void;
-
 }

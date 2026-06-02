@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Form\Type\CategoryType;
+use App\Security\Voter\CategoryVoter;
 use App\Service\CategoryServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/category')]
@@ -23,16 +25,27 @@ class CategoryController extends AbstractController
     ) {
     }
 
+    /**
+     * @param int $page
+     * @return Response
+     */
     #[Route(
         name: 'category_index',
         methods: ['GET'],
     )]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
+        $author = $this->getUser();
+
         return $this->render('category/index.html.twig', [
-            'pagination' => $this->categoryService->getPaginatedList($page)]);
+            'pagination' => $this->categoryService->getPaginatedList($page, $author), ]);
     }
 
+    /**
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route(
         '/add-category',
         name: 'add_category',
@@ -40,7 +53,9 @@ class CategoryController extends AbstractController
     )]
     public function addCategory(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $user = $this->getUser();
         $category = new Category();
+        $category->setAuthor($user);
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
@@ -62,12 +77,19 @@ class CategoryController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param Category $category
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route(
         '/{id}/delete',
         name: 'delete_category',
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
+    #[IsGranted(CategoryVoter::DELETE, subject: 'category')]
     public function deleteCategory(Request $request, Category $category, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FormType::class, null, [
@@ -94,12 +116,18 @@ class CategoryController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @param Category $category
+     * @return Response
+     */
     #[Route(
         '/{id}/edit',
         name: 'edit_category',
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
+    #[IsGranted(CategoryVoter::EDIT, subject: 'category')]
     public function editCategory(Request $request, Category $category): Response
     {
         $form = $this->createForm(CategoryType::class, $category, [

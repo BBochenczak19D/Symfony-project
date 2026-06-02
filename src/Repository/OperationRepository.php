@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\DTO\WalletOperationDTO;
 use App\Entity\Operation;
 use App\Entity\Category;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,10 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
+    /**
+     * @param User $author
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('operation')

@@ -29,7 +29,9 @@
             </tr>
             </thead>
             <tbody>
-            {% for item in pagination.items %}
+            {% if is_granted('wallet_VIEW', wallet) %}
+
+                {% for item in pagination.items %}
                 <tr>
                     <td>{{ item.amount }} {{ item.wallet.currency }}</td>
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
@@ -40,11 +42,13 @@
 {#                        <a href="{{ path('delete_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn btn-sm btn-danger">Usuń</a>#}
                     </td>
                 </tr>
+
             {% else %}
                 <tr>
                     <td colspan="4" class="text-center">Brak transakcji dla tego portfela.</td>
                 </tr>
             {% endfor %}
+                {% endif %}
             </tbody>
         </table>
         <div class="navigation text-center">

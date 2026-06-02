@@ -46,6 +46,7 @@ class WalletController extends AbstractController
         name: 'wallet_index',
         methods: ['GET'],
     )]
+    #[IsGranted(WalletVoter::VIEW, subject: 'wallet')]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $author = $this->getUser();
@@ -66,7 +67,7 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET'],
     )]
-    #[IsGranted(WalletVoter::VIEW, subject: 'wallet')]
+    #[IsGranted(OperationVoter::VIEW, subject: 'operation')]
     public function view(
         Wallet $wallet,
         #[MapQueryParameter] int $page = 1,
@@ -136,6 +137,7 @@ class WalletController extends AbstractController
         requirements: ['walletId' => '[1-9]\d*', 'id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
+    #[IsGranted(OperationVoter::DELETE, subject: 'operation')]
     public function deleteOperation(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
@@ -170,6 +172,7 @@ class WalletController extends AbstractController
         requirements: ['walletId' => '[1-9]\d*', 'id' => '[1-9]\d*'],
         methods: ['GET', 'POST'],
     )]
+    #[IsGranted(OperationVoter::EDIT, subject: 'operation')]
     public function edit(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();

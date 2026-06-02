@@ -8,19 +8,27 @@ namespace App\Form\Type;
 
 use App\Entity\Category;
 use App\Entity\Operation;
+use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 
 /**
  * Class operationType.
  */
 class OperationType extends AbstractType
 {
+    /**
+     * @param Security $security
+     */
+    public function __construct(private Security $security)
+    {
+    }
+
     /**
      * Builds the form.
      *
@@ -34,7 +42,7 @@ class OperationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var TYPE_NAME $builder */
+        /* @var TYPE_NAME $builder */
         $builder->add(
             'amount',
             NumberType::class,
@@ -51,7 +59,7 @@ class OperationType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'label.description',
-                    'maxlength' => 255]
+                    'maxlength' => 255],
             ],
         );
         $builder->add(
@@ -59,6 +67,9 @@ class OperationType extends AbstractType
             EntityType::class,
             [
                 'class' => Category::class,
+                'query_builder' => function (CategoryRepository $repo) {
+                    return $repo->queryAll($this->security->getUser());  // ← Filtruj po user'e
+                },
                 'choice_label' => function ($category): string {
                     return $category->getName();
                 },
@@ -93,5 +104,3 @@ class OperationType extends AbstractType
         return 'operation';
     }
 }
-
-
