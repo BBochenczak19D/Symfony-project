@@ -24,6 +24,9 @@ class Wallet
     #[ORM\Column(length: 5)]
     private ?string $currency = null;
 
+    #[ORM\ManyToOne]
+    private ?User $author = null;
+
     public function __construct()
     {
         $this->balance = 0;
@@ -66,6 +69,18 @@ class Wallet
     public function setCurrency(string $currency): static
     {
         $this->currency = $currency;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): static
+    {
+        $this->author = $author;
 
         return $this;
     }
