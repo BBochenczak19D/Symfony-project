@@ -72,7 +72,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->render(
-            'category/add-category.html.twig',
+            'category/add-tag.html.twig',
             ['form' => $form->createView()]
         );
     }
@@ -108,7 +108,7 @@ class CategoryController extends AbstractController
         }
 
         return $this->render(
-            'category/delete-category.html.twig',
+            'category/delete-tag.html.twig',
             [
                 'form' => $form->createView(),
                 'category' => $category,

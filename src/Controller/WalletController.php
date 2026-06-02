@@ -158,7 +158,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/delete-category.html.twig',
+            'wallet/delete-tag.html.twig',
             [
                 'form' => $form->createView(),
                 'wallet' => $wallet,

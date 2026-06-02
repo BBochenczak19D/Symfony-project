@@ -8,7 +8,10 @@ namespace App\Form\Type;
 
 use App\Entity\Category;
 use App\Entity\Operation;
+use App\Entity\Tag;
 use App\Repository\CategoryRepository;
+use App\Repository\TagRepository;
+use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -22,10 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OperationType extends AbstractType
 {
-    /**
-     * @param Security $security
-     */
-    public function __construct(private Security $security)
+    public function __construct(private Security $security,
+        private TagsDataTransformer $tagsDataTransformer)
     {
     }
 
@@ -78,6 +79,19 @@ class OperationType extends AbstractType
                 'multiple' => false,
             ]
         );
+        $builder->add(
+            'tags',
+            TextType::class,
+            [
+                'label' => 'label.tags',
+                'required' => false,
+                'attr' => ['max_length' => 128],
+            ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            modelTransformer: $this->tagsDataTransformer
+        );
     }
 
     /**
@@ -88,7 +102,9 @@ class OperationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         /* @var TYPE_NAME $resolver */
-        $resolver->setDefaults(['data_class' => Operation::class]);
+        $resolver->setDefaults([
+            'data_class' => Operation::class,
+        ]);
     }
 
     /**

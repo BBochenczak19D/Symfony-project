@@ -9,7 +9,7 @@
         </a>
         <h1 class="mb-0">Wszystkie kategorie</h1>
         <a href="{{ path('add_category') }}" class="btn btn-primary">
-            + kategorie
+            + Dodaj kategorie
         </a>
     </div>
 
@@ -26,10 +26,10 @@
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>
-                        {% if is_granted('EDIT', category) %}
+                        {% if is_granted('Category_EDIT', category) %}
                             <a href="{{ path('edit_category', {'id': category.id}) }}" class="btn btn-sm btn-secondary">Edytuj</a>
                         {% endif %}
-                        {% if is_granted('DELETE') %}
+                        {% if is_granted('Category_DELETE', category) %}
                             <a href="{{ path('delete_category', {'id': category.id}) }}" class="btn btn-sm btn-danger">Usuń</a>
                         {% endif %}
                     </td>
