@@ -24,8 +24,11 @@ class Wallet
     #[ORM\Column(length: 5)]
     private ?string $currency = null;
 
-    #[ORM\ManyToOne]
-    private ?User $author = null;
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
+    #[ORM\JoinColumn(nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Type(User::class)]
+    private ?User $author=null;
 
     public function __construct()
     {

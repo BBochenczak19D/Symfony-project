@@ -30,12 +30,16 @@
                     <td>{{ totals[wallet.id] ?? '0' }}</td>
                     <td>{{ wallet.currency }}</td>
                     <td>
+                        {% if is_granted('VIEW', wallet) %}
                         <a href="{{ path('wallet_view',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">
                             Przejdź
                         </a>
+                        {% endif %}
+                        {% if is_granted('EDIT', wallet) %}
                         <a href="{{ path('edit_wallet',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">
                             Edytuj
                         </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

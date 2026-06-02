@@ -48,8 +48,11 @@ class WalletController extends AbstractController
     )]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
+        $author = $this->getUser();
+        $pagination = $this->walletService->getPaginatedList($page,$author);
+
         return $this->render('wallet/index.html.twig', [
-            'pagination' => $this->walletService->getPaginatedList($page),
+            'pagination' => $pagination,
             'totals' => $this->walletService->getOperationTotals(),
         ]);
     }
@@ -63,19 +66,14 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET'],
     )]
+    #[IsGranted(WalletVoter::VIEW, subject: 'wallet')]
     public function view(
-        int $id,
+        Wallet $wallet,
         #[MapQueryParameter] int $page = 1,
     ): Response {
-        $wallet = $this->walletService->findById($id);
-
-        if (!$wallet) {
-            throw $this->createNotFoundException('Nie ma takiego portfela');
-        }
-
         return $this->render('wallet/view.html.twig', [
             'wallet' => $wallet,
-            'pagination' => $this->walletService->getPaginatedOperations($id, $page),
+            'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page),
             'totals' => $this->walletService->getOperationTotals(),
         ]);
     }
@@ -224,7 +222,10 @@ class WalletController extends AbstractController
     )]
     public function addWallet(Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
         $wallet = new Wallet();
+        $wallet->setAuthor($user);
 
         $form = $this->createForm(WalletType::class, $wallet);
         $form->handleRequest($request);
@@ -258,6 +259,7 @@ class WalletController extends AbstractController
         methods: ['GET', 'POST'],
         requirements: ['id' => '[1-9]\d*'],
     )]
+    #[IsGranted(WalletVoter::EDIT, subject: 'wallet')]
     public function editWallet(Request $request,int $id): Response
     {
         $wallet = $this->walletService->findById($id);

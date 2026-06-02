@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Wallet;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -31,9 +32,11 @@ class WalletRepository extends ServiceEntityRepository
      *
      * @return \Doctrine\ORM\QueryBuilder Query builder
      */
-    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    public function queryAll(User $author): \Doctrine\ORM\QueryBuilder
     {
-        return $this->createQueryBuilder('wallet');
+        return $this->createQueryBuilder('wallet')
+            ->where('wallet.author = :author')
+            ->setParameter('author', $author);
     }
     //    /**
     //     * @return Wallet[] Returns an array of Wallet objects
