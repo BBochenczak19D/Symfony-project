@@ -24,6 +24,7 @@ interface CategoryServiceInterface
      */
     public function getPaginatedList(int $page, User $author): PaginationInterface;
 
+    public function findOneById(int $id): ?Category;
     public function findById(int $id): ?Category;
 
     public function save(Category $category): void;

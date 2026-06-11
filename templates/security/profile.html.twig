@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}moje konto{% endblock %}
+
+{% block body %}
+    <a href="{{ path('wallet_index') }}" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">
+        <i class="bi bi-arrow-left"></i> portfele
+    </a>
+
+    <div class="page-header mt-2">
+        <h1><i class="bi bi-gear"></i> moje konto</h1>
+    </div>
+
+    <div class="app-card" style="max-width: 500px;">
+        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 1.5rem;">
+            zostaw pola hasła puste, jeśli nie chcesz go zmieniać
+        </p>
+
+        {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_errors(form.email) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.plainPassword.first) }}
+            {{ form_widget(form.plainPassword.first) }}
+            {{ form_errors(form.plainPassword.first) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.plainPassword.second) }}
+            {{ form_widget(form.plainPassword.second) }}
+            {{ form_errors(form.plainPassword.second) }}
+        </div>
+        <button type="submit" class="btn-accent">zapisz zmiany</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

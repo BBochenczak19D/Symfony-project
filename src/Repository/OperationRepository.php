@@ -2,10 +2,14 @@
 
 namespace App\Repository;
 
+use App\DTO\OperationListFiltersDTO;
 use App\DTO\WalletOperationDTO;
-use App\Entity\Operation;
 use App\Entity\Category;
-use App\Entity\User;
+use App\Entity\Operation;
+use App\Entity\Tag;
+
+use App\Repository\OperationRepository;
+use App\Resolver\OperationListInputFiltersDtoResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,22 +24,24 @@ class OperationRepository extends ServiceEntityRepository
         parent::__construct($registry, Operation::class);
     }
 
-    /**
-     * @param User $author
-     * @return QueryBuilder
-     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('operation')
             ->leftJoin('operation.wallet', 'wallet')
-            ->addSelect('wallet');
+            ->leftJoin('operation.category', 'category')
+            ->leftJoin('operation.tags', 'tags')
+            ->addSelect('wallet')
+            ->addSelect('category')
+            ->addSelect('tags');
     }
 
-    public function queryByWallet(int $walletId): QueryBuilder
+    public function queryByWallet(int $walletId, OperationListFiltersDTO $filters): QueryBuilder
     {
-        return $this->queryAll()
+        $queryBuilder = $this->queryAll()
             ->andWhere('operation.wallet = :walletId')
             ->setParameter('walletId', $walletId);
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     public function save(Operation $operation): void
@@ -64,6 +70,7 @@ class OperationRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
     public function nullifyCategory(Category $category): void
     {
         $this->createQueryBuilder('o')
@@ -74,5 +81,20 @@ class OperationRepository extends ServiceEntityRepository
         ->setParameter('category', $category)
         ->getQuery()
         ->execute();
+    }
+
+    private function applyFiltersToList(QueryBuilder $queryBuilder, OperationListFiltersDTO $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        if ($filters->tag instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters->tag);
+        }
+
+        return $queryBuilder;
     }
 }

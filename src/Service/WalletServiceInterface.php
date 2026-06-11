@@ -8,6 +8,7 @@ namespace App\Service;
 use App\Entity\User;
 use App\Entity\Wallet;
 use Knp\Component\Pager\Pagination\PaginationInterface;
+use App\DTO\OperationListInputFiltersDTO;
 
 /**
  * Interface WalletServiceInterface.
@@ -27,7 +28,7 @@ interface WalletServiceInterface
 
     public function findById(int $id): ?Wallet;
 
-    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface;
+    public function getPaginatedOperations(int $walletId, int $page, OperationListInputFiltersDTO $filters): PaginationInterface;
 
     public function save(Wallet $wallet): void;
     public function delete(Wallet $wallet): void;

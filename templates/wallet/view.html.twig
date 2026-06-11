@@ -1,67 +1,99 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Portfel #{{ wallet.id }}{% endblock %}
+{% block title %}{{ wallet.name }}{% endblock %}
 
 {% block body %}
+    <a href="{{ path('wallet_index') }}" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">
+        <i class="bi bi-arrow-left"></i> portfele
+    </a>
 
-    <a href="{{ path('wallet_index') }}">Wróć do listy</a>
-
-    {% if wallet is defined and wallet is not null %}
-        <p>Szczegóły portfela: </p>
-        <h1>{{ wallet.name }}</h1>
-        <dl>
-            <dt>Saldo</dt>
-            <dd>{{ totals[wallet.id] ?? '0' }} {{ wallet.currency }}</dd>
-        </dl>
-
-        <hr>
-
-        <h4>Lista Twoich transkacji</h4>
-        <button><a href="{{ path('add_operation',{id: wallet.id}) }}" class="btn btn-sm btn-outline-primary">+ Dodaj transakcję</a></button>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'Kwota', 'operation.amount') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Data transakcji', 'operation.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Opis', 'operation.description') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Kategoria', 'operation.category') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'Tagi', 'operation.tags') }}</th>
-
-                <th scope="col">Akcje</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% if is_granted('wallet_VIEW', wallet) %}
-
-                {% for item in pagination.items %}
-                <tr>
-                    <td>{{ item.amount }} {{ item.wallet.currency }}</td>
-                    <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.category ? item.category.name : ''}}</td>
-                    <td>
-                        {% for tag in item.tags %}
-                            <span class="badge bg-info">{{ tag.name }}</span>
-                        {% endfor %}
-                    </td>
-                    <td>
-                        <a href="{{ path('edit_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn btn-sm btn-secondary">Edytuj</a>
-{#                        <a href="{{ path('delete_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn btn-sm btn-danger">Usuń</a>#}
-                    </td>
-                </tr>
-
-            {% else %}
-                <tr>
-                    <td colspan="4" class="text-center">Brak transakcji dla tego portfela.</td>
-                </tr>
-            {% endfor %}
-                {% endif %}
-            </tbody>
-        </table>
-        <div class="navigation text-center">
-            {{ knp_pagination_render(pagination) }}
+    <div class="page-header mt-2">
+        <div>
+            <h1>{{ wallet.name }}</h1>
+            <div class="d-flex align-items-baseline gap-2 mt-1">
+                <span class="stat-label">saldo</span>
+                <span class="stat-value {% if (totals[wallet.id] ?? 0) >= 0 %}amount-positive{% else %}amount-negative{% endif %}">
+                    {{ totals[wallet.id] ?? '0' }}
+                </span>
+                <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">{{ wallet.currency }}</span>
+            </div>
         </div>
+        <div class="d-flex gap-2 align-items-center">
+            {% if app.request.querystring %}
+                <a href="{{ path('wallet_view', {'id': wallet.id}) }}" class="btn-filter-clear">
+                    <i class="bi bi-x"></i> wyczyść filtry
+                </a>
+            {% endif %}
+            <a href="{{ path('add_operation', {'id': wallet.id}) }}" class="btn-accent">
+                <i class="bi bi-plus-lg"></i> nowa transakcja
+            </a>
+        </div>
+    </div>
+
+    {% if is_granted('wallet_VIEW', wallet) %}
+        {% if pagination.items|length > 0 %}
+            <table class="app-table">
+                <thead>
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'kwota', 'operation.amount') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'data', 'operation.createdAt') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'opis', 'operation.description') }}</th>
+                    <th>kategoria</th>
+                    <th>tagi</th>
+                    <th>akcje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in pagination.items %}
+                    <tr>
+                        <td class="mono {% if item.amount >= 0 %}amount-positive{% else %}amount-negative{% endif %}">
+                            {{ item.amount }} {{ item.wallet.currency }}
+                        </td>
+                        <td style="color: var(--text-secondary);">
+                            {{ item.createdAt|date('d.m.Y H:i') }}
+                        </td>
+                        <td>{{ item.description }}</td>
+                        <td>
+                            {% if item.category %}
+                                <a class="btn-tag category"
+                                   href="{{ url('wallet_view', {'id': wallet.id, 'categoryId': item.category.id}) }}">
+                                    {{ item.category.name }}
+                                </a>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if item.tags is defined and item.tags|length %}
+                                <div class="d-flex gap-1 flex-wrap">
+                                    {% for tag in item.tags %}
+                                        <a class="btn-tag"
+                                           href="{{ url('wallet_view', {'id': wallet.id, 'tagId': tag.id}) }}">
+                                            {{ tag.name }}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ path('edit_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn-ghost">
+                                edytuj
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="mt-3 d-flex justify-content-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% else %}
+            <div class="app-card text-center" style="padding: 3rem;">
+                <div style="font-size: 2rem; margin-bottom: 0.5rem;">📋</div>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">brak transakcji</p>
+                <a href="{{ path('add_operation', {'id': wallet.id}) }}" class="btn-accent">dodaj pierwszą</a>
+            </div>
+        {% endif %}
     {% else %}
-        <div class="alert alert-danger">Portfel nie został znaleziony.</div>
+        <div class="alert alert-danger">brak dostępu do tego portfela.</div>
     {% endif %}
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Operation;
 use App\Entity\Wallet;
 use App\Form\Type\OperationType;
 use App\Form\Type\WalletType;
+use App\DTO\OperationListInputFiltersDTO;
 use App\Service\WalletServiceInterface;
 use App\Service\OperationServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,11 +71,12 @@ class WalletController extends AbstractController
     #[IsGranted(OperationVoter::VIEW, subject: 'operation')]
     public function view(
         Wallet $wallet,
-        #[MapQueryParameter] int $page = 1,
+        #[MapQueryString(resolver: OperationListInputFiltersDTOResolver::class)] OperationListInputFiltersDTO $filters,
+        #[MapQueryParameter] int $page = 1
     ): Response {
         return $this->render('wallet/view.html.twig', [
             'wallet' => $wallet,
-            'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page),
+            'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page,$filters),
             'totals' => $this->walletService->getOperationTotals(),
         ]);
     }

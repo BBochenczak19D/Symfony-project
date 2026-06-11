@@ -1,13 +1,37 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
     <body>
-
       <trans-unit id="action.avatar">
         <source>action.avatar</source>
         <target>Actions</target>
       </trans-unit>
+      <trans-unit id="action.delete">
+        <source>action.delete</source>
+        <target>Delete</target>
+      </trans-unit>
+      <trans-unit id="action.edit">
+        <source>action.edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="action.save">
+        <source>action.save</source>
+        <target>Save</target>
+      </trans-unit>
+      <trans-unit id="action.cancel">
+        <source>action.cancel</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="action.back">
+        <source>action.back</source>
+        <target>Back</target>
+      </trans-unit>
+      <trans-unit id="action.create">
+        <source>action.create</source>
+        <target>Create</target>
+      </trans-unit>
 
+      <!-- === LABELS === -->
       <trans-unit id="label.id">
         <source>label.id</source>
         <target>Id</target>
@@ -24,6 +48,60 @@
         <source>label.tags</source>
         <target>Tags</target>
       </trans-unit>
+      <trans-unit id="label.actions">
+        <source>label.actions</source>
+        <target>Actions</target>
+      </trans-unit>
+      <trans-unit id="label.email">
+        <source>label.email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id="label.password">
+        <source>label.password</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="label.repeat_password">
+        <source>label.repeat_password</source>
+        <target>Repeat password</target>
+      </trans-unit>
+      <trans-unit id="label.name">
+        <source>label.name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="label.amount">
+        <source>label.amount</source>
+        <target>Amount</target>
+      </trans-unit>
+      <trans-unit id="label.description">
+        <source>label.description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="label.category">
+        <source>label.category</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="label.currency">
+        <source>label.currency</source>
+        <target>Currency</target>
+      </trans-unit>
+      <trans-unit id="label.balance">
+        <source>label.balance</source>
+        <target>Balance</target>
+      </trans-unit>
+      <trans-unit id="label.created_at">
+        <source>label.created_at</source>
+        <target>Created at</target>
+      </trans-unit>
+      <trans-unit id="label.updated_at">
+        <source>label.updated_at</source>
+        <target>Updated at</target>
+      </trans-unit>
+      <trans-unit id="label.roles">
+        <source>label.roles</source>
+        <target>Roles</target>
+      </trans-unit>
+
+      <!-- === MESSAGES === -->
       <trans-unit id="message.empty_list">
         <source>message.empty_list</source>
         <target>List is empty.</target>
@@ -32,18 +110,97 @@
         <source>message.record_not_found</source>
         <target>Record not found.</target>
       </trans-unit>
-       <trans-unit id="title.record_details">
-              <source>title.record_details</source>
-              <target>Records details</target>
-            </trans-unit>
+      <trans-unit id="message.created_successfully">
+        <source>message.created_successfully</source>
+        <target>Created successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.edited_successfully">
+        <source>message.edited_successfully</source>
+        <target>Updated successfully.</target>
+      </trans-unit>
+      <trans-unit id="message.deleted_successfully">
+        <source>message.deleted_successfully</source>
+        <target>Deleted successfully.</target>
+      </trans-unit>
+
+      <!-- === TITLES === -->
+      <trans-unit id="title.record_details">
+        <source>title.record_details</source>
+        <target>Record details</target>
+      </trans-unit>
       <trans-unit id="title.record_list">
         <source>title.record_list</source>
         <target>Records list</target>
       </trans-unit>
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
-        <target>Record view #%id%</target>
+        <target>Record #%id%</target>
       </trans-unit>
+      <trans-unit id="title.wallet_list">
+        <source>title.wallet_list</source>
+        <target>Your wallets</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_view">
+        <source>title.wallet_view</source>
+        <target>Wallet #%id%</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_add">
+        <source>title.wallet_add</source>
+        <target>New wallet</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_edit">
+        <source>title.wallet_edit</source>
+        <target>Edit wallet</target>
+      </trans-unit>
+      <trans-unit id="title.operation_add">
+        <source>title.operation_add</source>
+        <target>New transaction</target>
+      </trans-unit>
+      <trans-unit id="title.operation_edit">
+        <source>title.operation_edit</source>
+        <target>Edit transaction</target>
+      </trans-unit>
+      <trans-unit id="title.operation_delete">
+        <source>title.operation_delete</source>
+        <target>Delete transaction</target>
+      </trans-unit>
+      <trans-unit id="title.category_list">
+        <source>title.category_list</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="title.category_add">
+        <source>title.category_add</source>
+        <target>New category</target>
+      </trans-unit>
+      <trans-unit id="title.category_edit">
+        <source>title.category_edit</source>
+        <target>Edit category</target>
+      </trans-unit>
+      <trans-unit id="title.category_delete">
+        <source>title.category_delete</source>
+        <target>Delete category</target>
+      </trans-unit>
+      <trans-unit id="title.user_list">
+        <source>title.user_list</source>
+        <target>User management</target>
+      </trans-unit>
+      <trans-unit id="title.user_edit">
+        <source>title.user_edit</source>
+        <target>Edit user</target>
+      </trans-unit>
+      <trans-unit id="title.profile">
+        <source>title.profile</source>
+        <target>My account</target>
+      </trans-unit>
+      <trans-unit id="title.register">
+        <source>title.register</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="title.login">
+        <source>title.login</source>
+        <target>Login</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>

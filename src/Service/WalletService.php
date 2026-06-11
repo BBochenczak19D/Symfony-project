@@ -6,9 +6,11 @@
 
 namespace App\Service;
 
+use App\DTO\OperationListFiltersDTO;
 use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\Wallet;
+use App\DTO\OperationListInputFiltersDTO;
 use App\Repository\OperationRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -37,10 +39,12 @@ class WalletService implements WalletServiceInterface
      * @param PaginatorInterface $paginator        Paginator
      */
     public function __construct(
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly TagServiceInterface $tagService,
         private readonly WalletRepository $walletRepository,
         private readonly PaginatorInterface $paginator,
-        private readonly OperationRepository $operationRepository)
-    {
+        private readonly OperationRepository $operationRepository,
+    ) {
     }
 
     /**
@@ -79,10 +83,12 @@ class WalletService implements WalletServiceInterface
         return $this->walletRepository->find($id);
     }
 
-    public function getPaginatedOperations(int $walletId, int $page): PaginationInterface
+    public function getPaginatedOperations(int $walletId, int $page, OperationListInputFiltersDTO $filters): PaginationInterface
     {
+        $preparedFilters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
-            $this->operationRepository->queryByWallet($walletId),
+            $this->operationRepository->queryByWallet($walletId, $preparedFilters),
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE,
             [
@@ -119,5 +125,17 @@ class WalletService implements WalletServiceInterface
     }
     public function editWallet(Wallet $wallet): void{
         $this->walletRepository->save($wallet);
+    }
+
+    /**
+     * @param OperationListInputFiltersDto $filters
+     * @return OperationListFiltersDto
+     */
+    private function prepareFilters(OperationListInputFiltersDTO $filters): OperationListFiltersDTO
+    {
+        return new OperationListFiltersDTO(
+            null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
+            null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
+        );
     }
 }

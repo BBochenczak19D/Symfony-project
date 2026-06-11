@@ -26,6 +26,7 @@ interface TagServiceInterface
 
     public function findById(int $id): ?Tag;
 
+    public function findOneById(int $id): ?Tag;
     public function save(Tag $tag): void;
 
     public function delete(Tag $tag): void;
