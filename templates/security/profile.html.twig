@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}moje konto{% endblock %}
+{% block title %}{{ 'title.profile'|trans }}{% endblock %}
 
 {% block body %}
     <a href="{{ path('wallet_index') }}" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">
-        <i class="bi bi-arrow-left"></i> portfele
+        <i class="bi bi-arrow-left"></i> {{ 'title.wallet_list'|trans }}
     </a>
 
     <div class="page-header mt-2">
@@ -13,7 +13,7 @@
 
     <div class="app-card" style="max-width: 500px;">
         <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 1.5rem;">
-            zostaw pola hasła puste, jeśli nie chcesz go zmieniać
+            {{ 'message.password_hint'|trans }}
         </p>
 
         {{ form_start(form) }}
@@ -32,7 +32,7 @@
             {{ form_widget(form.plainPassword.second) }}
             {{ form_errors(form.plainPassword.second) }}
         </div>
-        <button type="submit" class="btn-accent">zapisz zmiany</button>
+        <button type="submit" class="btn-accent">{{ 'action.save_changes'|trans }}</button>
         {{ form_end(form) }}
     </div>
 {% endblock %}

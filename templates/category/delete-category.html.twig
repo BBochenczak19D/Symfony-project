@@ -9,7 +9,7 @@
         <h1>{{ 'title.category_delete'|trans }}</h1>
 
         <div class="alert alert-warning">
-            <p>Czy na pewno chcesz bezpowrotnie usunąć tę kategorię?</p>
+            <p>{{ 'message.confirm_delete_category'|trans }}</p>
         </div>
 
         {{ form_start(form) }}
@@ -19,7 +19,7 @@
             <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger"/>
 
             <a href="{{ path('category_index', {'id': category.id}) }}" class="btn btn-secondary">
-                Przerwij
+                {{ 'action.cancel'|trans }}
             </a>
         </div>
         {{ form_end(form) }}

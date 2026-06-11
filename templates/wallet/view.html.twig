@@ -4,14 +4,14 @@
 
 {% block body %}
     <a href="{{ path('wallet_index') }}" style="color: var(--text-muted); text-decoration: none; font-size: 13px;">
-        <i class="bi bi-arrow-left"></i> portfele
+        <i class="bi bi-arrow-left"></i> {{ 'title.wallet_list'|trans }}
     </a>
 
     <div class="page-header mt-2">
         <div>
             <h1>{{ wallet.name }}</h1>
             <div class="d-flex align-items-baseline gap-2 mt-1">
-                <span class="stat-label">saldo</span>
+                <span class="stat-label">{{ 'label.balance'|trans }}</span>
                 <span class="stat-value {% if (totals[wallet.id] ?? 0) >= 0 %}amount-positive{% else %}amount-negative{% endif %}">
                     {{ totals[wallet.id] ?? '0' }}
                 </span>
@@ -21,11 +21,11 @@
         <div class="d-flex gap-2 align-items-center">
             {% if app.request.querystring %}
                 <a href="{{ path('wallet_view', {'id': wallet.id}) }}" class="btn-filter-clear">
-                    <i class="bi bi-x"></i> wyczyść filtry
+                    <i class="bi bi-x"></i> {{ 'action.clear_filters'|trans }}
                 </a>
             {% endif %}
             <a href="{{ path('add_operation', {'id': wallet.id}) }}" class="btn-accent">
-                <i class="bi bi-plus-lg"></i> nowa transakcja
+                <i class="bi bi-plus-lg"></i> {{ 'action.new_transaction'|trans }}
             </a>
         </div>
     </div>
@@ -35,12 +35,12 @@
             <table class="app-table">
                 <thead>
                 <tr>
-                    <th>{{ knp_pagination_sortable(pagination, 'kwota', 'operation.amount') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'data', 'operation.createdAt') }}</th>
-                    <th>{{ knp_pagination_sortable(pagination, 'opis', 'operation.description') }}</th>
-                    <th>kategoria</th>
-                    <th>tagi</th>
-                    <th>akcje</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.amount'|trans, 'operation.amount') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.date'|trans, 'operation.createdAt') }}</th>
+                    <th>{{ knp_pagination_sortable(pagination, 'label.description'|trans, 'operation.description') }}</th>
+                    <th>{{ 'label.category'|trans }}</th>
+                    <th>{{ 'label.tags'|trans }}</th>
+                    <th>{{ 'label.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -75,7 +75,7 @@
                         </td>
                         <td>
                             <a href="{{ path('edit_operation', {'walletId': wallet.id, 'id': item.id}) }}" class="btn-ghost">
-                                edytuj
+                                {{ 'action.edit'|trans }}
                             </a>
                         </td>
                     </tr>
@@ -89,11 +89,11 @@
         {% else %}
             <div class="app-card text-center" style="padding: 3rem;">
                 <div style="font-size: 2rem; margin-bottom: 0.5rem;">📋</div>
-                <p style="color: var(--text-secondary); margin-bottom: 1rem;">brak transakcji</p>
-                <a href="{{ path('add_operation', {'id': wallet.id}) }}" class="btn-accent">dodaj pierwszą</a>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">{{ 'message.no_transactions'|trans }}</p>
+                <a href="{{ path('add_operation', {'id': wallet.id}) }}" class="btn-accent">{{ 'action.add_first'|trans }}</a>
             </div>
         {% endif %}
     {% else %}
-        <div class="alert alert-danger">brak dostępu do tego portfela.</div>
+        <div class="alert alert-danger">{{ 'message.no_access'|trans }}</div>
     {% endif %}
 {% endblock %}

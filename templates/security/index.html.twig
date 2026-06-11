@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Zarządzanie użytkownikami{% endblock %}
+{% block title %}{{ 'title.user_list'|trans }}{% endblock %}
 
 {% block body %}
-    <h1>Zarządzanie użytkownikami</h1>
+    <h1>{{ 'title.user_list'|trans }}</h1>
 
     <table class="table table-striped">
         <thead>
@@ -28,13 +28,13 @@
                 </td>
                 <td>
                     <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-sm btn-secondary">
-                        Edytuj
+                        {{ 'action.edit'|trans }}
                     </a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="text-center">Brak użytkowników.</td>
+                <td colspan="4" class="text-center">{{ 'message.no_users'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>

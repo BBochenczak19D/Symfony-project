@@ -4,9 +4,9 @@
 
 {% block body %}
     <div class="page-header">
-        <h1><i class="bi bi-collection"></i> portfele</h1>
+        <h1><i class="bi bi-collection"></i> {{ 'title.wallet_list'|trans }}</h1>
         <a href="{{ path('add_wallet') }}" class="btn-accent">
-            <i class="bi bi-plus-lg"></i> nowy portfel
+            <i class="bi bi-plus-lg"></i> {{ 'title.wallet_add'|trans }}</h1>
         </a>
     </div>
 
@@ -14,9 +14,9 @@
         <table class="app-table">
             <thead>
             <tr>
-                <th>{{ knp_pagination_sortable(pagination, 'nazwa', 'wallet.name') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'saldo', 'wallet.balance') }}</th>
-                <th>{{ knp_pagination_sortable(pagination, 'waluta', 'wallet.currency') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.name'|trans, 'wallet.name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.balance'|trans, 'wallet.balance') }}</th>
+                <th>{{ knp_pagination_sortable(pagination,  'label.curreny'|trans, 'wallet.currency') }}</th>
                 <th>akcje</th>
             </tr>
             </thead>
@@ -30,10 +30,10 @@
                     <td class="mono" style="color: var(--text-secondary);">{{ wallet.currency }}</td>
                     <td>
                         <a href="{{ path('wallet_view', {'id': wallet.id}) }}" class="btn-ghost">
-                            przejdź
+                            {{ 'action.edit'|trans }}
                         </a>
                         <a href="{{ path('edit_wallet', {'id': wallet.id}) }}" class="btn-ghost">
-                            edytuj
+                            {{ 'action.edit'|trans }}
                         </a>
                     </td>
                 </tr>
@@ -47,8 +47,8 @@
     {% else %}
         <div class="app-card text-center" style="padding: 3rem;">
             <div style="font-size: 2rem; margin-bottom: 0.5rem;">📂</div>
-            <p style="color: var(--text-secondary); margin-bottom: 1rem;">brak portfeli</p>
-            <a href="{{ path('add_wallet') }}" class="btn-accent">utwórz pierwszy portfel</a>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">{{ 'message.no_wallets'|trans }}</p>
+            <a href="{{ path('add_wallet') }}" class="btn-accent">{{ 'action.create_first_wallet'|trans }}</a>
         </div>
     {% endif %}
 {% endblock %}

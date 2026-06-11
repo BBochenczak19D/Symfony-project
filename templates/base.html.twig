@@ -343,16 +343,16 @@
                     <i class="bi bi-wallet2"></i> portfel.app
                 </a>
                 <ul class="nav-links">
-                    <li><a href="{{ path('wallet_index') }}"><i class="bi bi-collection"></i> portfele</a></li>
-                    <li><a href="{{ path('category_index') }}"><i class="bi bi-tags"></i> kategorie</a></li>
+                    <li><a href="{{ path('wallet_index') }}"><i class="bi bi-collection"></i> {{ 'title.wallet_list'|trans }}</a></li>
+                    <li><a href="{{ path('category_index') }}"><i class="bi bi-tags"></i> {{ 'title.category_list'|trans }}</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href="{{ path('admin_user_index') }}" class="admin-link"><i class="bi bi-people-fill"></i> użytkownicy</a></li>
+                        <li><a href="{{ path('admin_user_index') }}" class="admin-link"><i class="bi bi-people-fill"></i> {{ 'title.user_list'|trans }}</a></li>
                     {% endif %}
                 </ul>
             </div>
             <div class="user-section">
                 <span class="user-email">{{ app.user.email }}</span>
-                <a href="{{ path('app_profile') }}" class="user-btn"><i class="bi bi-gear"></i> konto</a>
+                <a href="{{ path('app_profile') }}" class="user-btn"><i class="bi bi-gear"></i> {{ 'title.profile'|trans }}</a>
                 <a href="{{ path('app_logout') }}" class="user-btn logout"><i class="bi bi-box-arrow-right"></i></a>
             </div>
         </div>
