@@ -36,14 +36,15 @@ class WalletType extends AbstractType
             'name',
             TextType::class,
             [
-                'label' => 'label.title',
+                'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 128,
-                    'placeholder' => 'np. Konto osobiste, Oszczędności'],
+                    'placeholder' => 'placeholder.wallet_name'
+                ],
             ]);
         $builder->add(
             'currency', ChoiceType::class, [
-            'label' => 'Waluta',
+            'label' => 'label.currency',
             'required' => true,
             'choices' => [
                 'PLN' => 'PLN',

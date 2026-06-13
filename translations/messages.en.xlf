@@ -200,7 +200,18 @@
         <source>title.login</source>
         <target>Login</target>
       </trans-unit>
-
+      <trans-unit id="action.login">
+              <source>action.login</source>
+              <target>Login</target>
+      </trans-unit>
+    <trans-unit id="title.wallet_create">
+                  <source>title.wallet_create</source>
+                  <target>Create wallet</target>
+          </trans-unit>
+          <trans-unit id="placeholder.wallet_name"><source>placeholder.wallet_name</source><target>e.g. Personal account, Savings</target></trans-unit>
+    <trans-unit id="action.new_transaction"><source>action.new_transaction</source><target>New operation</target></trans-unit>
+    <trans-unit id="action.add_first"><source>action.add_first</source><target>Add first operation</target></trans-unit>
+    <trans-unit id="message.no_transactions"><source>message.no_transactions</source><target>You don't have any operations yet.</target></trans-unit>
     </body>
   </file>
 </xliff>

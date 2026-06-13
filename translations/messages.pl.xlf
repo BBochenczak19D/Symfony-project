@@ -302,7 +302,21 @@
         <source>title.login</source>
         <target>Logowanie</target>
       </trans-unit>
-
+    <trans-unit id="action.login">
+                  <source>action.login</source>
+                  <target>Zaloguj się</target>
+      </trans-unit>
+      <trans-unit id="title.wallet_create">
+                        <source>title.wallet_create</source>
+                        <target>Dodaj portfel</target>
+                </trans-unit>
+      <trans-unit id="placeholder.wallet_name">
+        <source>placeholder.wallet_name</source>
+            <target>np. Konto osobiste, Oszczędności</target>
+            </trans-unit>
+                <trans-unit id="action.new_transaction"><source>action.new_transaction</source><target>Nowa transkacja</target></trans-unit>
+        <trans-unit id="action.add_first"><source>action.add_first</source><target>Dodaj pierwszą transakcję</target></trans-unit>
+        <trans-unit id="message.no_transactions"><source>message.no_transactions</source><target>Nie masz jeszcze żadnych operacji.</target></trans-unit>
     </body>
   </file>
 </xliff>
