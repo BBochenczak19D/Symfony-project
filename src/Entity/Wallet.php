@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\WalletRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: WalletRepository::class)]
 #[ORM\Table(name: 'wallet')]
@@ -16,19 +17,23 @@ class Wallet
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Type('string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 100)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $balance = null;
 
     #[ORM\Column(length: 5)]
+    #[Assert\NotBlank]
     private ?string $currency = null;
 
     #[ORM\ManyToOne(targetEntity: User::class, fetch: 'EXTRA_LAZY')]
     #[ORM\JoinColumn(nullable: true)]
     #[Assert\NotBlank]
     #[Assert\Type(User::class)]
-    private ?User $author=null;
+    private ?User $author = null;
 
     public function __construct()
     {

@@ -74,7 +74,7 @@ class OperationType extends AbstractType
                 'choice_label' => function ($category): string {
                     return $category->getName();
                 },
-                'label' => 'Select label.category',
+                'label' => 'label.category',
                 'required' => false,
                 'multiple' => false,
             ]

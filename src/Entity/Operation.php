@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: OperationRepository::class)]
 class Operation
@@ -17,12 +18,16 @@ class Operation
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
+    #[Assert\NotBlank]
     private ?string $amount = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column]
+    #[Assert\Type('string')]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: 255)]
     private ?string $description = null;
 
     #[ORM\ManyToOne]

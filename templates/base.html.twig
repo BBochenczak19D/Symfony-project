@@ -62,7 +62,7 @@
             text-decoration: none;
             letter-spacing: -0.5px;
         }
-        .app-nav .brand i { color: var(--accent-yellow); }
+        .app-nav .brand i { color: var(--accent-green); }
         .app-nav .nav-links {
             display: flex;
             gap: 0.25rem;
@@ -71,7 +71,7 @@
             padding: 0;
         }
         .app-nav .nav-links a {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             text-decoration: none;
             font-size: 13px;
             font-weight: 400;
@@ -83,15 +83,13 @@
             gap: 0.4rem;
         }
         .app-nav .nav-links a:hover {
-            color: var(--text-primary);
+            color: var(--text-secondary);
             background: var(--bg-hover);
         }
         .app-nav .nav-links a.active {
-            color: var(--text-primary);
-            background: var(--bg-card);
+            color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.08);
         }
-        .app-nav .nav-links .admin-link { color: var(--accent-yellow); }
-        .app-nav .nav-links .admin-link:hover { color: var(--accent-yellow); background: rgba(250, 204, 21, 0.1); }
 
         .app-nav .user-section {
             display: flex;
@@ -275,6 +273,7 @@
         .alert-success { background: rgba(74, 222, 128, 0.1); color: var(--accent-green); border-color: rgba(74, 222, 128, 0.2); }
         .alert-danger { background: rgba(248, 113, 113, 0.1); color: var(--accent-red); border-color: rgba(248, 113, 113, 0.2); }
         .alert-info { background: rgba(96, 165, 250, 0.1); color: var(--accent-blue); border-color: rgba(96, 165, 250, 0.2); }
+        .alert-warning { background: rgba(250, 204, 21, 0.1); color: var(--accent-yellow); border-color: rgba(250, 204, 21, 0.2); }
 
         /* --- BADGES --- */
         .badge-role {
@@ -325,7 +324,6 @@
         hr { border-color: var(--border-color); }
         .text-muted { color: var(--text-muted) !important; }
 
-        /* responsive navbar */
         @media (max-width: 768px) {
             .app-nav .inner { flex-direction: column; gap: 0.5rem; }
             .app-nav .nav-links { flex-wrap: wrap; }
@@ -336,17 +334,18 @@
 <body>
 
 {% if app.user %}
+    {% set _route = app.request.attributes.get('_route') %}
     <nav class="app-nav">
         <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
             <div class="d-flex align-items-center gap-3">
                 <a class="brand" href="{{ path('wallet_index') }}">
-                    <i class="bi bi-wallet2"></i> portfel.app
+                    <i class="bi bi-wallet2"></i> {{ 'app.name'|trans }}
                 </a>
                 <ul class="nav-links">
-                    <li><a href="{{ path('wallet_index') }}"><i class="bi bi-collection"></i> {{ 'title.wallet_list'|trans }}</a></li>
-                    <li><a href="{{ path('category_index') }}"><i class="bi bi-tags"></i> {{ 'title.category_list'|trans }}</a></li>
+                    <li><a href="{{ path('wallet_index') }}" class="{{ _route starts with 'wallet' ? 'active' }}"><i class="bi bi-collection"></i> {{ 'title.wallet_list'|trans }}</a></li>
+                    <li><a href="{{ path('category_index') }}" class="{{ _route starts with 'category' or _route starts with 'add_category' or _route starts with 'edit_category' or _route starts with 'delete_category' ? 'active' }}"><i class="bi bi-tags"></i> {{ 'title.category_list'|trans }}</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li><a href="{{ path('admin_user_index') }}" class="admin-link"><i class="bi bi-people-fill"></i> {{ 'title.user_list'|trans }}</a></li>
+                        <li><a href="{{ path('admin_user_index') }}" class="{{ _route starts with 'admin_user' ? 'active' }}"><i class="bi bi-people-fill"></i> {{ 'title.user_list'|trans }}</a></li>
                     {% endif %}
                 </ul>
             </div>
