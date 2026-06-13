@@ -227,7 +227,7 @@
         <target>Brak dostępu do tego portfela.</target>
       </trans-unit>
 
-      <!-- === TITLES === -->
+      <trans-unit id="title.my_account"><source>title.my_account</source><target>My account</target></trans-unit>
       <trans-unit id="title.record_details">
         <source>title.record_details</source>
         <target>Szczegóły rekordu</target>

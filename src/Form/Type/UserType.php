@@ -19,6 +19,7 @@ class UserType extends AbstractType
         $builder->add('email', EmailType::class, [
             'label' => 'label.email',
             'required' => true,
+            'empty_data' => '',
             'attr' => ['class' => 'form-control'],
         ]);
 
