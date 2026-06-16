@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace App\Entity;
 
 use App\Repository\TagRepository;
@@ -7,6 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ *
+ */
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
@@ -24,20 +34,35 @@ class Tag
     #[ORM\ManyToMany(targetEntity: Operation::class, mappedBy: 'tags')]
     private Collection $operations;
 
-    public function __construct(){
+    /**
+     *
+     */
+    public function __construct()
+    {
         $this->operations = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string|null $name
+     *
+     * @return $this
+     */
     public function setName(?string $name): static
     {
         $this->name = $name;
@@ -45,32 +70,60 @@ class Tag
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * @param User|null $author
+     *
+     * @return $this
+     */
     public function setAuthor(?User $author): static
     {
         $this->author = $author;
 
         return $this;
     }
-    public function getOperations(): Collection{
+
+    /**
+     * @return Collection
+     */
+    public function getOperations(): Collection
+    {
         return $this->operations;
     }
-    public function addOperation(Operation $operation): static{
-        if($this->operations->contains($operation)){
+
+    /**
+     * @param Operation $operation
+     *
+     * @return $this
+     */
+    public function addOperation(Operation $operation): static
+    {
+        if ($this->operations->contains($operation)) {
             $this->operations->add($operation);
             $operation->addTag($this);
         }
+
         return $this;
     }
 
-    public function removeOperation(Operation $operation): static{
-        if($this->operations->contains($operation)){
+    /**
+     * @param Operation $operation
+     *
+     * @return $this
+     */
+    public function removeOperation(Operation $operation): static
+    {
+        if ($this->operations->contains($operation)) {
             $operation->removeTag($this);
         }
+
         return $this;
     }
 }

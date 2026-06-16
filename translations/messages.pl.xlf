@@ -335,7 +335,7 @@
                 <trans-unit id="action.new_transaction"><source>action.new_transaction</source><target>Nowa transkacja</target></trans-unit>
         <trans-unit id="action.add_first"><source>action.add_first</source><target>Dodaj pierwszą transakcję</target></trans-unit>
         <trans-unit id="message.no_transactions"><source>message.no_transactions</source><target>Nie masz jeszcze żadnych operacji.</target></trans-unit>
-        <trans-unit id="message.no_wallets"><source>message.no_wallets/source><target>Nie masz jeszcze żadnych portfeli.</target></trans-unit>
+        <trans-unit id="message.no_wallets"><source>message.no_wallets</source><target>Nie masz jeszcze żadnych portfeli.</target></trans-unit>
         <trans-unit id="action.save_changes"><source>action.save_changes</source><target>Zapisz zmiany</target></trans-unit>
             <trans-unit id="action.new_category"><source>action.new_category</source><target>Nowa kategoria</target></trans-unit>
 

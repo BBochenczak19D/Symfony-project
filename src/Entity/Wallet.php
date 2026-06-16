@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace App\Entity;
 
 use App\Repository\WalletRepository;
@@ -7,6 +14,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+/**
+ *
+ */
 #[ORM\Entity(repositoryClass: WalletRepository::class)]
 #[ORM\Table(name: 'wallet')]
 class Wallet
@@ -35,21 +45,35 @@ class Wallet
     #[Assert\Type(User::class)]
     private ?User $author = null;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->balance = 0;
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
+    /**
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -57,11 +81,19 @@ class Wallet
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getBalance(): ?string
     {
         return $this->balance;
     }
 
+    /**
+     * @param string $balance
+     *
+     * @return $this
+     */
     public function setBalance(string $balance): static
     {
         $this->balance = $balance;
@@ -69,11 +101,19 @@ class Wallet
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCurrency(): ?string
     {
         return $this->currency;
     }
 
+    /**
+     * @param string $currency
+     *
+     * @return $this
+     */
     public function setCurrency(string $currency): static
     {
         $this->currency = $currency;
@@ -81,11 +121,19 @@ class Wallet
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getAuthor(): ?User
     {
         return $this->author;
     }
 
+    /**
+     * @param User|null $author
+     *
+     * @return $this
+     */
     public function setAuthor(?User $author): static
     {
         $this->author = $author;

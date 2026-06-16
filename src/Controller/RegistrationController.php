@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -12,18 +21,24 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class RegistrationController.
+ */
 class RegistrationController extends AbstractController
 {
     /**
-     * Rejestracja nowego użytkownika.
+     * Register action.
+     *
+     * @param Request                     $request        HTTP request
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher
+     * @param EntityManagerInterface      $entityManager  Entity manager
+     * @param TranslatorInterface         $translator     Translator
+     *
+     * @return Response HTTP response
      */
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
-    public function register(
-        Request $request,
-        UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager,
-        TranslatorInterface $translator,
-    ): Response {
+    public function register(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
+    {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user, [

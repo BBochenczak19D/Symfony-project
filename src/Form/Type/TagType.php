@@ -38,7 +38,8 @@ class TagType extends AbstractType
                 'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 256],
-            ]);
+            ]
+        );
     }
 
     /**

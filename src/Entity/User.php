@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * User entity.
  */
@@ -31,8 +38,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Email.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\Type('string')]
@@ -51,8 +56,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Hashed password.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string')]
     #[Assert\Type('string')]

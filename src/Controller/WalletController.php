@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Operation;
@@ -18,7 +27,6 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-
 /**
  * Controller for wallet-related actions.
  *
@@ -27,21 +35,21 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/wallet')]
 class WalletController extends AbstractController
 {
+
     /**
-     * Constructor.
-     *
-     * @param WalletService $walletService Wallet service
+     * @param WalletServiceInterface    $walletService
+     * @param OperationServiceInterface $operationService
+     * @param TranslatorInterface       $translator
      */
-    public function __construct(
-        private readonly WalletServiceInterface $walletService,
-        private readonly OperationServiceInterface $operationService,
-        private readonly TranslatorInterface $translator
-    )
+    public function __construct(private readonly WalletServiceInterface $walletService, private readonly OperationServiceInterface $operationService, private readonly TranslatorInterface $translator)
     {
     }
 
+
     /**
-     * Displays list of all wallets.
+     * @param int $page
+     *
+     * @return Response
      */
     #[Route(
         name: 'wallet_index',
@@ -51,7 +59,7 @@ class WalletController extends AbstractController
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $author = $this->getUser();
-        $pagination = $this->walletService->getPaginatedList($page,$author);
+        $pagination = $this->walletService->getPaginatedList($page, $author);
 
         return $this->render('wallet/index.html.twig', [
             'pagination' => $pagination,
@@ -60,7 +68,11 @@ class WalletController extends AbstractController
     }
 
     /**
-     * Displays a single wallet by ID.
+     * @param Wallet                       $wallet
+     * @param OperationListInputFiltersDTO $filters
+     * @param int                          $page
+     *
+     * @return Response
      */
     #[Route(
         '/{id}',
@@ -69,22 +81,20 @@ class WalletController extends AbstractController
         methods: ['GET'],
     )]
     #[IsGranted(OperationVoter::VIEW, subject: 'operation')]
-    public function view(
-        Wallet $wallet,
-        #[MapQueryString(resolver: OperationListInputFiltersDTOResolver::class)] OperationListInputFiltersDTO $filters,
-        #[MapQueryParameter] int $page = 1
-    ): Response {
+    public function view(Wallet $wallet, #[MapQueryString(resolver: OperationListInputFiltersDTOResolver::class)] OperationListInputFiltersDTO $filters, #[MapQueryParameter] int $page = 1): Response
+    {
         return $this->render('wallet/view.html.twig', [
             'wallet' => $wallet,
-            'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page,$filters),
+            'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page, $filters),
             'totals' => $this->walletService->getOperationTotals(),
         ]);
     }
 
     /**
-     * @param int $id
-     * @param Request $request
+     * @param int                    $id
+     * @param Request                $request
      * @param EntityManagerInterface $entityManager
+     *
      * @return Response
      */
     #[Route(
@@ -110,6 +120,7 @@ class WalletController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount())) {
                 $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
+
                 return $this->render('wallet/add-operation.html.twig', [
                     'form' => $form->createView(),
                     'wallet' => $wallet,
@@ -117,6 +128,7 @@ class WalletController extends AbstractController
             }
             $this->operationService->save($operation);
             $this->addFlash('success', $this->translator->trans('message.created_successfully'));
+
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 
@@ -128,9 +140,11 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Operation $operation
+     * @param Request                $request
+     * @param int                    $walletId
+     * @param Operation              $operation
      * @param EntityManagerInterface $entityManager
+     *
      * @return Response
      */
     #[Route(
@@ -140,7 +154,7 @@ class WalletController extends AbstractController
         methods: ['GET', 'POST'],
     )]
     #[IsGranted(OperationVoter::DELETE, subject: 'operation')]
-    public function deleteOperation(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
+    public function deleteOperation(Request $request, int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
         $form = $this->createForm(FormType::class, null, [
@@ -153,9 +167,9 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $this->operationService->save($operation);
             $this->addFlash('success', $this->translator->trans('message.edited_successfully'));
+
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 
@@ -168,6 +182,14 @@ class WalletController extends AbstractController
         );
     }
 
+    /**
+     * @param Request                $request
+     * @param int                    $walletId
+     * @param Operation              $operation
+     * @param EntityManagerInterface $entityManager
+     *
+     * @return Response
+     */
     #[Route(
         '/{walletId}/operation-{id}/edit',
         name: 'edit_operation',
@@ -175,7 +197,7 @@ class WalletController extends AbstractController
         methods: ['GET', 'POST'],
     )]
     #[IsGranted(OperationVoter::EDIT, subject: 'operation')]
-    public function edit(Request $request,int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, int $walletId, Operation $operation, EntityManagerInterface $entityManager): Response
     {
         $wallet = $operation->getWallet();
         $oldAmount = (float) $operation->getAmount();
@@ -190,9 +212,10 @@ class WalletController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //$entityManager->flush();
+            // $entityManager->flush();
             if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount(), $oldAmount)) {
                 $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
+
                 return $this->render('wallet/edit-category.html.twig', [
                     'form' => $form->createView(),
                     'operation' => $operation,
@@ -201,6 +224,7 @@ class WalletController extends AbstractController
             }
             $this->operationService->save($operation);
             $this->addFlash('success', $this->translator->trans('message.created_successfully'));
+
             return $this->redirectToRoute('wallet_view', ['id' => $wallet->getId()]);
         }
 
@@ -215,9 +239,9 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param int $id
-     * @param Request $request
+     * @param Request                $request
      * @param EntityManagerInterface $entityManager
+     *
      * @return Response
      */
     #[Route(
@@ -255,7 +279,8 @@ class WalletController extends AbstractController
 
     /**
      * @param Request $request
-     * @param int $walletId
+     * @param int     $id
+     *
      * @return Response
      */
     #[Route(
@@ -265,7 +290,7 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
     )]
     #[IsGranted(WalletVoter::EDIT, subject: 'wallet')]
-    public function editWallet(Request $request,int $id): Response
+    public function editWallet(Request $request, int $id): Response
     {
         $wallet = $this->walletService->findById($id);
         if (!$wallet) {

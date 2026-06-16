@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace App\Repository;
 
 use App\DTO\OperationListFiltersDTO;
@@ -7,9 +14,6 @@ use App\DTO\WalletOperationDTO;
 use App\Entity\Category;
 use App\Entity\Operation;
 use App\Entity\Tag;
-
-use App\Repository\OperationRepository;
-use App\Resolver\OperationListInputFiltersDtoResolver;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,11 +23,17 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OperationRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Operation::class);
     }
 
+    /**
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('operation')
@@ -35,6 +45,12 @@ class OperationRepository extends ServiceEntityRepository
             ->addSelect('tags');
     }
 
+    /**
+     * @param int                     $walletId
+     * @param OperationListFiltersDTO $filters
+     *
+     * @return QueryBuilder
+     */
     public function queryByWallet(int $walletId, OperationListFiltersDTO $filters): QueryBuilder
     {
         $queryBuilder = $this->queryAll()
@@ -44,18 +60,31 @@ class OperationRepository extends ServiceEntityRepository
         return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
+    /**
+     * @param Operation $operation
+     *
+     * @return void
+     */
     public function save(Operation $operation): void
     {
         $this->getEntityManager()->persist($operation);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @param Operation $operation
+     *
+     * @return void
+     */
     public function delete(Operation $operation): void
     {
         $this->getEntityManager()->remove($operation);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @return array
+     */
     public function findByExampleField(): array
     {
         return $this->createQueryBuilder('o')
@@ -71,6 +100,11 @@ class OperationRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @param Category $category
+     *
+     * @return void
+     */
     public function nullifyCategory(Category $category): void
     {
         $this->createQueryBuilder('o')
@@ -83,6 +117,12 @@ class OperationRepository extends ServiceEntityRepository
         ->execute();
     }
 
+    /**
+     * @param QueryBuilder            $queryBuilder
+     * @param OperationListFiltersDTO $filters
+     *
+     * @return QueryBuilder
+     */
     private function applyFiltersToList(QueryBuilder $queryBuilder, OperationListFiltersDTO $filters): QueryBuilder
     {
         if ($filters->category instanceof Category) {

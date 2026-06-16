@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * operation type.
  */
@@ -8,9 +15,7 @@ namespace App\Form\Type;
 
 use App\Entity\Category;
 use App\Entity\Operation;
-use App\Entity\Tag;
 use App\Repository\CategoryRepository;
-use App\Repository\TagRepository;
 use App\Form\DataTransformer\TagsDataTransformer;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -25,9 +30,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OperationType extends AbstractType
 {
-    public function __construct(private Security $security,
-        private TagsDataTransformer $tagsDataTransformer)
-    {
+    public function __construct(
+        private Security $security,
+        private TagsDataTransformer $tagsDataTransformer,
+    ) {
     }
 
     /**
@@ -52,15 +58,17 @@ class OperationType extends AbstractType
                 'required' => true,
                 'scale' => 2,
                 'attr' => ['step' => 0.01],
-            ]);
+            ]
+        );
         $builder->add(
             'description',
-            TextType::class, [
+            TextType::class,
+            [
                 'label' => 'label.description',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'label.description',
-                    'maxlength' => 255],
+                    'maxlength' => 255, ],
             ],
         );
         $builder->add(

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\User;
@@ -8,7 +17,6 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -17,23 +25,39 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class AdminUserController.
+ */
 #[Route('/admin/user')]
 #[IsGranted('ROLE_ADMIN')]
 class AdminUserController extends AbstractController
 {
+    /**
+     * Items per page.
+     *
+     * @var int
+     */
     private const int PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly TranslatorInterface $translator,
-        private readonly PaginatorInterface $paginator,
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param UserRepository              $userRepository User repository
+     * @param EntityManagerInterface      $entityManager  Entity manager
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher
+     * @param TranslatorInterface         $translator     Translator
+     * @param PaginatorInterface          $paginator      Paginator
+     */
+    public function __construct(private readonly UserRepository $userRepository, private readonly EntityManagerInterface $entityManager, private readonly UserPasswordHasherInterface $passwordHasher, private readonly TranslatorInterface $translator, private readonly PaginatorInterface $paginator)
+    {
     }
 
     /**
-     * Lista użytkowników.
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
      */
     #[Route(
         name: 'admin_user_index',
@@ -56,7 +80,12 @@ class AdminUserController extends AbstractController
     }
 
     /**
-     * Edycja użytkownika (email + opcjonalnie hasło).
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param User    $user    User entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}/edit',

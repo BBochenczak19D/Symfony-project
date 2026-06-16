@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * Tag service interface.
  */
@@ -15,22 +22,47 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
  */
 interface TagServiceInterface
 {
+
     /**
-     * Get paginated list.
+     * @param int  $page
+     * @param User $author
      *
-     * @param int $page Page number
-     *
-     * @return PaginationInterface<string, mixed> Paginated list
+     * @return PaginationInterface
      */
     public function getPaginatedList(int $page, User $author): PaginationInterface;
 
+    /**
+     * @param int $id
+     *
+     * @return Tag|null
+     */
     public function findById(int $id): ?Tag;
 
+    /**
+     * @param int $id
+     *
+     * @return Tag|null
+     */
     public function findOneById(int $id): ?Tag;
+
+    /**
+     * @param Tag $tag
+     *
+     * @return void
+     */
     public function save(Tag $tag): void;
 
+    /**
+     * @param Tag $tag
+     *
+     * @return void
+     */
     public function delete(Tag $tag): void;
 
+    /**
+     * @param string $name
+     *
+     * @return Tag|null
+     */
     public function findOneByName(string $name): ?Tag;
-
 }

@@ -84,8 +84,8 @@ final class WalletVoter extends Voter
     /**
      * Checks if user can delete Wallet.
      *
-     * @param Wallet          $wallet Wallet entity
-     * @param UserInterface $user User
+     * @param Wallet        $wallet Wallet entity
+     * @param UserInterface $user   User
      *
      * @return bool Result
      */
@@ -97,8 +97,8 @@ final class WalletVoter extends Voter
     /**
      * Checks if user can edit Wallet.
      *
-     * @param Wallet          $wallet Wallet entity
-     * @param UserInterface $user User
+     * @param Wallet        $wallet Wallet entity
+     * @param UserInterface $user   User
      *
      * @return bool Result
      */
@@ -110,8 +110,8 @@ final class WalletVoter extends Voter
     /**
      * Checks if a user can view a Wallet.
      *
-     * @param Wallet          $wallet Wallet entity
-     * @param UserInterface $user User
+     * @param Wallet        $wallet Wallet entity
+     * @param UserInterface $user   User
      *
      * @return bool Result
      */

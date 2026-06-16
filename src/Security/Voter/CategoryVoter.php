@@ -84,8 +84,8 @@ final class CategoryVoter extends Voter
     /**
      * Checks if user can delete Category.
      *
-     * @param Category          $category Category entity
-     * @param UserInterface $user User
+     * @param Category      $category Category entity
+     * @param UserInterface $user     User
      *
      * @return bool Result
      */
@@ -97,8 +97,8 @@ final class CategoryVoter extends Voter
     /**
      * Checks if user can edit Category.
      *
-     * @param Category          $category Category entity
-     * @param UserInterface $user User
+     * @param Category      $category Category entity
+     * @param UserInterface $user     User
      *
      * @return bool Result
      */
@@ -110,8 +110,8 @@ final class CategoryVoter extends Voter
     /**
      * Checks if a user can view a Category.
      *
-     * @param Category          $category Category entity
-     * @param UserInterface $user User
+     * @param Category      $category Category entity
+     * @param UserInterface $user     User
      *
      * @return bool Result
      */

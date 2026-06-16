@@ -1,16 +1,21 @@
 <?php
 
 /**
- * Wallet service.
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service;
 
 use App\DTO\OperationListFiltersDTO;
+use App\DTO\OperationListInputFiltersDTO;
 use App\Entity\Operation;
 use App\Entity\User;
 use App\Entity\Wallet;
-use App\DTO\OperationListInputFiltersDTO;
 use App\Repository\OperationRepository;
 use App\Repository\WalletRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
@@ -24,37 +29,32 @@ class WalletService implements WalletServiceInterface
     /**
      * Items per page.
      *
-     * Use constants to define configuration options that rarely change instead
-     * of specifying them in app/config/config.yml.
-     * See https://symfony.com/doc/current/best_practices.html#configuration
-     *
-     * @varant int
+     * @var int
      */
     private const int PAGINATOR_ITEMS_PER_PAGE = 7;
 
     /**
      * Constructor.
      *
-     * @param WalletRepository   $walletRepository Task repository
-     * @param PaginatorInterface $paginator        Paginator
+     * @param CategoryServiceInterface $categoryService     Category service
+     * @param TagServiceInterface      $tagService          Tag service
+     * @param WalletRepository         $walletRepository    Wallet repository
+     * @param PaginatorInterface       $paginator           Paginator
+     * @param OperationRepository      $operationRepository Operation repository
      */
-    public function __construct(
-        private readonly CategoryServiceInterface $categoryService,
-        private readonly TagServiceInterface $tagService,
-        private readonly WalletRepository $walletRepository,
-        private readonly PaginatorInterface $paginator,
-        private readonly OperationRepository $operationRepository,
-    ) {
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly WalletRepository $walletRepository, private readonly PaginatorInterface $paginator, private readonly OperationRepository $operationRepository)
+    {
     }
 
     /**
      * Get paginated list.
      *
-     * @param int|null $page Page number
+     * @param User     $author Author
+     * @param int|null $page   Page number
      *
      * @return PaginationInterface Paginated list
      */
-    public function getPaginatedList(?int $page = 1,User $author): PaginationInterface
+    public function getPaginatedList(User $author, ?int $page = 1): PaginationInterface
     {
         return $this->paginator->paginate(
             $this->walletRepository->queryAll($author),
@@ -68,6 +68,11 @@ class WalletService implements WalletServiceInterface
         );
     }
 
+    /**
+     * Get operation totals.
+     *
+     * @return array Operation totals
+     */
     public function getOperationTotals(): array
     {
         $totals = [];
@@ -78,11 +83,27 @@ class WalletService implements WalletServiceInterface
         return $totals;
     }
 
+    /**
+     * Find wallet by ID.
+     *
+     * @param int $id Wallet ID
+     *
+     * @return Wallet|null Wallet entity
+     */
     public function findById(int $id): ?Wallet
     {
         return $this->walletRepository->find($id);
     }
 
+    /**
+     * Get paginated operations for a wallet.
+     *
+     * @param int                          $walletId Wallet ID
+     * @param int                          $page     Page number
+     * @param OperationListInputFiltersDTO $filters  Filters
+     *
+     * @return PaginationInterface Paginated list
+     */
     public function getPaginatedOperations(int $walletId, int $page, OperationListInputFiltersDTO $filters): PaginationInterface
     {
         $preparedFilters = $this->prepareFilters($filters);
@@ -99,16 +120,33 @@ class WalletService implements WalletServiceInterface
         );
     }
 
+    /**
+     * Save wallet.
+     *
+     * @param Wallet $wallet Wallet entity
+     */
     public function save(Wallet $wallet): void
     {
         $this->walletRepository->save($wallet);
     }
 
+    /**
+     * Delete operation or wallet.
+     *
+     * @param Operation|Wallet $operation Operation or wallet entity
+     */
     public function delete(Operation|Wallet $operation): void
     {
         $this->operationRepository->delete($operation);
     }
 
+    /**
+     * Get current balance for a wallet.
+     *
+     * @param int $walletId Wallet ID
+     *
+     * @return float Current balance
+     */
     public function getCurrentBalance(int $walletId): float
     {
         $totals = $this->getOperationTotals();
@@ -116,6 +154,15 @@ class WalletService implements WalletServiceInterface
         return (float) ($totals[$walletId] ?? 0);
     }
 
+    /**
+     * Check if amount can be added to wallet.
+     *
+     * @param int        $walletId  Wallet ID
+     * @param float      $newAmount New amount
+     * @param float|null $oldAmount Old amount
+     *
+     * @return bool True if amount can be added
+     */
     public function canAddAmount(int $walletId, float $newAmount, ?float $oldAmount = null): bool
     {
         $current = $this->getCurrentBalance($walletId);
@@ -123,13 +170,23 @@ class WalletService implements WalletServiceInterface
 
         return $base + $newAmount >= 0;
     }
-    public function editWallet(Wallet $wallet): void{
+
+    /**
+     * Edit wallet.
+     *
+     * @param Wallet $wallet Wallet entity
+     */
+    public function editWallet(Wallet $wallet): void
+    {
         $this->walletRepository->save($wallet);
     }
 
     /**
-     * @param OperationListInputFiltersDto $filters
-     * @return OperationListFiltersDto
+     * Prepare filters.
+     *
+     * @param OperationListInputFiltersDTO $filters Input filters
+     *
+     * @return OperationListFiltersDTO Prepared filters
      */
     private function prepareFilters(OperationListInputFiltersDTO $filters): OperationListFiltersDTO
     {

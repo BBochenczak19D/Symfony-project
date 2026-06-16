@@ -23,9 +23,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class RecordController extends AbstractController
 {
     /**
-     * Displays list of all records.
-     *
-     * @param RecordRepository $repository the record repository
+     * @param RecordRepository $repository
      *
      * @return Response
      */
@@ -40,11 +38,10 @@ class RecordController extends AbstractController
         return $this->render('record/index.html.twig', ['records' => $records]);
     }
 
+
     /**
-     * Displays a single record by ID.
-     *
-     * @param RecordRepository $repository the record repository
-     * @param int              $id         the record ID
+     * @param RecordRepository $repository
+     * @param int              $id
      *
      * @return Response
      */

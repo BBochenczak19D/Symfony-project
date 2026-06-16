@@ -1,5 +1,13 @@
 <?php
 /**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+/**
  * Operation list filters DTO.
  */
 
@@ -19,9 +27,8 @@ class OperationListFiltersDTO
     /**
      * Constructor.
      *
-     * @param Category|null        $category        Category entity
-     * @param Tag|null             $tag             Tag entity
-     * @param OperationStatus|null $operationStatus Operation status
+     * @param Category|null $category Category entity
+     * @param Tag|null      $tag      Tag entity
      */
     public function __construct(
         public readonly ?Category $category,

@@ -1,7 +1,12 @@
 <?php
 
 /**
- * Category service interface.
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Service;
@@ -18,16 +23,42 @@ interface CategoryServiceInterface
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param User $author Author
+     * @param int  $page   Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface;
+    public function getPaginatedList(User $author, int $page): PaginationInterface;
 
+    /**
+     * Find one category by ID.
+     *
+     * @param int $id Category ID
+     *
+     * @return Category|null Category entity
+     */
     public function findOneById(int $id): ?Category;
+
+    /**
+     * Find category by ID.
+     *
+     * @param int $id Category ID
+     *
+     * @return Category|null Category entity
+     */
     public function findById(int $id): ?Category;
 
+    /**
+     * Save category.
+     *
+     * @param Category $category Category entity
+     */
     public function save(Category $category): void;
 
+    /**
+     * Delete category.
+     *
+     * @param Category $category Category entity
+     */
     public function delete(Category $category): void;
 }

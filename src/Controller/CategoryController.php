@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -16,18 +25,28 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class CategoryController.
+ */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    public function __construct(
-        private readonly CategoryServiceInterface $categoryService,
-        private readonly TranslatorInterface $translator,
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param TranslatorInterface      $translator      Translator
+     */
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
+    {
     }
 
     /**
-     * @param int $page
-     * @return Response
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
      */
     #[Route(
         name: 'category_index',
@@ -38,13 +57,17 @@ class CategoryController extends AbstractController
         $author = $this->getUser();
 
         return $this->render('category/index.html.twig', [
-            'pagination' => $this->categoryService->getPaginatedList($page, $author), ]);
+            'pagination' => $this->categoryService->getPaginatedList($author, $page),
+        ]);
     }
 
     /**
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * Add category action.
+     *
+     * @param Request                $request       HTTP request
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/add-category',
@@ -78,10 +101,13 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Category $category
-     * @param EntityManagerInterface $entityManager
-     * @return Response
+     * Delete category action.
+     *
+     * @param Request                $request       HTTP request
+     * @param Category               $category      Category entity
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}/delete',
@@ -117,9 +143,12 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param Category $category
-     * @return Response
+     * Edit category action.
+     *
+     * @param Request  $request  HTTP request
+     * @param Category $category Category entity
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}/edit',
@@ -137,6 +166,7 @@ class CategoryController extends AbstractController
             ]),
         ]);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->save($category);
             $this->addFlash('success', $this->translator->trans('message.created_successfully'));

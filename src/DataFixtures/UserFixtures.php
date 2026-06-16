@@ -1,20 +1,39 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Enum\UserRole;
 use App\Entity\User;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+/**
+ * Class UserFixtures.
+ */
 class UserFixtures extends AbstractBaseFixtures
 {
+    /**
+     * Constructor.
+     *
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher
+     */
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
-
+    /**
+     * Load data fixtures with the passed EntityManager.
+     */
     protected function loadData(): void
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = new User();
             $user->setEmail(sprintf('user%d@example.com', $i));
             $user->setRoles([UserRole::ROLE_USER->value]);
@@ -23,8 +42,7 @@ class UserFixtures extends AbstractBaseFixtures
             );
             $this->manager->persist($user);
         }
-
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
             $user = new User();
             $user->setEmail(sprintf('admin%d@example.com', $i));
             $user->setRoles([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);
@@ -33,7 +51,6 @@ class UserFixtures extends AbstractBaseFixtures
             );
             $this->manager->persist($user);
         }
-
         $this->manager->flush();
     }
 }

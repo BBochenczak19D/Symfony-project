@@ -84,8 +84,8 @@ final class OperationVoter extends Voter
     /**
      * Checks if user can delete Operation.
      *
-     * @param Operation          $operation Operation entity
-     * @param UserInterface $user User
+     * @param Operation     $operation Operation entity
+     * @param UserInterface $user      User
      *
      * @return bool Result
      */
@@ -97,8 +97,8 @@ final class OperationVoter extends Voter
     /**
      * Checks if user can edit Operation.
      *
-     * @param Operation          $operation Operation entity
-     * @param UserInterface $user User
+     * @param Operation     $operation Operation entity
+     * @param UserInterface $user      User
      *
      * @return bool Result
      */
@@ -110,8 +110,8 @@ final class OperationVoter extends Voter
     /**
      * Checks if a user can view a Operation.
      *
-     * @param Operation          $operation Operation entity
-     * @param UserInterface $user User
+     * @param Operation     $operation Operation entity
+     * @param UserInterface $user      User
      *
      * @return bool Result
      */
