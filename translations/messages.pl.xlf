@@ -3,10 +3,10 @@
   <file source-language="en" target-language="pl" datatype="plaintext" original="file.ext">
     <body>
 
-     <trans-unit id="app.name">
-                 <source>app.name</source>
-                 <target>portfel app</target>
-               </trans-unit>
+      <trans-unit id="app.name">
+        <source>app.name</source>
+        <target>portfel app</target>
+      </trans-unit>
       <trans-unit id="action.avatar">
         <source>action.avatar</source>
         <target>Akcje</target>
@@ -32,9 +32,9 @@
         <target>Anuluj</target>
       </trans-unit>
       <trans-unit id="action.view">
-              <source>action.view</source>
-              <target>Przejdź</target>
-            </trans-unit>
+        <source>action.view</source>
+        <target>Przejdź</target>
+      </trans-unit>
       <trans-unit id="action.back">
         <source>action.back</source>
         <target>Wróć</target>
@@ -132,10 +132,10 @@
         <source>label.category</source>
         <target>Kategoria</target>
       </trans-unit>
-       <trans-unit id="label.date">
-                    <source>label.date</source>
-                    <target>Data</target>
-                  </trans-unit>
+      <trans-unit id="label.date">
+        <source>label.date</source>
+        <target>Data</target>
+      </trans-unit>
       <trans-unit id="label.currency">
         <source>label.currency</source>
         <target>Waluta</target>
@@ -156,12 +156,11 @@
         <source>label.roles</source>
         <target>Role</target>
       </trans-unit>
-      <trans-unit id="label.date">
-        <source>label.date</source>
-        <target>Data</target>
-      </trans-unit>
 
-      <trans-unit id="message.confirm_delete_category"><source>message.confirm_delete_category</source><target>Are you sure you want to permanently delete this category?</target></trans-unit>
+      <trans-unit id="message.confirm_delete_category">
+        <source>message.confirm_delete_category</source>
+        <target>Czy na pewno chcesz bezpowrotnie usunąć tę kategorię?</target>
+      </trans-unit>
       <trans-unit id="message.empty_list">
         <source>message.empty_list</source>
         <target>Lista jest pusta.</target>
@@ -181,10 +180,6 @@
       <trans-unit id="message.deleted_successfully">
         <source>message.deleted_successfully</source>
         <target>Usunięto pomyślnie.</target>
-      </trans-unit>
-      <trans-unit id="message.confirm_delete_category">
-        <source>message.confirm_delete_category</source>
-        <target>Czy na pewno chcesz bezpowrotnie usunąć tę kategorię?</target>
       </trans-unit>
       <trans-unit id="message.confirm_delete_operation">
         <source>message.confirm_delete_operation</source>
@@ -227,7 +222,10 @@
         <target>Brak dostępu do tego portfela.</target>
       </trans-unit>
 
-      <trans-unit id="title.my_account"><source>title.my_account</source><target>My account</target></trans-unit>
+      <trans-unit id="title.my_account">
+        <source>title.my_account</source>
+        <target>Moje konto</target>
+      </trans-unit>
       <trans-unit id="title.record_details">
         <source>title.record_details</source>
         <target>Szczegóły rekordu</target>
@@ -252,10 +250,6 @@
         <source>title.wallet_add</source>
         <target>Nowy portfel</target>
       </trans-unit>
-      <trans-unit id="action.create_first_wallet">
-                          <source>action.create_first_wallet</source>
-                          <target>Załóż pierwszy portfel</target>
-                  </trans-unit>
       <trans-unit id="title.wallet_create">
         <source>title.wallet_create</source>
         <target>Nowy portfel</target>
@@ -316,28 +310,11 @@
         <source>title.login</source>
         <target>Logowanie</target>
       </trans-unit>
-    <trans-unit id="action.login">
-                  <source>action.login</source>
-                  <target>Zaloguj się</target>
-      </trans-unit>
-      <trans-unit id="title.wallet_create">
-                        <source>title.wallet_create</source>
-                        <target>Dodaj portfel</target>
-                </trans-unit>
-      <trans-unit id="title.category_create">
-                              <source>title.category_create</source>
-                              <target>Dodaj kategorię</target>
-                      </trans-unit>
+
       <trans-unit id="placeholder.wallet_name">
         <source>placeholder.wallet_name</source>
-            <target>np. Konto osobiste, Oszczędności</target>
-            </trans-unit>
-                <trans-unit id="action.new_transaction"><source>action.new_transaction</source><target>Nowa transkacja</target></trans-unit>
-        <trans-unit id="action.add_first"><source>action.add_first</source><target>Dodaj pierwszą transakcję</target></trans-unit>
-        <trans-unit id="message.no_transactions"><source>message.no_transactions</source><target>Nie masz jeszcze żadnych operacji.</target></trans-unit>
-        <trans-unit id="message.no_wallets"><source>message.no_wallets</source><target>Nie masz jeszcze żadnych portfeli.</target></trans-unit>
-        <trans-unit id="action.save_changes"><source>action.save_changes</source><target>Zapisz zmiany</target></trans-unit>
-            <trans-unit id="action.new_category"><source>action.new_category</source><target>Nowa kategoria</target></trans-unit>
+        <target>np. Konto osobiste, Oszczędności</target>
+      </trans-unit>
 
     </body>
   </file>

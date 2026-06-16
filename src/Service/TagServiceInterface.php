@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 /**
  * Tag service interface.
  */
@@ -23,13 +25,14 @@ use Knp\Component\Pager\Pagination\PaginationInterface;
 interface TagServiceInterface
 {
 
+
     /**
-     * @param int  $page
      * @param User $author
+     * @param int  $page
      *
      * @return PaginationInterface
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface;
+    public function getPaginatedList(User $author, int $page): PaginationInterface;
 
     /**
      * @param int $id

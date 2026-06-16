@@ -30,10 +30,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class OperationType extends AbstractType
 {
-    public function __construct(
-        private Security $security,
-        private TagsDataTransformer $tagsDataTransformer,
-    ) {
+    /**
+     * @param Security            $security
+     * @param TagsDataTransformer $tagsDataTransformer
+     */
+    public function __construct(private Security $security, private TagsDataTransformer $tagsDataTransformer)
+    {
     }
 
     /**

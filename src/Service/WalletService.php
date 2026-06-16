@@ -54,7 +54,7 @@ class WalletService implements WalletServiceInterface
      *
      * @return PaginationInterface Paginated list
      */
-    public function getPaginatedList(User $author, ?int $page = 1): PaginationInterface
+    public function getPaginatedList(User $author, int $page = 1): PaginationInterface
     {
         return $this->paginator->paginate(
             $this->walletRepository->queryAll($author),

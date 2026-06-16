@@ -24,12 +24,12 @@ use App\DTO\OperationListInputFiltersDTO;
 interface WalletServiceInterface
 {
     /**
-     * @param int  $page
      * @param User $author
+     * @param int  $page
      *
      * @return PaginationInterface
      */
-    public function getPaginatedList(int $page, User $author): PaginationInterface;
+    public function getPaginatedList(User $author, int $page = 1): PaginationInterface;
 
     /**
      * @return array
