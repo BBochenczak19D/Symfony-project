@@ -21,6 +21,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'wallet')]
 class Wallet
 {
+    /**
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

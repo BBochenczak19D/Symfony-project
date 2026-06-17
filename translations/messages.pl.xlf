@@ -156,7 +156,10 @@
         <source>label.roles</source>
         <target>Role</target>
       </trans-unit>
-
+    <trans-unit id="label.not_equal_password">
+            <source>label.not_equal_password</source>
+            <target>Hasła musza być takie same</target>
+          </trans-unit>
       <trans-unit id="message.confirm_delete_category">
         <source>message.confirm_delete_category</source>
         <target>Czy na pewno chcesz bezpowrotnie usunąć tę kategorię?</target>

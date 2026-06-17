@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Entity;
 
 use App\Repository\OperationRepository;
@@ -44,7 +46,6 @@ class Operation
     #[ORM\JoinColumn(nullable: false)]
     private ?Wallet $wallet = null;
 
-
     #[ORM\ManyToOne(targetEntity: Category::class)]
     #[ORM\JoinColumn(nullable: true)] // wskauzjemy jak moze wygladac ta kolumna, moze byc pusta
     private ?Category $category = null;
@@ -81,8 +82,6 @@ class Operation
     }
 
     /**
-     * @param string $amount
-     *
      * @return $this
      */
     public function setAmount(string $amount): static
@@ -102,7 +101,6 @@ class Operation
 
     /**
      * @param \DateTimeImmutable $createdAt
-     *
      * @return $this
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
@@ -120,9 +118,9 @@ class Operation
         return $this->description;
     }
 
+
     /**
      * @param string|null $description
-     *
      * @return $this
      */
     public function setDescription(?string $description): static
@@ -140,10 +138,8 @@ class Operation
         return $this->wallet;
     }
 
-
     /**
      * @param Wallet|null $wallet
-     *
      * @return $this
      */
     public function setWallet(?Wallet $wallet): static
@@ -153,17 +149,14 @@ class Operation
         return $this;
     }
 
-    /**
-     * @return Category|null
-     */
     public function getCategory(): ?Category
     {
         return $this->category;
     }
 
+
     /**
      * @param Category|null $category
-     *
      * @return $this
      */
     public function setCategory(?Category $category): static
@@ -183,7 +176,6 @@ class Operation
 
     /**
      * @param Tag $tag
-     *
      * @return $this
      */
     public function addTag(Tag $tag): static
@@ -197,7 +189,6 @@ class Operation
 
     /**
      * @param Tag $tag
-     *
      * @return $this
      */
     public function removeTag(Tag $tag): static

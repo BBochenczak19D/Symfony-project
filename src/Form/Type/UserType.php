@@ -41,7 +41,7 @@ class UserType extends AbstractType
 
         $passwordConstraints = [];
         if ($options['require_password']) {
-            $passwordConstraints[] = new NotBlank(['message' => 'Podaj hasło']);
+            $passwordConstraints[] = new NotBlank(['message' => 'label.require_password']);
         }
         //        $passwordConstraints[] = new Length([
         //            'min' => 6,
@@ -62,7 +62,7 @@ class UserType extends AbstractType
                 'label' => 'label.repeat_password',
                 'attr' => ['class' => 'form-control'],
             ],
-            'invalid_message' => 'Hasła muszą się zgadzać.',
+            'invalid_message' => 'label.not_equal_password',
         ]);
     }
 

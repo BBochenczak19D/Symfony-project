@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,10 +8,11 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Repository;
 
-use App\Entity\Wallet;
 use App\Entity\User;
+use App\Entity\Wallet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -30,7 +32,6 @@ class WalletRepository extends ServiceEntityRepository
 
     /**
      * @param Wallet $wallet
-     *
      * @return void
      */
     public function save(Wallet $wallet): void
@@ -41,10 +42,9 @@ class WalletRepository extends ServiceEntityRepository
 
     /**
      * @param User $author
-     *
      * @return QueryBuilder
      */
-    public function queryAll(User $author): \Doctrine\ORM\QueryBuilder
+    public function queryAll(User $author): QueryBuilder
     {
         return $this->createQueryBuilder('wallet')
             ->where('wallet.author = :author')

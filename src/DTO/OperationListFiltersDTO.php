@@ -16,11 +16,9 @@ namespace App\DTO;
 use App\Entity\Category;
 use App\Entity\Tag;
 
+
 /**
- * Class OperationListFiltersDto.
  *
- * Przechowuje obiekty encji do filtrowania w warstwie repozytorium.
- * Tworzona przez WalletService::prepareFilters() na podstawie OperationListInputFiltersDto.
  */
 class OperationListFiltersDTO
 {

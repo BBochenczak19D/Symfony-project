@@ -44,7 +44,7 @@
       <trans-unit id="label.updated_at"><source>label.updated_at</source><target>Updated at</target></trans-unit>
       <trans-unit id="label.roles"><source>label.roles</source><target>Roles</target></trans-unit>
       <trans-unit id="label.date"><source>label.date</source><target>Date</target></trans-unit>
-
+      <trans-unit id="label.not_equal_password"><source>label.not_equal_password</source><target>Password must match</target></trans-unit>
       <trans-unit id="message.empty_list"><source>message.empty_list</source><target>List is empty.</target></trans-unit>
       <trans-unit id="message.record_not_found"><source>message.record_not_found</source><target>Record not found.</target></trans-unit>
       <trans-unit id="message.created_successfully"><source>message.created_successfully</source><target>Created successfully.</target></trans-unit>

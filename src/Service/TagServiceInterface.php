@@ -9,9 +9,6 @@
  * file that was distributed with this source code.
  */
 
-/**
- * Tag service interface.
- */
 
 namespace App\Service;
 
@@ -20,12 +17,10 @@ use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
- * Interface TagServiceInterface.
+ *
  */
 interface TagServiceInterface
 {
-
-
     /**
      * @param User $author
      * @param int  $page
