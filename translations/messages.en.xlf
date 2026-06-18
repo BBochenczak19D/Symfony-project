@@ -100,6 +100,10 @@
       <trans-unit id="nav.account"><source>nav.account</source><target>account</target></trans-unit>
 
       <trans-unit id="placeholder.wallet_name"><source>placeholder.wallet_name</source><target>e.g. Personal account, Savings</target></trans-unit>
+      <trans-unit id="label.date_from"><source>label.date_from</source><target>From</target></trans-unit>
+      <trans-unit id="label.date_to"><source>label.date_to</source><target>To</target></trans-unit>
+      <trans-unit id="label.period_balance"><source>label.period_balance</source><target>period balance</target></trans-unit>
+      <trans-unit id="action.filter"><source>action.filter</source><target>Filter</target></trans-unit>
     </body>
   </file>
 </xliff>

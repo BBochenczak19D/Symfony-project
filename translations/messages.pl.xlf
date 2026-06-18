@@ -326,6 +326,22 @@
         <source>placeholder.wallet_name</source>
         <target>np. Konto osobiste, Oszczędności</target>
       </trans-unit>
+      <trans-unit id="label.date_from">
+        <source>label.date_from</source>
+        <target>Od</target>
+      </trans-unit>
+      <trans-unit id="label.date_to">
+        <source>label.date_to</source>
+        <target>Do</target>
+      </trans-unit>
+      <trans-unit id="label.period_balance">
+        <source>label.period_balance</source>
+        <target>saldo okresu</target>
+      </trans-unit>
+      <trans-unit id="action.filter">
+        <source>action.filter</source>
+        <target>Filtruj</target>
+      </trans-unit>
 
     </body>
   </file>

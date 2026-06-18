@@ -182,6 +182,20 @@ class WalletService implements WalletServiceInterface
     }
 
     /**
+     * Get balance for a given period.
+     *
+     * @param int                     $walletId Wallet ID
+     * @param \DateTimeImmutable|null $dateFrom Start date
+     * @param \DateTimeImmutable|null $dateTo   End date
+     *
+     * @return float Period balance
+     */
+    public function getPeriodBalance(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float
+    {
+        return $this->operationRepository->sumByWalletAndPeriod($walletId, $dateFrom, $dateTo);
+    }
+
+    /**
      * Prepare filters.
      *
      * @param OperationListInputFiltersDTO $filters Input filters
@@ -193,6 +207,8 @@ class WalletService implements WalletServiceInterface
         return new OperationListFiltersDTO(
             null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
+            $filters->dateFrom,
+            $filters->dateTo,
         );
     }
 }

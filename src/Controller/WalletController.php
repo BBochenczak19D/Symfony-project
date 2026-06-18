@@ -82,10 +82,14 @@ class WalletController extends AbstractController
     #[IsGranted(OperationVoter::VIEW, subject: 'operation')]
     public function view(Wallet $wallet, #[MapQueryString(resolver: OperationListInputFiltersDTOResolver::class)] OperationListInputFiltersDTO $filters, #[MapQueryParameter] int $page = 1): Response
     {
+        $hasPeriodFilter = null !== $filters->dateFrom || null !== $filters->dateTo;
+
         return $this->render('wallet/view.html.twig', [
             'wallet' => $wallet,
             'pagination' => $this->walletService->getPaginatedOperations($wallet->getId(), $page, $filters),
             'totals' => $this->walletService->getOperationTotals(),
+            'filters' => $filters,
+            'periodBalance' => $hasPeriodFilter ? $this->walletService->getPeriodBalance($wallet->getId(), $filters->dateFrom, $filters->dateTo) : null,
         ]);
     }
 

@@ -37,10 +37,24 @@ class OperationListInputFiltersDTOResolver implements ValueResolverInterface
 
         $categoryId = $request->query->get('categoryId');
         $tagId = $request->query->get('tagId');
+        $dateFromStr = $request->query->get('dateFrom');
+        $dateToStr = $request->query->get('dateTo');
+
+        $dateFrom = $dateFromStr ? (\DateTimeImmutable::createFromFormat('Y-m-d', $dateFromStr) ?: null) : null;
+        $dateTo = $dateToStr ? (\DateTimeImmutable::createFromFormat('Y-m-d', $dateToStr) ?: null) : null;
+        if ($dateFrom instanceof \DateTimeImmutable) {
+            $dateFrom = $dateFrom->setTime(0, 0, 0);
+        }
+        if ($dateTo instanceof \DateTimeImmutable) {
+            $dateTo = $dateTo->setTime(23, 59, 59);
+        }
 
         return [new OperationListInputFiltersDTO(
             $categoryId ? (int) $categoryId : null,
             $tagId ? (int) $tagId : null,
+            1,
+            $dateFrom ?: null,
+            $dateTo ?: null,
         ), ];
     }
 }

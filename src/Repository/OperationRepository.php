@@ -101,6 +101,31 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
+     * @param int                     $walletId
+     * @param \DateTimeImmutable|null $dateFrom
+     * @param \DateTimeImmutable|null $dateTo
+     *
+     * @return float
+     */
+    public function sumByWalletAndPeriod(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->select('SUM(o.amount)')
+            ->andWhere('o.wallet = :walletId')
+            ->setParameter('walletId', $walletId);
+
+        if ($dateFrom instanceof \DateTimeImmutable) {
+            $qb->andWhere('o.createdAt >= :dateFrom')->setParameter('dateFrom', $dateFrom);
+        }
+
+        if ($dateTo instanceof \DateTimeImmutable) {
+            $qb->andWhere('o.createdAt <= :dateTo')->setParameter('dateTo', $dateTo);
+        }
+
+        return (float) ($qb->getQuery()->getSingleScalarResult() ?? 0);
+    }
+
+    /**
      * @param Category $category
      *
      * @return void
@@ -133,6 +158,16 @@ class OperationRepository extends ServiceEntityRepository
         if ($filters->tag instanceof Tag) {
             $queryBuilder->andWhere('tags IN (:tag)')
                 ->setParameter('tag', $filters->tag);
+        }
+
+        if ($filters->dateFrom instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('operation.createdAt >= :dateFrom')
+                ->setParameter('dateFrom', $filters->dateFrom);
+        }
+
+        if ($filters->dateTo instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('operation.createdAt <= :dateTo')
+                ->setParameter('dateTo', $filters->dateTo);
         }
 
         return $queryBuilder;

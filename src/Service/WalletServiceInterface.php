@@ -88,4 +88,13 @@ interface WalletServiceInterface
      * @return bool
      */
     public function canAddAmount(int $walletId, float $newAmount, ?float $oldAmount = null): bool;
+
+    /**
+     * @param int                     $walletId
+     * @param \DateTimeImmutable|null $dateFrom
+     * @param \DateTimeImmutable|null $dateTo
+     *
+     * @return float
+     */
+    public function getPeriodBalance(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float;
 }

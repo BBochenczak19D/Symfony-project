@@ -113,7 +113,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.3",
-        "escapestudios/symfony2-coding-standard": "*",
+        "escapestudios/symfony2-coding-standard": "^3.18",
         "fakerphp/faker": "^1.24",
         "friendsofphp/php-cs-fixer": "^3.95",
         "phpunit/phpunit": "^13.1",

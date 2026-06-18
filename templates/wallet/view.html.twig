@@ -16,6 +16,13 @@
                     {{ totals[wallet.id] ?? '0' }}
                 </span>
                 <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">{{ wallet.currency }}</span>
+                {% if periodBalance is not null %}
+                    <span style="margin-left:10px;font-size:12px;color:var(--text-muted);">{{ 'label.period_balance'|trans }}:</span>
+                    <span class="mono {% if periodBalance >= 0 %}amount-positive{% else %}amount-negative{% endif %}" style="font-size:14px;font-weight:600;">
+                        {{ periodBalance|number_format(2, '.', '') }}
+                    </span>
+                    <span style="color: var(--text-muted); font-family: 'JetBrains Mono', monospace; font-size:12px;">{{ wallet.currency }}</span>
+                {% endif %}
             </div>
         </div>
         <div class="d-flex gap-2 align-items-center">
@@ -29,6 +36,20 @@
             </a>
         </div>
     </div>
+
+    <form method="get" action="{{ path('wallet_view', {'id': wallet.id}) }}" class="d-flex align-items-end gap-2 mb-3 flex-wrap">
+        {% if filters.categoryId %}<input type="hidden" name="categoryId" value="{{ filters.categoryId }}">{% endif %}
+        {% if filters.tagId %}<input type="hidden" name="tagId" value="{{ filters.tagId }}">{% endif %}
+        <div class="d-flex flex-column" style="gap:2px;">
+            <label style="font-size:11px;color:var(--text-muted);">{{ 'label.date_from'|trans }}</label>
+            <input type="date" name="dateFrom" value="{{ filters.dateFrom ? filters.dateFrom|date('Y-m-d') : '' }}" style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-primary);border-radius:6px;padding:4px 8px;">
+        </div>
+        <div class="d-flex flex-column" style="gap:2px;">
+            <label style="font-size:11px;color:var(--text-muted);">{{ 'label.date_to'|trans }}</label>
+            <input type="date" name="dateTo" value="{{ filters.dateTo ? filters.dateTo|date('Y-m-d') : '' }}" style="font-family:'JetBrains Mono',monospace;font-size:13px;background:var(--card-bg);border:1px solid var(--border);color:var(--text-primary);border-radius:6px;padding:4px 8px;">
+        </div>
+        <button type="submit" class="btn-accent" style="height:32px;">{{ 'action.filter'|trans }}</button>
+    </form>
 
     {% if is_granted('wallet_VIEW', wallet) %}
         {% if pagination.items|length > 0 %}
