@@ -105,8 +105,7 @@ class Tag
      */
     public function addOperation(Operation $operation): static
     {
-        if ($this->operations->contains($operation))
-        {
+        if ($this->operations->contains($operation)) {
             $this->operations->add($operation);
             $operation->addTag($this);
         }
@@ -121,8 +120,7 @@ class Tag
      */
     public function removeOperation(Operation $operation): static
     {
-        if ($this->operations->contains($operation))
-        {
+        if ($this->operations->contains($operation)) {
             $operation->removeTag($this);
         }
 

@@ -36,9 +36,9 @@ class WalletController extends AbstractController
 
 
     /**
-     * @param WalletServiceInterface $walletService
+     * @param WalletServiceInterface    $walletService
      * @param OperationServiceInterface $operationService
-     * @param TranslatorInterface $translator
+     * @param TranslatorInterface       $translator
      */
     public function __construct(private readonly WalletServiceInterface $walletService, private readonly OperationServiceInterface $operationService, private readonly TranslatorInterface $translator)
     {
@@ -58,7 +58,7 @@ class WalletController extends AbstractController
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $author = $this->getUser();
-        $pagination = $this->walletService->getPaginatedList($author,$page);
+        $pagination = $this->walletService->getPaginatedList($author, $page);
 
         return $this->render('wallet/index.html.twig', [
             'pagination' => $pagination,

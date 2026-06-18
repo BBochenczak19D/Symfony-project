@@ -22,8 +22,9 @@ use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 class OperationListInputFiltersDTOResolver implements ValueResolverInterface
 {
     /**
-     * @param Request $request
+     * @param Request          $request
      * @param ArgumentMetadata $argument
+     *
      * @return iterable
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable

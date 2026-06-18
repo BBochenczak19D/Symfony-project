@@ -18,7 +18,6 @@ use App\Entity\Wallet;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use App\DTO\OperationListInputFiltersDTO;
 
-
 /**
  *
  */

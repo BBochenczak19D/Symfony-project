@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -14,9 +15,8 @@
 namespace App\DTO;
 
 /**
- * Class OperationListInputFiltersDto.
  *
- **/
+ */
 class OperationListInputFiltersDTO
 {
     /**

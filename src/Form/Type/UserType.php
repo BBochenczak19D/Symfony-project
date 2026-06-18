@@ -43,11 +43,11 @@ class UserType extends AbstractType
         if ($options['require_password']) {
             $passwordConstraints[] = new NotBlank(['message' => 'label.require_password']);
         }
-        //        $passwordConstraints[] = new Length([
-        //            'min' => 6,
-        //            'minMessage' => 'Hasło musi mieć co najmniej {{ limit }} znaków',
-        //            'max' => 128,
-        //        ]);
+        $passwordConstraints[] = new Length([
+            'min' => 6,
+            'minMessage' => 'label.password_too_short',
+            'max' => 255,
+        ]);
 
         $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,

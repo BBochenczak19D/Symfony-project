@@ -1,10 +1,19 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+
     <body>
+     <trans-unit id="label.require_password">
+         <source>label.require_password</source>
+         <target>Password is required.</target>
+       </trans-unit>
     <trans-unit id="app.name">
                      <source>app.name</source>
                      <target>wallet app</target>
+                   </trans-unit>
+                   <trans-unit id="label.password_too_short">
+                     <source>label.password_too_short</source>
+                     <target>Password must be at least {{ limit }} characters long.</target>
                    </trans-unit>
       <trans-unit id="action.avatar"><source>action.avatar</source><target>Actions</target></trans-unit>
       <trans-unit id="action.delete"><source>action.delete</source><target>Delete</target></trans-unit>
@@ -61,7 +70,6 @@
       <trans-unit id="message.no_categories"><source>message.no_categories</source><target>No categories.</target></trans-unit>
       <trans-unit id="message.no_users"><source>message.no_users</source><target>No users.</target></trans-unit>
       <trans-unit id="message.no_access"><source>message.no_access</source><target>No access to this wallet.</target></trans-unit>
-
       <trans-unit id="title.record_details"><source>title.record_details</source><target>Record details</target></trans-unit>
       <trans-unit id="title.record_list"><source>title.record_list</source><target>Records list</target></trans-unit>
       <trans-unit id="title.record_view"><source>title.record_view</source><target>Record #%id%</target></trans-unit>

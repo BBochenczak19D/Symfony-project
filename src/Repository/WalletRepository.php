@@ -32,6 +32,7 @@ class WalletRepository extends ServiceEntityRepository
 
     /**
      * @param Wallet $wallet
+     *
      * @return void
      */
     public function save(Wallet $wallet): void
@@ -42,6 +43,7 @@ class WalletRepository extends ServiceEntityRepository
 
     /**
      * @param User $author
+     *
      * @return QueryBuilder
      */
     public function queryAll(User $author): QueryBuilder

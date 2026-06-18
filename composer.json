@@ -32,7 +32,7 @@
         "symfony/process": "7.4.*",
         "symfony/property-access": "7.4.*",
         "symfony/property-info": "7.4.*",
-        "symfony/runtime": "7.4.*",
+        "symfony/runtime": "*",
         "symfony/security-bundle": "7.4.*",
         "symfony/serializer": "7.4.*",
         "symfony/stimulus-bundle": "^3.0",
@@ -113,7 +113,7 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.3",
-        "escapestudios/symfony2-coding-standard": "^3.18",
+        "escapestudios/symfony2-coding-standard": "*",
         "fakerphp/faker": "^1.24",
         "friendsofphp/php-cs-fixer": "^3.95",
         "phpunit/phpunit": "^13.1",
