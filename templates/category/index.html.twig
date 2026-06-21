@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title.category_list'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1><i class="bi bi-tags"></i> {{ 'title.category_list'|trans }}</h1>
+        <a href="{{ path('add_category') }}" class="btn-accent">
+            <i class="bi bi-plus-lg"></i> {{ 'action.new_category'|trans }}
+        </a>
+    </div>
+
+    {% if pagination is defined and pagination.items|length %}
+        <table class="app-table">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label.name'|trans, 'category.name') }}</th>
+                <th>{{ 'label.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for category in pagination.items %}
+                <tr>
+                    <td class="mono">
+                        <span style="color: var(--accent-purple);">●</span> {{ category.name }}
+                    </td>
+                    <td>
+                        {% if is_granted('Category_EDIT', category) %}
+                            <a href="{{ path('edit_category', {'id': category.id}) }}" class="btn-ghost">{{ 'action.edit'|trans }}</a>
+                        {% endif %}
+                        {% if is_granted('Category_DELETE', category) %}
+                            <a href="{{ path('delete_category', {'id': category.id}) }}" class="btn-ghost danger">{{ 'action.delete'|trans }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="mt-3 d-flex justify-content-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        <div class="app-card text-center" style="padding: 3rem;">
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">🏷️</div>
+            <p style="color: var(--text-secondary); margin-bottom: 1rem;">{{ 'message.no_categories'|trans }}</p>
+            <a href="{{ path('add_category') }}" class="btn-accent">{{ 'action.new_category'|trans }}</a>
+        </div>
+    {% endif %}
+{% endblock %}

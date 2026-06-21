@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.operation_edit'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.operation_edit'|trans }}</h1>
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group row float-sm-right">
+        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary"/>
+        <a href="{{ path('wallet_view', {'id': wallet.id} ) }}" class="btn btn-sm btn-secondary">{{ 'action.cancel'|trans }}</a>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

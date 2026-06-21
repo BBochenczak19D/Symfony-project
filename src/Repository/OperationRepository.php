@@ -1,9 +1,19 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace App\Repository;
 
+use App\DTO\OperationListFiltersDTO;
 use App\DTO\WalletOperationDTO;
+use App\Entity\Category;
 use App\Entity\Operation;
+use App\Entity\Tag;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,37 +23,68 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class OperationRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Operation::class);
     }
 
+    /**
+     * @return QueryBuilder
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('operation')
             ->leftJoin('operation.wallet', 'wallet')
-            ->addSelect('wallet');
+            ->leftJoin('operation.category', 'category')
+            ->leftJoin('operation.tags', 'tags')
+            ->addSelect('wallet')
+            ->addSelect('category')
+            ->addSelect('tags');
     }
 
-    public function queryByWallet(int $walletId): QueryBuilder
+    /**
+     * @param int                     $walletId
+     * @param OperationListFiltersDTO $filters
+     *
+     * @return QueryBuilder
+     */
+    public function queryByWallet(int $walletId, OperationListFiltersDTO $filters): QueryBuilder
     {
-        return $this->queryAll()
+        $queryBuilder = $this->queryAll()
             ->andWhere('operation.wallet = :walletId')
             ->setParameter('walletId', $walletId);
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
+    /**
+     * @param Operation $operation
+     *
+     * @return void
+     */
     public function save(Operation $operation): void
     {
         $this->getEntityManager()->persist($operation);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @param Operation $operation
+     *
+     * @return void
+     */
     public function delete(Operation $operation): void
     {
         $this->getEntityManager()->remove($operation);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * @return array
+     */
     public function findByExampleField(): array
     {
         return $this->createQueryBuilder('o')
@@ -57,5 +98,78 @@ class OperationRepository extends ServiceEntityRepository
             ->addGroupBy('w.currency')
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @param int                     $walletId
+     * @param \DateTimeImmutable|null $dateFrom
+     * @param \DateTimeImmutable|null $dateTo
+     *
+     * @return float
+     */
+    public function sumByWalletAndPeriod(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float
+    {
+        $qb = $this->createQueryBuilder('o')
+            ->select('SUM(o.amount)')
+            ->andWhere('o.wallet = :walletId')
+            ->setParameter('walletId', $walletId);
+
+        if ($dateFrom instanceof \DateTimeImmutable) {
+            $qb->andWhere('o.createdAt >= :dateFrom')->setParameter('dateFrom', $dateFrom);
+        }
+
+        if ($dateTo instanceof \DateTimeImmutable) {
+            $qb->andWhere('o.createdAt <= :dateTo')->setParameter('dateTo', $dateTo);
+        }
+
+        return (float) ($qb->getQuery()->getSingleScalarResult() ?? 0);
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return void
+     */
+    public function nullifyCategory(Category $category): void
+    {
+        $this->createQueryBuilder('o')
+        ->update()
+        ->set('o.category', ':null')
+        ->where('o.category = :category')
+        ->setParameter('null', null)
+        ->setParameter('category', $category)
+        ->getQuery()
+        ->execute();
+    }
+
+    /**
+     * @param QueryBuilder            $queryBuilder
+     * @param OperationListFiltersDTO $filters
+     *
+     * @return QueryBuilder
+     */
+    private function applyFiltersToList(QueryBuilder $queryBuilder, OperationListFiltersDTO $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
+
+        if ($filters->tag instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters->tag);
+        }
+
+        if ($filters->dateFrom instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('operation.createdAt >= :dateFrom')
+                ->setParameter('dateFrom', $filters->dateFrom);
+        }
+
+        if ($filters->dateTo instanceof \DateTimeImmutable) {
+            $queryBuilder->andWhere('operation.createdAt <= :dateTo')
+                ->setParameter('dateTo', $filters->dateTo);
+        }
+
+        return $queryBuilder;
     }
 }

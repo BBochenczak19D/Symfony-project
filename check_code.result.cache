@@ -1,0 +1,49 @@
+   1) src/DTO/WalletOperationDTO.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+   2) src/DTO/OperationListInputFiltersDTO.php (no_superfluous_phpdoc_tags, no_empty_phpdoc)
+   3) src/DTO/OperationListFiltersDTO.php (no_superfluous_phpdoc_tags, no_empty_phpdoc)
+   4) src/Repository/WalletRepository.php (no_superfluous_phpdoc_tags, no_empty_phpdoc)
+   5) src/Repository/TagRepository.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+   6) src/Repository/CategoryRepository.php (fully_qualified_strict_types, no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+   7) src/Repository/OperationRepository.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+   8) src/Repository/UserRepository.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+   9) src/Service/OperationServiceInterface.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag)
+  10) src/Service/WalletServiceInterface.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag)
+  11) src/Service/TagServiceInterface.php (no_superfluous_phpdoc_tags, no_empty_phpdoc)
+  12) src/Resolver/OperationListInputFiltersDTOResolver.php (no_superfluous_phpdoc_tags, no_empty_phpdoc)
+  13) src/Kernel.php (no_empty_phpdoc, single_line_after_imports)
+  14) src/Entity/Tag.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, phpdoc_trim, blank_lines_before_namespace)
+  15) src/Entity/User.php (blank_line_after_opening_tag)
+  16) src/Entity/Task.php (blank_line_after_opening_tag)
+  17) src/Entity/Operation.php (class_attributes_separation, no_superfluous_phpdoc_tags, no_empty_phpdoc, phpdoc_trim)
+  18) src/DataFixtures/WalletFixtures.php (no_empty_phpdoc)
+  19) src/DataFixtures/OperationFixtures.php (no_empty_phpdoc)
+  20) src/DataFixtures/UserFixtures.php (class_attributes_separation)
+  21) src/Form/Type/WalletType.php (blank_line_after_opening_tag)
+  22) src/Form/Type/CategoryType.php (blank_line_after_opening_tag)
+  23) src/Form/Type/OperationType.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag)
+  24) src/Form/Type/UserType.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, blank_lines_before_namespace)
+  25) src/Entity/Category.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, phpdoc_trim, blank_lines_before_namespace)
+  26) src/Entity/Wallet.php (no_superfluous_phpdoc_tags, no_empty_phpdoc, blank_line_after_opening_tag, phpdoc_trim, blank_lines_before_namespace)
+  27) src/Controller/WalletController.php (class_attributes_separation, no_superfluous_phpdoc_tags, no_empty_phpdoc)
+
+Found 27 of 49 files that can be fixed in 0.719 seconds, 110.00 MB memory used
+ ------- -------- ---- ---------------------- 
+  State   Domain   Id   Message Preview (en)  
+ ------- -------- ---- ---------------------- 
+
+ ------- -------- ---- ---------------------- ------------------------------- 
+  State   Domain   Id   Message Preview (pl)   Fallback Message Preview (en)  
+ ------- -------- ---- ---------------------- ------------------------------- 
+
+[notice] Migrating up to DoctrineMigrations\Version20260616205735
+[notice] finished in 194.7ms, used 24M memory, 1 migrations executed, 15 sql queries
+
+ [OK] Successfully migrated to version: DoctrineMigrations\Version20260616205735                                        
+
+
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\UserFixtures
+   > loading App\DataFixtures\TaskFixtures
+   > loading App\DataFixtures\WalletFixtures
+   > loading App\DataFixtures\OperationFixtures

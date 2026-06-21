@@ -1,9 +1,20 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Wallet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -11,6 +22,9 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class WalletRepository extends ServiceEntityRepository
 {
+    /**
+     * @param ManagerRegistry $registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Wallet::class);
@@ -18,6 +32,7 @@ class WalletRepository extends ServiceEntityRepository
 
     /**
      * @param Wallet $wallet
+     *
      * @return void
      */
     public function save(Wallet $wallet): void
@@ -27,13 +42,15 @@ class WalletRepository extends ServiceEntityRepository
     }
 
     /**
-     * Query all records.
+     * @param User $author
      *
-     * @return \Doctrine\ORM\QueryBuilder Query builder
+     * @return QueryBuilder
      */
-    public function queryAll(): \Doctrine\ORM\QueryBuilder
+    public function queryAll(User $author): QueryBuilder
     {
-        return $this->createQueryBuilder('wallet');
+        return $this->createQueryBuilder('wallet')
+            ->where('wallet.author = :author')
+            ->setParameter('author', $author);
     }
     //    /**
     //     * @return Wallet[] Returns an array of Wallet objects

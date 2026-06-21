@@ -1,24 +1,43 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * operation type.
  */
 
 namespace App\Form\Type;
 
+use App\Entity\Category;
 use App\Entity\Operation;
+use App\Repository\CategoryRepository;
+use App\Form\DataTransformer\TagsDataTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
 
 /**
  * Class operationType.
  */
 class OperationType extends AbstractType
 {
+    /**
+     * @param Security            $security
+     * @param TagsDataTransformer $tagsDataTransformer
+     */
+    public function __construct(private Security $security, private TagsDataTransformer $tagsDataTransformer)
+    {
+    }
+
     /**
      * Builds the form.
      *
@@ -32,7 +51,7 @@ class OperationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /** @var TYPE_NAME $builder */
+        /* @var TYPE_NAME $builder */
         $builder->add(
             'amount',
             NumberType::class,
@@ -41,16 +60,47 @@ class OperationType extends AbstractType
                 'required' => true,
                 'scale' => 2,
                 'attr' => ['step' => 0.01],
-            ]);
+            ]
+        );
         $builder->add(
             'description',
-            TextType::class, [
+            TextType::class,
+            [
                 'label' => 'label.description',
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'label.description',
-                    'maxlength' => 255]
+                    'maxlength' => 255, ],
             ],
+        );
+        $builder->add(
+            'category',
+            EntityType::class,
+            [
+                'class' => Category::class,
+                'query_builder' => function (CategoryRepository $repo) {
+                    return $repo->queryAll($this->security->getUser());  // ← Filtruj po user'e
+                },
+                'choice_label' => function ($category): string {
+                    return $category->getName();
+                },
+                'label' => 'label.category',
+                'required' => false,
+                'multiple' => false,
+            ]
+        );
+        $builder->add(
+            'tags',
+            TextType::class,
+            [
+                'label' => 'label.tags',
+                'required' => false,
+                'attr' => ['max_length' => 128],
+            ]
+        );
+
+        $builder->get('tags')->addModelTransformer(
+            modelTransformer: $this->tagsDataTransformer
         );
     }
 
@@ -62,7 +112,9 @@ class OperationType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         /* @var TYPE_NAME $resolver */
-        $resolver->setDefaults(['data_class' => Operation::class]);
+        $resolver->setDefaults([
+            'data_class' => Operation::class,
+        ]);
     }
 
     /**
@@ -78,5 +130,3 @@ class OperationType extends AbstractType
         return 'operation';
     }
 }
-
-

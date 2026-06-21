@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * Wallet type.
  */
@@ -36,22 +43,27 @@ class WalletType extends AbstractType
             'name',
             TextType::class,
             [
-                'label' => 'label.title',
+                'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 128,
-                    'placeholder' => 'np. Konto osobiste, Oszczędności'],
-            ]);
+                    'placeholder' => 'placeholder.wallet_name',
+                ],
+            ]
+        );
         $builder->add(
-            'currency', ChoiceType::class, [
-            'label' => 'Waluta',
-            'required' => true,
-            'choices' => [
-                'PLN' => 'PLN',
-                'EUR' => 'EUR',
-                'USD' => 'USD',
-                'GBP' => 'GBP',
-            ],
-        ]);
+            'currency',
+            ChoiceType::class,
+            [
+                'label' => 'label.currency',
+                'required' => true,
+                'choices' => [
+                    'PLN' => 'PLN',
+                    'EUR' => 'EUR',
+                    'USD' => 'USD',
+                    'GBP' => 'GBP',
+                ],
+            ]
+        );
     }
 
     /**

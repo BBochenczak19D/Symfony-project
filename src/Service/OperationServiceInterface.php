@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 /**
  * Operation service interface.
  */
@@ -25,20 +32,22 @@ interface OperationServiceInterface
 
     /**
      * @param int $id
+     *
      * @return Operation|null
      */
     public function findById(int $id): ?Operation;
 
     /**
      * @param Operation $operation
+     *
      * @return void
      */
     public function save(Operation $operation): void;
 
     /**
      * @param Operation $operation
+     *
      * @return void
      */
     public function delete(Operation $operation): void;
-
 }
