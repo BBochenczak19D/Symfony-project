@@ -78,11 +78,11 @@ class Wallet
     /**
      * Set name.
      *
-     * @param string $name Wallet name
+     * @param string|null $name Wallet name
      *
      * @return $this Current instance, for method chaining
      */
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -126,11 +126,11 @@ class Wallet
     /**
      * Set currency.
      *
-     * @param string $currency Wallet currency
+     * @param string|null $currency Wallet currency
      *
      * @return $this Current instance, for method chaining
      */
-    public function setCurrency(string $currency): static
+    public function setCurrency(?string $currency): static
     {
         $this->currency = $currency;
 

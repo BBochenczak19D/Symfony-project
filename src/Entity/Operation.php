@@ -88,11 +88,11 @@ class Operation
     /**
      * Set amount.
      *
-     * @param string $amount Operation amount
+     * @param string|null $amount Operation amount
      *
      * @return $this Current instance, for method chaining
      */
-    public function setAmount(string $amount): static
+    public function setAmount(?string $amount): static
     {
         $this->amount = $amount;
 

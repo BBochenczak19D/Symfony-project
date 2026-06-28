@@ -58,11 +58,11 @@ class Category
     /**
      * Set name.
      *
-     * @param string $name Category name
+     * @param string|null $name Category name
      *
      * @return $this Current instance, for method chaining
      */
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
