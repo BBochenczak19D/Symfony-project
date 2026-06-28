@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -21,7 +23,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class CategoryRepository extends ServiceEntityRepository
 {
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -29,11 +33,13 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $author
+     * Query all categories visible to given author (own + global).
      *
-     * @return QueryBuilder
+     * @param User $author Category author
+     *
+     * @return QueryBuilder Query builder
      */
-    public function queryAll(User $author): \Doctrine\ORM\QueryBuilder
+    public function queryAll(User $author): QueryBuilder
     {
         return $this->createQueryBuilder('category')
             ->where('category.author = :author OR category.author IS NULL')
@@ -41,9 +47,9 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Category $category
+     * Save category.
      *
-     * @return void
+     * @param Category $category Category entity
      */
     public function save(Category $category): void
     {
@@ -52,9 +58,9 @@ class CategoryRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Category $category
+     * Delete category.
      *
-     * @return void
+     * @param Category $category Category entity
      */
     public function delete(Category $category): void
     {

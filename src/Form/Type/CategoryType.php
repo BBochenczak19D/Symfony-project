@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -6,9 +7,6 @@
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
- */
-/**
- * Wallet type.
  */
 
 namespace App\Form\Type;
@@ -20,7 +18,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class WalletType.
+ * Category form type.
  */
 class CategoryType extends AbstractType
 {
@@ -37,7 +35,6 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /* @var TYPE_NAME $builder */
         $builder->add(
             'name',
             TextType::class,
@@ -56,7 +53,6 @@ class CategoryType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        /* @var TYPE_NAME $resolver */
         $resolver->setDefaults(['data_class' => Category::class]);
     }
 

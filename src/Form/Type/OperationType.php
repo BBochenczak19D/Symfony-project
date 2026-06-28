@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,16 +8,13 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-/**
- * operation type.
- */
 
 namespace App\Form\Type;
 
 use App\Entity\Category;
 use App\Entity\Operation;
-use App\Repository\CategoryRepository;
 use App\Form\DataTransformer\TagsDataTransformer;
+use App\Repository\CategoryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Form\AbstractType;
@@ -26,13 +24,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class operationType.
+ * Operation form type.
  */
 class OperationType extends AbstractType
 {
     /**
-     * @param Security            $security
-     * @param TagsDataTransformer $tagsDataTransformer
+     * Constructor.
+     *
+     * @param Security            $security            Security helper, used to get the current user
+     * @param TagsDataTransformer $tagsDataTransformer Transformer for the tags field
      */
     public function __construct(private Security $security, private TagsDataTransformer $tagsDataTransformer)
     {
@@ -51,7 +51,6 @@ class OperationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /* @var TYPE_NAME $builder */
         $builder->add(
             'amount',
             NumberType::class,
@@ -111,7 +110,6 @@ class OperationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        /* @var TYPE_NAME $resolver */
         $resolver->setDefaults([
             'data_class' => Operation::class,
         ]);

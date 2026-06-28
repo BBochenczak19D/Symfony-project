@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,94 +8,105 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-/**
- * Wallet service interface.
- */
 
 namespace App\Service;
 
+use App\DTO\OperationListInputFiltersDTO;
 use App\Entity\User;
 use App\Entity\Wallet;
 use Knp\Component\Pager\Pagination\PaginationInterface;
-use App\DTO\OperationListInputFiltersDTO;
 
 /**
- *
+ * Wallet service interface.
  */
 interface WalletServiceInterface
 {
     /**
-     * @param User $author
-     * @param int  $page
+     * Get paginated list.
      *
-     * @return PaginationInterface
+     * @param User $author Wallet author
+     * @param int  $page   Page number
+     *
+     * @return PaginationInterface Paginated list
      */
     public function getPaginatedList(User $author, int $page = 1): PaginationInterface;
 
     /**
-     * @return array
+     * Get operation totals.
+     *
+     * @return array Aggregated operation totals
      */
     public function getOperationTotals(): array;
 
     /**
-     * @param int $id
+     * Find wallet by id.
      *
-     * @return Wallet|null
+     * @param int $id Wallet id
+     *
+     * @return Wallet|null Found wallet or null
      */
     public function findById(int $id): ?Wallet;
 
     /**
-     * @param int                          $walletId
-     * @param int                          $page
-     * @param OperationListInputFiltersDTO $filters
+     * Get paginated operations for given wallet.
      *
-     * @return PaginationInterface
+     * @param int                          $walletId Wallet id
+     * @param int                          $page     Page number
+     * @param OperationListInputFiltersDTO $filters  Filters
+     *
+     * @return PaginationInterface Paginated list
      */
     public function getPaginatedOperations(int $walletId, int $page, OperationListInputFiltersDTO $filters): PaginationInterface;
 
     /**
-     * @param Wallet $wallet
+     * Save wallet.
      *
-     * @return void
+     * @param Wallet $wallet Wallet entity
      */
     public function save(Wallet $wallet): void;
 
     /**
-     * @param Wallet $wallet
+     * Delete wallet.
      *
-     * @return void
+     * @param Wallet $wallet Wallet entity
      */
     public function delete(Wallet $wallet): void;
 
     /**
-     * @param Wallet $wallet
+     * Edit wallet.
      *
-     * @return void
+     * @param Wallet $wallet Wallet entity
      */
     public function editWallet(Wallet $wallet): void;
 
     /**
-     * @param int $walletId
+     * Get current balance for given wallet.
      *
-     * @return float
+     * @param int $walletId Wallet id
+     *
+     * @return float Current balance
      */
     public function getCurrentBalance(int $walletId): float;
 
     /**
-     * @param int        $walletId
-     * @param float      $newAmount
-     * @param float|null $oldAmount
+     * Check if given amount can be added to wallet without exceeding limits.
      *
-     * @return bool
+     * @param int        $walletId  Wallet id
+     * @param float      $newAmount New amount
+     * @param float|null $oldAmount Previous amount, if editing an existing operation
+     *
+     * @return bool True if amount can be added
      */
     public function canAddAmount(int $walletId, float $newAmount, ?float $oldAmount = null): bool;
 
     /**
-     * @param int                     $walletId
-     * @param \DateTimeImmutable|null $dateFrom
-     * @param \DateTimeImmutable|null $dateTo
+     * Get balance for given wallet within an optional date period.
      *
-     * @return float
+     * @param int                     $walletId Wallet id
+     * @param \DateTimeImmutable|null $dateFrom Date from
+     * @param \DateTimeImmutable|null $dateTo   Date to
+     *
+     * @return float Period balance
      */
     public function getPeriodBalance(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float;
 }

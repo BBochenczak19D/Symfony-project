@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
@@ -14,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- *
+ * Category entity.
  */
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -34,7 +36,9 @@ class Category
     private ?User $author = null;
 
     /**
-     * @return int|null
+     * Get id.
+     *
+     * @return int|null Category id
      */
     public function getId(): ?int
     {
@@ -42,7 +46,9 @@ class Category
     }
 
     /**
-     * @return string|null
+     * Get name.
+     *
+     * @return string|null Category name
      */
     public function getName(): ?string
     {
@@ -50,9 +56,11 @@ class Category
     }
 
     /**
-     * @param string $name
+     * Set name.
      *
-     * @return $this
+     * @param string $name Category name
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setName(string $name): static
     {
@@ -62,7 +70,9 @@ class Category
     }
 
     /**
-     * @return User|null
+     * Get author.
+     *
+     * @return User|null Category author
      */
     public function getAuthor(): ?User
     {
@@ -70,9 +80,11 @@ class Category
     }
 
     /**
-     * @param User|null $author
+     * Set author.
      *
-     * @return $this
+     * @param User|null $author Category author
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setAuthor(?User $author): static
     {

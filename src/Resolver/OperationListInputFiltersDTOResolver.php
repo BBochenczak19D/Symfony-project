@@ -17,15 +17,17 @@ use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
 /**
- *
+ * Value resolver building OperationListInputFiltersDTO from the request query string.
  */
 class OperationListInputFiltersDTOResolver implements ValueResolverInterface
 {
     /**
-     * @param Request          $request
-     * @param ArgumentMetadata $argument
+     * Resolve the filters DTO for the current request.
      *
-     * @return iterable
+     * @param Request          $request  HTTP request
+     * @param ArgumentMetadata $argument Argument metadata
+     *
+     * @return iterable Resolved values (empty if argument type doesn't match)
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {

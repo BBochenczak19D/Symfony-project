@@ -91,7 +91,7 @@ final class OperationVoter extends Voter
      */
     private function canDelete(Operation $operation, UserInterface $user): bool
     {
-        return $operation->getAuthor() === $user;
+        return $operation->getWallet()->getAuthor() === $user;
     }
 
     /**
@@ -104,7 +104,7 @@ final class OperationVoter extends Voter
      */
     private function canEdit(Operation $operation, UserInterface $user): bool
     {
-        return $operation->getAuthor() === $user;
+        return $operation->getWallet()->getAuthor() === $user;
     }
 
     /**
@@ -117,6 +117,6 @@ final class OperationVoter extends Voter
      */
     private function canView(Operation $operation, UserInterface $user): bool
     {
-        return $operation->getAuthor() === $user;
+        return $operation->getWallet()->getAuthor() === $user;
     }
 }

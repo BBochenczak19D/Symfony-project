@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- *
+ * Operation entity representing a single wallet transaction.
  */
 #[ORM\Entity(repositoryClass: OperationRepository::class)]
 class Operation
@@ -57,7 +57,7 @@ class Operation
     private Collection $tags;
 
     /**
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -66,7 +66,9 @@ class Operation
     }
 
     /**
-     * @return int|null
+     * Get id.
+     *
+     * @return int|null Operation id
      */
     public function getId(): ?int
     {
@@ -74,7 +76,9 @@ class Operation
     }
 
     /**
-     * @return string|null
+     * Get amount.
+     *
+     * @return string|null Operation amount
      */
     public function getAmount(): ?string
     {
@@ -82,9 +86,11 @@ class Operation
     }
 
     /**
-     * @param string $amount
+     * Set amount.
      *
-     * @return $this
+     * @param string $amount Operation amount
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setAmount(string $amount): static
     {
@@ -94,7 +100,9 @@ class Operation
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * Get creation date.
+     *
+     * @return \DateTimeImmutable|null Creation date
      */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -102,9 +110,11 @@ class Operation
     }
 
     /**
-     * @param \DateTimeImmutable $createdAt
+     * Set creation date.
      *
-     * @return $this
+     * @param \DateTimeImmutable $createdAt Creation date
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
@@ -114,7 +124,9 @@ class Operation
     }
 
     /**
-     * @return string|null
+     * Get description.
+     *
+     * @return string|null Operation description
      */
     public function getDescription(): ?string
     {
@@ -122,9 +134,11 @@ class Operation
     }
 
     /**
-     * @param string|null $description
+     * Set description.
      *
-     * @return $this
+     * @param string|null $description Operation description
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setDescription(?string $description): static
     {
@@ -134,7 +148,9 @@ class Operation
     }
 
     /**
-     * @return Wallet|null
+     * Get wallet.
+     *
+     * @return Wallet|null Wallet that this operation belongs to
      */
     public function getWallet(): ?Wallet
     {
@@ -142,9 +158,11 @@ class Operation
     }
 
     /**
-     * @param Wallet|null $wallet
+     * Set wallet.
      *
-     * @return $this
+     * @param Wallet|null $wallet Wallet that this operation belongs to
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setWallet(?Wallet $wallet): static
     {
@@ -154,7 +172,9 @@ class Operation
     }
 
     /**
-     * @return Category|null
+     * Get category.
+     *
+     * @return Category|null Operation category
      */
     public function getCategory(): ?Category
     {
@@ -162,9 +182,11 @@ class Operation
     }
 
     /**
-     * @param Category|null $category
+     * Set category.
      *
-     * @return $this
+     * @param Category|null $category Operation category
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setCategory(?Category $category): static
     {
@@ -174,18 +196,21 @@ class Operation
     }
 
     /**
-     * @return Collection<int, Tag>
+     * Get tags.
+     *
+     * @return Collection<int, Tag> Tags assigned to this operation
      */
     public function getTags(): Collection
     {
         return $this->tags;
     }
 
-
     /**
-     * @param Tag $tag
+     * Add tag.
      *
-     * @return $this
+     * @param Tag $tag Tag entity
+     *
+     * @return $this Current instance, for method chaining
      */
     public function addTag(Tag $tag): static
     {
@@ -197,9 +222,11 @@ class Operation
     }
 
     /**
-     * @param Tag $tag
+     * Remove tag.
      *
-     * @return $this
+     * @param Tag $tag Tag entity
+     *
+     * @return $this Current instance, for method chaining
      */
     public function removeTag(Tag $tag): static
     {

@@ -16,7 +16,7 @@ use App\Entity\Wallet;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
- *
+ * Operation fixtures.
  */
 class OperationFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {

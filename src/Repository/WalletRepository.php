@@ -23,7 +23,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class WalletRepository extends ServiceEntityRepository
 {
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -31,9 +33,9 @@ class WalletRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Wallet $wallet
+     * Save wallet.
      *
-     * @return void
+     * @param Wallet $wallet Wallet entity
      */
     public function save(Wallet $wallet): void
     {
@@ -42,9 +44,11 @@ class WalletRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $author
+     * Query all wallets for given author.
      *
-     * @return QueryBuilder
+     * @param User $author Wallet author
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(User $author): QueryBuilder
     {

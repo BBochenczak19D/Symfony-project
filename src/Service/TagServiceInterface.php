@@ -16,50 +16,58 @@ use App\Entity\User;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
- *
+ * Tag service interface.
  */
 interface TagServiceInterface
 {
     /**
-     * @param User $author
-     * @param int  $page
+     * Get paginated list.
      *
-     * @return PaginationInterface
+     * @param User $author Tag author
+     * @param int  $page   Page number
+     *
+     * @return PaginationInterface Paginated list
      */
     public function getPaginatedList(User $author, int $page): PaginationInterface;
 
     /**
-     * @param int $id
+     * Find tag by id.
      *
-     * @return Tag|null
+     * @param int $id Tag id
+     *
+     * @return Tag|null Found tag or null
      */
     public function findById(int $id): ?Tag;
 
     /**
-     * @param int $id
+     * Find one tag by id.
      *
-     * @return Tag|null
+     * @param int $id Tag id
+     *
+     * @return Tag|null Found tag or null
      */
     public function findOneById(int $id): ?Tag;
 
     /**
-     * @param Tag $tag
+     * Save tag.
      *
-     * @return void
+     * @param Tag $tag Tag entity
      */
     public function save(Tag $tag): void;
 
     /**
-     * @param Tag $tag
+     * Delete tag.
      *
-     * @return void
+     * @param Tag $tag Tag entity
      */
     public function delete(Tag $tag): void;
 
     /**
-     * @param string $name
+     * Find one tag by name.
      *
-     * @return Tag|null
+     * @param string $name Tag name
+     *
+     * @return Tag|null Found tag or null
      */
     public function findOneByName(string $name): ?Tag;
 }

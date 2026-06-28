@@ -9,23 +9,21 @@
  * file that was distributed with this source code.
  */
 
-/**
- * Operation list input filters DTO.
- */
-
 namespace App\DTO;
 
 /**
- *
+ * Operation list input filters DTO.
  */
 class OperationListInputFiltersDTO
 {
     /**
-     * @param int|null                $categoryId
-     * @param int|null                $tagId
-     * @param int                     $statusId
-     * @param \DateTimeImmutable|null $dateFrom
-     * @param \DateTimeImmutable|null $dateTo
+     * Constructor.
+     *
+     * @param int|null                $categoryId Category id filter
+     * @param int|null                $tagId      Tag id filter
+     * @param int                     $statusId   Status id filter
+     * @param \DateTimeImmutable|null $dateFrom   Date from filter
+     * @param \DateTimeImmutable|null $dateTo     Date to filter
      */
     public function __construct(public readonly ?int $categoryId = null, public readonly ?int $tagId = null, public readonly int $statusId = 1, public readonly ?\DateTimeImmutable $dateFrom = null, public readonly ?\DateTimeImmutable $dateTo = null)
     {

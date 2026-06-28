@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Repository;
 
 use App\DTO\OperationListFiltersDTO;
@@ -24,7 +26,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class OperationRepository extends ServiceEntityRepository
 {
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -32,7 +36,9 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return QueryBuilder
+     * Query all operations with joined wallet, category and tags.
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
@@ -46,10 +52,12 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int                     $walletId
-     * @param OperationListFiltersDTO $filters
+     * Query operations for given wallet, with filters applied.
      *
-     * @return QueryBuilder
+     * @param int                     $walletId Wallet id
+     * @param OperationListFiltersDTO $filters  Filters
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryByWallet(int $walletId, OperationListFiltersDTO $filters): QueryBuilder
     {
@@ -61,9 +69,9 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Operation $operation
+     * Save operation.
      *
-     * @return void
+     * @param Operation $operation Operation entity
      */
     public function save(Operation $operation): void
     {
@@ -72,9 +80,9 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Operation $operation
+     * Delete operation.
      *
-     * @return void
+     * @param Operation $operation Operation entity
      */
     public function delete(Operation $operation): void
     {
@@ -83,7 +91,9 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return array
+     * Find wallet operation totals grouped by wallet.
+     *
+     * @return WalletOperationDTO[] List of wallet operation totals
      */
     public function findByExampleField(): array
     {
@@ -101,11 +111,13 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int                     $walletId
-     * @param \DateTimeImmutable|null $dateFrom
-     * @param \DateTimeImmutable|null $dateTo
+     * Sum operation amounts for given wallet within an optional date period.
      *
-     * @return float
+     * @param int                     $walletId Wallet id
+     * @param \DateTimeImmutable|null $dateFrom Date from
+     * @param \DateTimeImmutable|null $dateTo   Date to
+     *
+     * @return float Sum of amounts
      */
     public function sumByWalletAndPeriod(int $walletId, ?\DateTimeImmutable $dateFrom, ?\DateTimeImmutable $dateTo): float
     {
@@ -126,27 +138,29 @@ class OperationRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param Category $category
+     * Nullify category on all operations referencing it.
      *
-     * @return void
+     * @param Category $category Category entity
      */
     public function nullifyCategory(Category $category): void
     {
         $this->createQueryBuilder('o')
-        ->update()
-        ->set('o.category', ':null')
-        ->where('o.category = :category')
-        ->setParameter('null', null)
-        ->setParameter('category', $category)
-        ->getQuery()
-        ->execute();
+            ->update()
+            ->set('o.category', ':null')
+            ->where('o.category = :category')
+            ->setParameter('null', null)
+            ->setParameter('category', $category)
+            ->getQuery()
+            ->execute();
     }
 
     /**
-     * @param QueryBuilder            $queryBuilder
-     * @param OperationListFiltersDTO $filters
+     * Apply filters to given query builder.
      *
-     * @return QueryBuilder
+     * @param QueryBuilder            $queryBuilder Query builder
+     * @param OperationListFiltersDTO $filters      Filters
+     *
+     * @return QueryBuilder Query builder with filters applied
      */
     private function applyFiltersToList(QueryBuilder $queryBuilder, OperationListFiltersDTO $filters): QueryBuilder
     {

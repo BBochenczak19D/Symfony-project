@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Entity;
 
 use App\Repository\TagRepository;
@@ -15,7 +17,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- *
+ * Tag entity.
  */
 #[ORM\Entity(repositoryClass: TagRepository::class)]
 class Tag
@@ -35,7 +37,7 @@ class Tag
     private Collection $operations;
 
     /**
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -43,7 +45,9 @@ class Tag
     }
 
     /**
-     * @return int|null
+     * Get id.
+     *
+     * @return int|null Tag id
      */
     public function getId(): ?int
     {
@@ -51,7 +55,9 @@ class Tag
     }
 
     /**
-     * @return string|null
+     * Get name.
+     *
+     * @return string|null Tag name
      */
     public function getName(): ?string
     {
@@ -59,9 +65,11 @@ class Tag
     }
 
     /**
-     * @param string|null $name
+     * Set name.
      *
-     * @return $this
+     * @param string|null $name Tag name
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setName(?string $name): static
     {
@@ -71,7 +79,9 @@ class Tag
     }
 
     /**
-     * @return User|null
+     * Get author.
+     *
+     * @return User|null Tag author
      */
     public function getAuthor(): ?User
     {
@@ -79,9 +89,11 @@ class Tag
     }
 
     /**
-     * @param User|null $author
+     * Set author.
      *
-     * @return $this
+     * @param User|null $author Tag author
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setAuthor(?User $author): static
     {
@@ -91,7 +103,9 @@ class Tag
     }
 
     /**
-     * @return Collection
+     * Get operations using this tag.
+     *
+     * @return Collection<int, Operation> Operations collection
      */
     public function getOperations(): Collection
     {
@@ -99,9 +113,11 @@ class Tag
     }
 
     /**
-     * @param Operation $operation
+     * Add operation to this tag.
      *
-     * @return $this
+     * @param Operation $operation Operation entity
+     *
+     * @return $this Current instance, for method chaining
      */
     public function addOperation(Operation $operation): static
     {
@@ -114,9 +130,11 @@ class Tag
     }
 
     /**
-     * @param Operation $operation
+     * Remove operation from this tag.
      *
-     * @return $this
+     * @param Operation $operation Operation entity
+     *
+     * @return $this Current instance, for method chaining
      */
     public function removeOperation(Operation $operation): static
     {

@@ -28,6 +28,7 @@ class UserFixtures extends AbstractBaseFixtures
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
+
     /**
      * Load data fixtures with the passed EntityManager.
      */

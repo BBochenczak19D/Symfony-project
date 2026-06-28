@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Repository;
 
 use App\Entity\Tag;
@@ -23,7 +25,9 @@ use Doctrine\Persistence\ManagerRegistry;
 class TagRepository extends ServiceEntityRepository
 {
     /**
-     * @param ManagerRegistry $registry
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -31,9 +35,11 @@ class TagRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param User $author
+     * Query all tags belonging to given author.
      *
-     * @return QueryBuilder
+     * @param User $author Tag author
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(User $author): QueryBuilder
     {

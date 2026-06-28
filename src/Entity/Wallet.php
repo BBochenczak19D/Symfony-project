@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Entity;
 
 use App\Repository\WalletRepository;
@@ -15,15 +17,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- *
+ * Wallet entity.
  */
 #[ORM\Entity(repositoryClass: WalletRepository::class)]
 #[ORM\Table(name: 'wallet')]
 class Wallet
 {
-    /**
-     * @var int|null
-     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -49,7 +48,7 @@ class Wallet
     private ?User $author = null;
 
     /**
-     *
+     * Constructor.
      */
     public function __construct()
     {
@@ -57,7 +56,9 @@ class Wallet
     }
 
     /**
-     * @return int|null
+     * Get id.
+     *
+     * @return int|null Wallet id
      */
     public function getId(): ?int
     {
@@ -65,7 +66,9 @@ class Wallet
     }
 
     /**
-     * @return string|null
+     * Get name.
+     *
+     * @return string|null Wallet name
      */
     public function getName(): ?string
     {
@@ -73,9 +76,11 @@ class Wallet
     }
 
     /**
-     * @param string $name
+     * Set name.
      *
-     * @return $this
+     * @param string $name Wallet name
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setName(string $name): static
     {
@@ -85,7 +90,9 @@ class Wallet
     }
 
     /**
-     * @return string|null
+     * Get balance.
+     *
+     * @return string|null Wallet balance
      */
     public function getBalance(): ?string
     {
@@ -93,9 +100,11 @@ class Wallet
     }
 
     /**
-     * @param string $balance
+     * Set balance.
      *
-     * @return $this
+     * @param string $balance Wallet balance
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setBalance(string $balance): static
     {
@@ -105,7 +114,9 @@ class Wallet
     }
 
     /**
-     * @return string|null
+     * Get currency.
+     *
+     * @return string|null Wallet currency
      */
     public function getCurrency(): ?string
     {
@@ -113,9 +124,11 @@ class Wallet
     }
 
     /**
-     * @param string $currency
+     * Set currency.
      *
-     * @return $this
+     * @param string $currency Wallet currency
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setCurrency(string $currency): static
     {
@@ -125,7 +138,9 @@ class Wallet
     }
 
     /**
-     * @return User|null
+     * Get author.
+     *
+     * @return User|null Wallet author
      */
     public function getAuthor(): ?User
     {
@@ -133,9 +148,11 @@ class Wallet
     }
 
     /**
-     * @param User|null $author
+     * Set author.
      *
-     * @return $this
+     * @param User|null $author Wallet author
+     *
+     * @return $this Current instance, for method chaining
      */
     public function setAuthor(?User $author): static
     {

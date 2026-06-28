@@ -11,50 +11,55 @@
 
 namespace App\Controller;
 
+use App\DTO\OperationListInputFiltersDTO;
 use App\Entity\Operation;
 use App\Entity\Wallet;
 use App\Form\Type\OperationType;
 use App\Form\Type\WalletType;
-use App\DTO\OperationListInputFiltersDTO;
-use App\Service\WalletServiceInterface;
+use App\Resolver\OperationListInputFiltersDTOResolver;
+use App\Security\Voter\OperationVoter;
+use App\Security\Voter\WalletVoter;
 use App\Service\OperationServiceInterface;
+use App\Service\WalletServiceInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\HttpKernel\Attribute\MapQueryString;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
- *
- * */
+ * Wallet controller.
+ */
 #[Route('/wallet')]
 class WalletController extends AbstractController
 {
-
-
     /**
-     * @param WalletServiceInterface    $walletService
-     * @param OperationServiceInterface $operationService
-     * @param TranslatorInterface       $translator
+     * Constructor.
+     *
+     * @param WalletServiceInterface    $walletService    Wallet service
+     * @param OperationServiceInterface $operationService Operation service
+     * @param TranslatorInterface       $translator       Translator
      */
     public function __construct(private readonly WalletServiceInterface $walletService, private readonly OperationServiceInterface $operationService, private readonly TranslatorInterface $translator)
     {
     }
 
-
     /**
-     * @param int $page
+     * List wallets.
      *
-     * @return Response
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
      */
     #[Route(
         name: 'wallet_index',
         methods: ['GET'],
     )]
-    #[IsGranted(WalletVoter::VIEW, subject: 'wallet')]
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $author = $this->getUser();
@@ -67,11 +72,13 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Wallet                       $wallet
-     * @param OperationListInputFiltersDTO $filters
-     * @param int                          $page
+     * View a single wallet with its operations.
      *
-     * @return Response
+     * @param Wallet                       $wallet  Wallet entity
+     * @param OperationListInputFiltersDTO $filters Filters resolved from query string
+     * @param int                          $page    Page number
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}',
@@ -79,7 +86,7 @@ class WalletController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET'],
     )]
-    #[IsGranted(OperationVoter::VIEW, subject: 'operation')]
+    #[IsGranted(WalletVoter::VIEW, subject: 'wallet')]
     public function view(Wallet $wallet, #[MapQueryString(resolver: OperationListInputFiltersDTOResolver::class)] OperationListInputFiltersDTO $filters, #[MapQueryParameter] int $page = 1): Response
     {
         $hasPeriodFilter = null !== $filters->dateFrom || null !== $filters->dateTo;
@@ -94,11 +101,13 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param int                    $id
-     * @param Request                $request
-     * @param EntityManagerInterface $entityManager
+     * Add an operation to a wallet.
      *
-     * @return Response
+     * @param int                    $id            Wallet id
+     * @param Request                $request       HTTP request
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}/add-operation',
@@ -143,12 +152,14 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param int                    $walletId
-     * @param Operation              $operation
-     * @param EntityManagerInterface $entityManager
+     * Delete an operation.
      *
-     * @return Response
+     * @param Request                $request       HTTP request
+     * @param int                    $walletId      Wallet id
+     * @param Operation              $operation     Operation entity
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{walletId}/operation-{id}/delete',
@@ -177,7 +188,7 @@ class WalletController extends AbstractController
         }
 
         return $this->render(
-            'wallet/delete-tag.html.twig',
+            'wallet/delete-operation.html.twig',
             [
                 'form' => $form->createView(),
                 'wallet' => $wallet,
@@ -186,12 +197,14 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param int                    $walletId
-     * @param Operation              $operation
-     * @param EntityManagerInterface $entityManager
+     * Edit an operation.
      *
-     * @return Response
+     * @param Request                $request       HTTP request
+     * @param int                    $walletId      Wallet id
+     * @param Operation              $operation     Operation entity
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{walletId}/operation-{id}/edit',
@@ -219,7 +232,7 @@ class WalletController extends AbstractController
             if (!$this->walletService->canAddAmount($wallet->getId(), (float) $operation->getAmount(), $oldAmount)) {
                 $this->addFlash('danger', 'Saldo nie może spaść poniżej 0.');
 
-                return $this->render('wallet/edit-category.html.twig', [
+                return $this->render('wallet/edit-operation.html.twig', [
                     'form' => $form->createView(),
                     'operation' => $operation,
                     'wallet' => $wallet,
@@ -242,10 +255,12 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Request                $request
-     * @param EntityManagerInterface $entityManager
+     * Add a new wallet.
      *
-     * @return Response
+     * @param Request                $request       HTTP request
+     * @param EntityManagerInterface $entityManager Entity manager
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/add-wallet',
@@ -254,7 +269,6 @@ class WalletController extends AbstractController
     )]
     public function addWallet(Request $request, EntityManagerInterface $entityManager): Response
     {
-
         $user = $this->getUser();
         $wallet = new Wallet();
         $wallet->setAuthor($user);
@@ -281,10 +295,12 @@ class WalletController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param int     $id
+     * Edit an existing wallet.
      *
-     * @return Response
+     * @param Request $request HTTP request
+     * @param int     $id      Wallet id
+     *
+     * @return Response HTTP response
      */
     #[Route(
         '/{id}/edit-wallet',
@@ -292,13 +308,14 @@ class WalletController extends AbstractController
         methods: ['GET', 'POST'],
         requirements: ['id' => '[1-9]\d*'],
     )]
-    #[IsGranted(WalletVoter::EDIT, subject: 'wallet')]
     public function editWallet(Request $request, int $id): Response
     {
         $wallet = $this->walletService->findById($id);
         if (!$wallet) {
             throw $this->createNotFoundException('Nie ma takiego portfela');
         }
+
+        $this->denyAccessUnlessGranted(WalletVoter::EDIT, $wallet);
 
         $form = $this->createForm(WalletType::class, $wallet, [
             'method' => 'POST',

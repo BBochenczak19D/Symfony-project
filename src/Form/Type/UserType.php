@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,6 +8,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 namespace App\Form\Type;
 
 use App\Entity\User;
@@ -20,15 +22,15 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- *
+ * User form type.
  */
 class UserType extends AbstractType
 {
     /**
-     * @param FormBuilderInterface $builder
-     * @param array                $options
+     * Builds the form.
      *
-     * @return void
+     * @param FormBuilderInterface $builder Form builder
+     * @param array                $options Form options, supports 'require_password'
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -67,9 +69,9 @@ class UserType extends AbstractType
     }
 
     /**
-     * @param OptionsResolver $resolver
+     * Configures the options for this type.
      *
-     * @return void
+     * @param OptionsResolver $resolver Options resolver, sets 'data_class' and 'require_password'
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

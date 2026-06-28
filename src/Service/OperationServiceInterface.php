@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the SI project.
  *
@@ -7,9 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-/**
- * Operation service interface.
- */
 
 namespace App\Service;
 
@@ -17,7 +15,7 @@ use App\Entity\Operation;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 
 /**
- * Interface OperationServiceInterface.
+ * Operation service interface.
  */
 interface OperationServiceInterface
 {
@@ -31,23 +29,25 @@ interface OperationServiceInterface
     public function getPaginatedList(int $page): PaginationInterface;
 
     /**
-     * @param int $id
+     * Find operation by id.
      *
-     * @return Operation|null
+     * @param int $id Operation id
+     *
+     * @return Operation|null Found operation or null
      */
     public function findById(int $id): ?Operation;
 
     /**
-     * @param Operation $operation
+     * Save operation.
      *
-     * @return void
+     * @param Operation $operation Operation entity
      */
     public function save(Operation $operation): void;
 
     /**
-     * @param Operation $operation
+     * Delete operation.
      *
-     * @return void
+     * @param Operation $operation Operation entity
      */
     public function delete(Operation $operation): void;
 }
