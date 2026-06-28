@@ -19,7 +19,7 @@
             <input type="submit" value="{{ 'action.delete'|trans }}" class="btn btn-danger"/>
 
             <a href="{{ path('wallet_view', {'id': wallet.id}) }}" class="btn btn-secondary">
-                Przerwij
+                {{ 'action.cancel'|trans }}
             </a>
         </div>
         {{ form_end(form) }}

@@ -1,0 +1,22 @@
+
+Found 0 of 49 files that can be fixed in 0.626 seconds, 110.00 MB memory used
+ ------- -------- ---- ---------------------- 
+  State   Domain   Id   Message Preview (en)  
+ ------- -------- ---- ---------------------- 
+
+ ------- -------- ---- ---------------------- ------------------------------- 
+  State   Domain   Id   Message Preview (pl)   Fallback Message Preview (en)  
+ ------- -------- ---- ---------------------- ------------------------------- 
+
+[notice] Migrating up to DoctrineMigrations\Version20260616205735
+[notice] finished in 145.5ms, used 24M memory, 1 migrations executed, 15 sql queries
+
+ [OK] Successfully migrated to version: DoctrineMigrations\Version20260616205735                                        
+
+
+   > purging database
+   > loading App\DataFixtures\AppFixtures
+   > loading App\DataFixtures\UserFixtures
+   > loading App\DataFixtures\TaskFixtures
+   > loading App\DataFixtures\WalletFixtures
+   > loading App\DataFixtures\OperationFixtures

@@ -1,9 +1,18 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\DTO;
 
 /**
- *
+ * DTO representing a wallet operation.
  */
 class WalletOperationDTO
 {
@@ -13,10 +22,12 @@ class WalletOperationDTO
     private string $currency;
 
     /**
-     * @param string $id
-     * @param string $name
-     * @param string $amount
-     * @param string $currency
+     * Constructor.
+     *
+     * @param string $id       Wallet id
+     * @param string $name     Wallet name
+     * @param string $amount   Total amount
+     * @param string $currency Wallet currency
      */
     public function __construct(string $id, string $name, string $amount, string $currency)
     {
@@ -27,7 +38,9 @@ class WalletOperationDTO
     }
 
     /**
-     * @return string
+     * Get id.
+     *
+     * @return string Wallet id
      */
     public function getId(): string
     {
@@ -35,7 +48,9 @@ class WalletOperationDTO
     }
 
     /**
-     * @return string
+     * Get name.
+     *
+     * @return string Wallet name
      */
     public function getName(): string
     {
@@ -43,7 +58,9 @@ class WalletOperationDTO
     }
 
     /**
-     * @return string
+     * Get amount.
+     *
+     * @return string Total amount
      */
     public function getAmount(): string
     {
@@ -51,7 +68,9 @@ class WalletOperationDTO
     }
 
     /**
-     * @return string
+     * Get currency.
+     *
+     * @return string Wallet currency
      */
     public function getCurrency(): string
     {

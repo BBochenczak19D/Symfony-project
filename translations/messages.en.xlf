@@ -1,49 +1,109 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="en" target-language="en" datatype="plaintext" original="file.ext">
+
     <body>
+     <trans-unit id="label.require_password">
+         <source>label.require_password</source>
+         <target>Password is required.</target>
+       </trans-unit>
+    <trans-unit id="app.name">
+                     <source>app.name</source>
+                     <target>wallet app</target>
+                   </trans-unit>
+                   <trans-unit id="label.password_too_short">
+                     <source>label.password_too_short</source>
+                     <target>Password must be at least {{ limit }} characters long.</target>
+                   </trans-unit>
+      <trans-unit id="action.avatar"><source>action.avatar</source><target>Actions</target></trans-unit>
+      <trans-unit id="action.delete"><source>action.delete</source><target>Delete</target></trans-unit>
+      <trans-unit id="action.edit"><source>action.edit</source><target>Edit</target></trans-unit>
+      <trans-unit id="action.save"><source>action.save</source><target>Save</target></trans-unit>
+      <trans-unit id="action.save_changes"><source>action.save_changes</source><target>Save changes</target></trans-unit>
+      <trans-unit id="action.cancel"><source>action.cancel</source><target>Cancel</target></trans-unit>
+      <trans-unit id="action.back"><source>action.back</source><target>Back</target></trans-unit>
+      <trans-unit id="action.create"><source>action.create</source><target>Create</target></trans-unit>
+      <trans-unit id="action.login"><source>action.login</source><target>Sign in</target></trans-unit>
+      <trans-unit id="action.logout"><source>action.logout</source><target>Logout</target></trans-unit>
+      <trans-unit id="action.register"><source>action.register</source><target>Register</target></trans-unit>
+      <trans-unit id="action.clear_filters"><source>action.clear_filters</source><target>Clear filters</target></trans-unit>
+      <trans-unit id="action.new_transaction"><source>action.new_transaction</source><target>New transaction</target></trans-unit>
+      <trans-unit id="action.new_wallet"><source>action.new_wallet</source><target>New wallet</target></trans-unit>
+      <trans-unit id="action.new_category"><source>action.new_category</source><target>New category</target></trans-unit>
+      <trans-unit id="action.add_first"><source>action.add_first</source><target>Add first one</target></trans-unit>
+      <trans-unit id="action.create_first_wallet"><source>action.create_first_wallet</source><target>Create your first wallet</target></trans-unit>
+      <trans-unit id="action.create_first_category"><source>action.create_first_category</source><target>Create first one</target></trans-unit>
+      <trans-unit id="action.view"><source>action.view</source><target>View</target></trans-unit>
 
-      <trans-unit id="action.avatar">
-        <source>action.avatar</source>
-        <target>Actions</target>
-      </trans-unit>
+      <trans-unit id="label.id"><source>label.id</source><target>Id</target></trans-unit>
+      <trans-unit id="label.title"><source>label.title</source><target>Title</target></trans-unit>
+      <trans-unit id="label.content"><source>label.content</source><target>Content</target></trans-unit>
+      <trans-unit id="label.tags"><source>label.tags</source><target>Tags</target></trans-unit>
+      <trans-unit id="label.actions"><source>label.actions</source><target>Actions</target></trans-unit>
+      <trans-unit id="label.email"><source>label.email</source><target>Email</target></trans-unit>
+      <trans-unit id="label.password"><source>label.password</source><target>Password</target></trans-unit>
+      <trans-unit id="label.repeat_password"><source>label.repeat_password</source><target>Repeat password</target></trans-unit>
+      <trans-unit id="label.name"><source>label.name</source><target>Name</target></trans-unit>
+      <trans-unit id="label.amount"><source>label.amount</source><target>Amount</target></trans-unit>
+      <trans-unit id="label.description"><source>label.description</source><target>Description</target></trans-unit>
+      <trans-unit id="label.category"><source>label.category</source><target>Category</target></trans-unit>
+      <trans-unit id="label.currency"><source>label.currency</source><target>Currency</target></trans-unit>
+      <trans-unit id="label.balance"><source>label.balance</source><target>Balance</target></trans-unit>
+      <trans-unit id="label.created_at"><source>label.created_at</source><target>Created at</target></trans-unit>
+      <trans-unit id="label.updated_at"><source>label.updated_at</source><target>Updated at</target></trans-unit>
+      <trans-unit id="label.roles"><source>label.roles</source><target>Roles</target></trans-unit>
+      <trans-unit id="label.date"><source>label.date</source><target>Date</target></trans-unit>
+      <trans-unit id="label.not_equal_password"><source>label.not_equal_password</source><target>Password must match</target></trans-unit>
+      <trans-unit id="message.empty_list"><source>message.empty_list</source><target>List is empty.</target></trans-unit>
+      <trans-unit id="message.record_not_found"><source>message.record_not_found</source><target>Record not found.</target></trans-unit>
+      <trans-unit id="message.created_successfully"><source>message.created_successfully</source><target>Created successfully.</target></trans-unit>
+      <trans-unit id="message.edited_successfully"><source>message.edited_successfully</source><target>Updated successfully.</target></trans-unit>
+      <trans-unit id="message.deleted_successfully"><source>message.deleted_successfully</source><target>Deleted successfully.</target></trans-unit>
+      <trans-unit id="message.confirm_delete_category"><source>message.confirm_delete_category</source><target>Are you sure you want to permanently delete this category?</target></trans-unit>
+      <trans-unit id="message.confirm_delete_operation"><source>message.confirm_delete_operation</source><target>Are you sure you want to permanently delete this transaction?</target></trans-unit>
+      <trans-unit id="message.password_hint"><source>message.password_hint</source><target>Leave password fields empty if you do not want to change it.</target></trans-unit>
+      <trans-unit id="message.have_account"><source>message.have_account</source><target>Already have an account?</target></trans-unit>
+      <trans-unit id="message.no_account"><source>message.no_account</source><target>Do not have an account?</target></trans-unit>
+      <trans-unit id="message.logged_in_as"><source>message.logged_in_as</source><target>Logged in as %user%</target></trans-unit>
+      <trans-unit id="message.no_transactions"><source>message.no_transactions</source><target>No transactions.</target></trans-unit>
+      <trans-unit id="message.no_wallets"><source>message.no_wallets</source><target>No wallets.</target></trans-unit>
+      <trans-unit id="message.no_categories"><source>message.no_categories</source><target>No categories.</target></trans-unit>
+      <trans-unit id="message.no_users"><source>message.no_users</source><target>No users.</target></trans-unit>
+      <trans-unit id="message.no_access"><source>message.no_access</source><target>No access to this wallet.</target></trans-unit>
+      <trans-unit id="title.record_details"><source>title.record_details</source><target>Record details</target></trans-unit>
+      <trans-unit id="title.record_list"><source>title.record_list</source><target>Records list</target></trans-unit>
+      <trans-unit id="title.record_view"><source>title.record_view</source><target>Record #%id%</target></trans-unit>
+      <trans-unit id="title.wallet_list"><source>title.wallet_list</source><target>Your wallets</target></trans-unit>
+      <trans-unit id="title.wallet_view"><source>title.wallet_view</source><target>Wallet #%id%</target></trans-unit>
+      <trans-unit id="title.wallet_add"><source>title.wallet_add</source><target>New wallet</target></trans-unit>
+      <trans-unit id="title.wallet_create"><source>title.wallet_create</source><target>New wallet</target></trans-unit>
+      <trans-unit id="title.wallet_edit"><source>title.wallet_edit</source><target>Edit wallet</target></trans-unit>
+      <trans-unit id="title.operation_add"><source>title.operation_add</source><target>New transaction</target></trans-unit>
+      <trans-unit id="title.operation_edit"><source>title.operation_edit</source><target>Edit transaction</target></trans-unit>
+      <trans-unit id="title.operation_delete"><source>title.operation_delete</source><target>Delete transaction</target></trans-unit>
+      <trans-unit id="title.category_list"><source>title.category_list</source><target>Categories</target></trans-unit>
+      <trans-unit id="title.category_create"><source>title.category_create</source><target>New category</target></trans-unit>
+      <trans-unit id="title.category_add"><source>title.category_add</source><target>New category</target></trans-unit>
+      <trans-unit id="title.category_edit"><source>title.category_edit</source><target>Edit category</target></trans-unit>
+      <trans-unit id="title.category_delete"><source>title.category_delete</source><target>Delete category</target></trans-unit>
+      <trans-unit id="title.user_list"><source>title.user_list</source><target>User management</target></trans-unit>
+      <trans-unit id="title.user_edit"><source>title.user_edit</source><target>Edit user</target></trans-unit>
+      <trans-unit id="title.profile"><source>title.profile</source><target>My account</target></trans-unit>
+      <trans-unit id="title.register"><source>title.register</source><target>Register</target></trans-unit>
+      <trans-unit id="title.login"><source>title.login</source><target>Sign in</target></trans-unit>
+      <trans-unit id="title.my_account"><source>title.my_account</source><target>My account</target></trans-unit>
 
-      <trans-unit id="label.id">
-        <source>label.id</source>
-        <target>Id</target>
-      </trans-unit>
-      <trans-unit id="label.title">
-        <source>label.title</source>
-        <target>Title</target>
-      </trans-unit>
-      <trans-unit id="label.content">
-        <source>label.content</source>
-        <target>Content</target>
-      </trans-unit>
-      <trans-unit id="label.tags">
-        <source>label.tags</source>
-        <target>Tags</target>
-      </trans-unit>
-      <trans-unit id="message.empty_list">
-        <source>message.empty_list</source>
-        <target>List is empty.</target>
-      </trans-unit>
-      <trans-unit id="message.record_not_found">
-        <source>message.record_not_found</source>
-        <target>Record not found.</target>
-      </trans-unit>
-       <trans-unit id="title.record_details">
-              <source>title.record_details</source>
-              <target>Records details</target>
-            </trans-unit>
-      <trans-unit id="title.record_list">
-        <source>title.record_list</source>
-        <target>Records list</target>
-      </trans-unit>
-      <trans-unit id="title.record_view">
-        <source>title.record_view</source>
-        <target>Record view #%id%</target>
-      </trans-unit>
+
+      <trans-unit id="nav.wallets"><source>nav.wallets</source><target>wallets</target></trans-unit>
+      <trans-unit id="nav.categories"><source>nav.categories</source><target>categories</target></trans-unit>
+      <trans-unit id="nav.users"><source>nav.users</source><target>users</target></trans-unit>
+      <trans-unit id="nav.account"><source>nav.account</source><target>account</target></trans-unit>
+
+      <trans-unit id="placeholder.wallet_name"><source>placeholder.wallet_name</source><target>e.g. Personal account, Savings</target></trans-unit>
+      <trans-unit id="label.date_from"><source>label.date_from</source><target>From</target></trans-unit>
+      <trans-unit id="label.date_to"><source>label.date_to</source><target>To</target></trans-unit>
+      <trans-unit id="label.period_balance"><source>label.period_balance</source><target>period balance</target></trans-unit>
+      <trans-unit id="action.filter"><source>action.filter</source><target>Filter</target></trans-unit>
     </body>
   </file>
 </xliff>

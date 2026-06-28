@@ -1,7 +1,12 @@
 <?php
 
 /**
- * Wallet type.
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 namespace App\Form\Type;
@@ -14,7 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class WalletType.
+ * Wallet form type.
  */
 class WalletType extends AbstractType
 {
@@ -31,27 +36,31 @@ class WalletType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        /* @var TYPE_NAME $builder */
         $builder->add(
             'name',
             TextType::class,
             [
-                'label' => 'label.title',
+                'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 128,
-                    'placeholder' => 'np. Konto osobiste, Oszczędności'],
-            ]);
+                    'placeholder' => 'placeholder.wallet_name',
+                ],
+            ]
+        );
         $builder->add(
-            'currency', ChoiceType::class, [
-            'label' => 'Waluta',
-            'required' => true,
-            'choices' => [
-                'PLN' => 'PLN',
-                'EUR' => 'EUR',
-                'USD' => 'USD',
-                'GBP' => 'GBP',
-            ],
-        ]);
+            'currency',
+            ChoiceType::class,
+            [
+                'label' => 'label.currency',
+                'required' => true,
+                'choices' => [
+                    'PLN' => 'PLN',
+                    'EUR' => 'EUR',
+                    'USD' => 'USD',
+                    'GBP' => 'GBP',
+                ],
+            ]
+        );
     }
 
     /**
@@ -61,7 +70,6 @@ class WalletType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        /* @var TYPE_NAME $resolver */
         $resolver->setDefaults(['data_class' => Wallet::class]);
     }
 

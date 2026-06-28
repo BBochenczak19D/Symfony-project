@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the SI project.
+ *
+ * (c) Students
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Service;
 
 use App\Entity\Operation;
@@ -7,20 +16,32 @@ use App\Repository\OperationRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
+/**
+ * Class OperationService.
+ */
 class OperationService implements OperationServiceInterface
 {
+    /**
+     * Items per page.
+     *
+     * @var int
+     */
     private const int PAGINATOR_ITEMS_PER_PAGE = 5;
 
-    public function __construct(
-        private readonly PaginatorInterface $paginator,
-        private readonly OperationRepository $operationRepository,
-    ) {
+    /**
+     * Constructor.
+     *
+     * @param PaginatorInterface  $paginator           Paginator
+     * @param OperationRepository $operationRepository Operation repository
+     */
+    public function __construct(private readonly PaginatorInterface $paginator, private readonly OperationRepository $operationRepository)
+    {
     }
 
     /**
      * Get paginated list.
      *
-     * @param int $page Page number
+     * @param int|null $page Page number
      *
      * @return PaginationInterface<string, mixed> Paginated list
      */
@@ -39,8 +60,11 @@ class OperationService implements OperationServiceInterface
     }
 
     /**
-     * @param int $id
-     * @return Operation|null
+     * Find operation by ID.
+     *
+     * @param int $id Operation ID
+     *
+     * @return Operation|null Operation entity
      */
     public function findById(int $id): ?Operation
     {
@@ -48,8 +72,9 @@ class OperationService implements OperationServiceInterface
     }
 
     /**
-     * @param Operation $operation
-     * @return void
+     * Save operation.
+     *
+     * @param Operation $operation Operation entity
      */
     public function save(Operation $operation): void
     {
@@ -61,8 +86,9 @@ class OperationService implements OperationServiceInterface
     }
 
     /**
-     * @param Operation $operation
-     * @return void
+     * Delete operation.
+     *
+     * @param Operation $operation Operation entity
      */
     public function delete(Operation $operation): void
     {
